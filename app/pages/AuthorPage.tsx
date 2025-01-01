@@ -1,8 +1,18 @@
-type AuthorPageProps = {
+type Author = {
+  id: number,
+  name: string,
 };
 
-export const AuthorPage: React.FC<AuthorPageProps> = ({}) => {
+type AuthorPageProps = {
+  authors: Author[],
+}
+
+export const AuthorPage = ({ authors }: AuthorPageProps) => {
   return (
-    <>Author Page!!!!!!</>
+    <main>
+      <pre>
+        {JSON.stringify(authors, null, 2)}
+      </pre>
+    </main>
   )
 }
