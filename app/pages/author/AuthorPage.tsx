@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 type Author = {
   id: number,
   name: string,
@@ -10,6 +12,7 @@ type AuthorPageProps = {
 export const AuthorPage = ({ authors }: AuthorPageProps) => {
   return (
     <main>
+      <Link to="create">新規登録</Link>
       <ul>
         {
           authors
