@@ -1,5 +1,5 @@
 import type { Route } from "./+types/author";
-import { AuthorPage } from "../pages/AuthorPage";
+import { AuthorPage } from "../pages/author/AuthorPage";
 import { db } from "~/infra/db";
 import { authorTable } from "~/infra/db/schema";
 
