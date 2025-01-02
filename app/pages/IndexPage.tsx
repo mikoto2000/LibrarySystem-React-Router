@@ -1,7 +1,9 @@
+import { Link } from "react-router"
 export function IndexPage() {
   return (
     <main>
-      <p>Hello, World!</p>
+      <h2>書籍管理</h2>
+      <Link to="/authors">Authors</Link>
     </main>
   );
 }
