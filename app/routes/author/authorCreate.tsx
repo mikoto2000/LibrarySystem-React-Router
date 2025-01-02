@@ -18,7 +18,7 @@ export async function action({ request }: Route.ActionArgs) {
     const insertResult = await db.insert(authorTable).values(author).returning();
     console.log(insertResult);
 
-    return redirect(`authors/${insertResult[0].id}`);
+    return redirect(`/authors/${insertResult[0].id}`);
   } else {
     throw new Response("Invalid Parameter", { status: 400 })
   }
@@ -31,7 +31,7 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-export default function Index() {
+export default function AuthorCreate() {
   return <AuthorCreatePage />;
 }
 
