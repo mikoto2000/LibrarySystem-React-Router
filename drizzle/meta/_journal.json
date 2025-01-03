@@ -8,6 +8,20 @@
       "when": 1735878317078,
       "tag": "0000_friendly_triathlon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1735904400410,
+      "tag": "0001_greedy_sleepwalker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1735941492254,
+      "tag": "0002_minor_robin_chapel",
+      "breakpoints": true
     }
   ]
 }

@@ -1,3 +1,8 @@
+export type BookStockStatus = {
+  id: number,
+  name: string,
+};
+
 export type Author = {
   id: number,
   name: string,
