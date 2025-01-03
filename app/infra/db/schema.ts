@@ -14,7 +14,7 @@ export const bookMasterTable = pgTable("bookMaster", {
 });
 
 export const bookMasterToAuthorTable = pgTable(
-  'users_to_groups',
+  'book_master_to_author',
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     bookMasterId: integer("book_master_id")
@@ -31,3 +31,19 @@ export const bookMasterRelations = relations(bookMasterTable, ({ many }) => (
     bookMasterToAuthor: many(bookMasterToAuthorTable)
   }
 ));
+
+export const authorRelations = relations(authorTable, ({ many }) => (
+  {
+    bookMasterToAuthor: many(bookMasterToAuthorTable)
+  }
+));
+export const bookMasterToAuthorRelations = relations(bookMasterToAuthorTable, ({ one }) => ({
+  bookMaster: one(bookMasterTable, {
+    fields: [bookMasterToAuthorTable.bookMasterId],
+    references: [bookMasterTable.id],
+  }),
+  user: one(authorTable, {
+    fields: [bookMasterToAuthorTable.authorId],
+    references: [authorTable.id],
+  }),
+}));

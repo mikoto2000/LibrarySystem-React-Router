@@ -1,13 +1,31 @@
 import type { Route } from "./+types/bookMaster";
 import { BookMasterDetailPage } from "../../pages/bookMaster/BookMasterDetailPage";
 import { db } from "~/infra/db";
-import { bookMasterTable } from "~/infra/db/schema";
+import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 
 import { eq } from "drizzle-orm";
 
-export async function loader({ params, request }: Route.LoaderArgs) {
+export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const bookMaster = (await db.select().from(bookMasterTable).where(eq(bookMasterTable.id, Number(id))))[0];
+  const selectResult = (await db.select().from(bookMasterTable)
+                      .leftJoin(bookMasterToAuthorTable, eq(bookMasterTable.id, bookMasterToAuthorTable.bookMasterId))
+                      .leftJoin(authorTable, eq(bookMasterToAuthorTable.authorId, authorTable.id))
+                      .where(eq(bookMasterTable.id, Number(id))));
+
+  const bookMaster = selectResult.reduce((acumulator, currentValue) => {
+    acumulator.id = currentValue.bookMaster.id;
+    acumulator.isbn = currentValue.bookMaster.isbn;
+    acumulator.name = currentValue.bookMaster.name;
+    acumulator.author.push(currentValue.author)
+    return acumulator;
+  },
+  {
+    id: 0,
+    isbn: 0,
+    name: "",
+    author: [],
+  } as any);
+
   return { bookMaster };
 }
 
@@ -23,5 +41,4 @@ export default function BookMasterDetail({ loaderData }: Route.ComponentProps) {
     bookMaster={loaderData.bookMaster}
   />;
 }
-
 

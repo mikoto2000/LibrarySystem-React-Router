@@ -5,16 +5,33 @@ type BookMaster = {
   name: string,
 };
 
+type Author = {
+  id: number,
+  name: string,
+};
+
 type BookMasterEditPageProps = {
   bookMaster: BookMaster,
+  authors: Author[],
 }
 
-export const BookMasterEditPage = ({ bookMaster }: BookMasterEditPageProps) => {
+export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPageProps) => {
   return (
     <main>
       <Form method="post" name="edit">
-        <label>Id: <input type="text" name="id" defaultValue={bookMaster.id} readOnly/></label>
-        <label>Name: <input type="text" name="name" defaultValue={bookMaster.name}/></label>
+        <div>
+          <label>Id: <input type="text" name="id" defaultValue={bookMaster.id} readOnly /></label>
+        </div>
+        <div>
+          <label>Name: <input type="text" name="name" defaultValue={bookMaster.name} /></label>
+        </div>
+        <div>
+          <select multiple name="authors">
+            {
+              authors.map((e) => <option value={e.id}>{e.name}</option>)
+            }
+          </select>
+        </div>
         <button type="submit">変更</button>
       </Form>
       {" "}

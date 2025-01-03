@@ -1,6 +1,15 @@
 import { Form, Link } from "react-router"
 
-export const BookMasterCreatePage = () => {
+type Author = {
+  id: number,
+  name: string,
+};
+
+type BookMasterCreatePageProps = {
+  authors: Author[],
+}
+
+export const BookMasterCreatePage = ({ authors }: BookMasterCreatePageProps) => {
   return (
     <main>
       <Form method="post">
@@ -15,6 +24,9 @@ export const BookMasterCreatePage = () => {
         </div>
         <div>
           <select multiple name="authors">
+            {
+              authors.map((e) => <option value={e.id}>{e.name}</option>)
+            }
           </select>
         </div>
         <div>
