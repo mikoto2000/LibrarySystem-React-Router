@@ -1,9 +1,5 @@
 import { Link } from "react-router";
-
-type Author = {
-  id: number,
-  name: string,
-};
+import type { Author } from "~/types";
 
 type AuthorDetailPageProps = {
   author: Author,

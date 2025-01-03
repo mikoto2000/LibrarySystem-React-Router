@@ -1,9 +1,5 @@
 import { Link } from "react-router";
-
-type BookMaster = {
-  id: number,
-  name: string,
-};
+import type { BookMaster } from "~/types";
 
 type BookMasterPageProps = {
   bookMasters: BookMaster[],

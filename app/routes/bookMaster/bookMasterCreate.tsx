@@ -51,4 +51,3 @@ export default function BookMasterCreate({ loaderData }: Route.ComponentProps) {
   />;
 }
 
-

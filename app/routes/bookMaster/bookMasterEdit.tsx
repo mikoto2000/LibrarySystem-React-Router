@@ -45,5 +45,3 @@ export default function BookMasterEdit({ loaderData }: Route.ComponentProps) {
   />;
 }
 
-
-

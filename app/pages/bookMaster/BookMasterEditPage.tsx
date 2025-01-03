@@ -1,14 +1,5 @@
 import { Form, Link } from "react-router";
-
-type BookMaster = {
-  id: number,
-  name: string,
-};
-
-type Author = {
-  id: number,
-  name: string,
-};
+import type { Author, BookMaster } from "~/types";
 
 type BookMasterEditPageProps = {
   bookMaster: BookMaster,
