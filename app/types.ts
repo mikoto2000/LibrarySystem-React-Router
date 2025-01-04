@@ -27,3 +27,9 @@ export type BookStock = {
   memo: string,
 }
 
+export type Customer = {
+  id: number,
+  name: string,
+  emailAddress: string,
+};
+
