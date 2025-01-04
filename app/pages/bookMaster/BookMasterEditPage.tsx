@@ -7,6 +7,7 @@ type BookMasterEditPageProps = {
 }
 
 export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPageProps) => {
+  const authorIds = bookMaster.authors.map((e) => e.id)
   return (
     <main>
       <Form method="post" name="edit">
@@ -19,7 +20,7 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
         <div>
           <select multiple name="authors">
             {
-              authors.map((e) => <option value={e.id}>{e.name}</option>)
+              authors.map((e) => <option selected={authorIds.includes(e.id)} value={e.id}>{e.name}</option>)
             }
           </select>
         </div>

@@ -15,4 +15,9 @@ export type BookMaster = {
   authors: Author[],
 };
 
+export type BookStock = {
+  id: number,
+  bookStockStatus: BookStockStatus,
+  bookMaster: BookMaster,
+}
 

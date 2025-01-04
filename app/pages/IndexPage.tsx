@@ -11,6 +11,10 @@ export function IndexPage() {
         <li><Link to="/authors">Authors</Link></li>
         <li><Link to="/bookMasters">Book Masters</Link></li>
       </ul>
+      <h2>在庫管理</h2>
+      <ul>
+        <li><Link to="/bookStocks">Book Stocks</Link></li>
+      </ul>
     </main>
   );
 }

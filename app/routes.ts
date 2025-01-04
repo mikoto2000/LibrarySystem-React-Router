@@ -14,4 +14,8 @@ export default [
   route("bookStockStatuses/create", "routes/bookStockStatus/bookStockStatusCreate.tsx"),
   route("bookStockStatuses/:id/edit", "routes/bookStockStatus/bookStockStatusEdit.tsx"),
   route("bookStockStatuses/:id", "routes/bookStockStatus/bookStockStatusDetail.tsx"),
+  route("bookStocks", "routes/bookStock/bookStock.tsx"),
+  route("bookStocks/create", "routes/bookStock/bookStockCreate.tsx"),
+  route("bookStocks/:id/edit", "routes/bookStock/bookStockEdit.tsx"),
+  route("bookStocks/:id", "routes/bookStock/bookStockDetail.tsx"),
 ] satisfies RouteConfig;

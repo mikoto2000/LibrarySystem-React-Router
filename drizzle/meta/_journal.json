@@ -22,6 +22,20 @@
       "when": 1735941492254,
       "tag": "0002_minor_robin_chapel",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1735948079537,
+      "tag": "0003_bumpy_thor",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1735949358192,
+      "tag": "0004_graceful_loki",
+      "breakpoints": true
     }
   ]
 }

@@ -10,23 +10,24 @@ export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
   const selectResult = (await db.select().from(bookMasterTable)
-                      .leftJoin(bookMasterToAuthorTable, eq(bookMasterTable.id, bookMasterToAuthorTable.bookMasterId))
-                      .leftJoin(authorTable, eq(bookMasterToAuthorTable.authorId, authorTable.id))
-                      .where(eq(bookMasterTable.id, Number(id))));
+    .leftJoin(bookMasterToAuthorTable, eq(bookMasterTable.id, bookMasterToAuthorTable.bookMasterId))
+    .leftJoin(authorTable, eq(bookMasterToAuthorTable.authorId, authorTable.id))
+    .where(eq(bookMasterTable.id, Number(id))));
 
   const bookMaster = selectResult.reduce((acumulator, currentValue) => {
     acumulator.id = currentValue.bookMaster.id;
     acumulator.isbn = currentValue.bookMaster.isbn;
     acumulator.name = currentValue.bookMaster.name;
+    currentValue.author
     acumulator.authors.push(currentValue.author)
     return acumulator;
   },
-  {
-    id: 0,
-    isbn: "",
-    name: "",
-    author: [],
-  } as BookMaster);
+    {
+      id: 0,
+      isbn: "",
+      name: "",
+      authors: [],
+    } as BookMaster);
 
   return { bookMaster };
 }

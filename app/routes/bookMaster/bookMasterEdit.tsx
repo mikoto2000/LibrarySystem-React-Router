@@ -1,13 +1,13 @@
 import type { Route } from "./+types/bookMaster";
 import { BookMasterEditPage } from "../../pages/bookMaster/BookMasterEditPage";
 import { db } from "~/infra/db";
-import { authorTable, bookMasterTable } from "~/infra/db/schema";
+import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
+import type { BookMaster } from "~/types";
 
 export async function action({ request }: Route.ActionArgs) {
-  console.dir(request);
   const formData = await request.formData();
   const id = formData.get("id")?.toString()
   const name = formData.get("name")?.toString()
@@ -25,8 +25,27 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const bookMaster = (await db.select().from(bookMasterTable).where(eq(bookMasterTable.id, Number(id))))[0];
+  const selectResult = (await db.select()
+    .from(bookMasterTable)
+    .leftJoin(bookMasterToAuthorTable, eq(bookMasterTable.id, bookMasterToAuthorTable.bookMasterId))
+    .leftJoin(authorTable, eq(bookMasterToAuthorTable.authorId, authorTable.id))
+    .where(eq(bookMasterTable.id, Number(id))));
   const authors = (await db.select().from(authorTable));
+
+  const bookMaster = selectResult.reduce((acumulator, currentValue) => {
+    acumulator.id = currentValue.bookMaster.id;
+    acumulator.isbn = currentValue.bookMaster.isbn;
+    acumulator.name = currentValue.bookMaster.name;
+    currentValue.author
+    acumulator.authors.push(currentValue.author)
+    return acumulator;
+  },
+    {
+      id: 0,
+      isbn: "",
+      name: "",
+      authors: [],
+    } as BookMaster);
 
   return { bookMaster, authors };
 }
