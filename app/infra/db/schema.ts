@@ -11,6 +11,11 @@ export const bookStockStatusTable = pgTable("book_stock_status", {
   name: varchar({ length: 255 }).notNull(),
 });
 
+export const lendingStatusTable = pgTable("lending_status", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+});
+
 export const bookMasterTable = pgTable("bookMaster", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   isbn: varchar({ length: 16 }).notNull(),
