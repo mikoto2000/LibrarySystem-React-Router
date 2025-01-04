@@ -3,6 +3,11 @@ export type BookStockStatus = {
   name: string,
 };
 
+export type LendingStatus = {
+  id: number,
+  name: string,
+};
+
 export type Author = {
   id: number,
   name: string,

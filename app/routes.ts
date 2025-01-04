@@ -18,4 +18,8 @@ export default [
   route("bookStocks/create", "routes/bookStock/bookStockCreate.tsx"),
   route("bookStocks/:id/edit", "routes/bookStock/bookStockEdit.tsx"),
   route("bookStocks/:id", "routes/bookStock/bookStockDetail.tsx"),
+  route("lendingStatuses", "routes/lendingStatus/lendingStatus.tsx"),
+  route("lendingStatuses/create", "routes/lendingStatus/lendingStatusCreate.tsx"),
+  route("lendingStatuses/:id/edit", "routes/lendingStatus/lendingStatusEdit.tsx"),
+  route("lendingStatuses/:id", "routes/lendingStatus/lendingStatusDetail.tsx"),
 ] satisfies RouteConfig;
