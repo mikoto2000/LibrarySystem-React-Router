@@ -37,7 +37,9 @@ export async function loader({ params }: Route.LoaderArgs) {
     acumulator.isbn = currentValue.bookMaster.isbn;
     acumulator.name = currentValue.bookMaster.name;
     currentValue.author
-    acumulator.authors.push(currentValue.author)
+    if (currentValue.author) {
+      acumulator.authors.push(currentValue.author)
+    }
     return acumulator;
   },
     {
