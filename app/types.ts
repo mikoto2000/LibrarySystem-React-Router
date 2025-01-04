@@ -17,7 +17,8 @@ export type BookMaster = {
 
 export type BookStock = {
   id: number,
-  bookStockStatus: BookStockStatus,
-  bookMaster: BookMaster,
+  bookStockStatusId: number,
+  bookMasterId: number,
+  memo: string,
 }
 

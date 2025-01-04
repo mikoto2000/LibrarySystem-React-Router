@@ -1,5 +1,5 @@
 import { Form, Link } from "react-router";
-import type { Author, BookMaster, BookStock, BookStockStatus } from "~/types";
+import type { BookMaster, BookStock, BookStockStatus } from "~/types";
 
 type BookStockEditPageProps = {
   bookStock: BookStock,
@@ -8,6 +8,7 @@ type BookStockEditPageProps = {
 }
 
 export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }: BookStockEditPageProps) => {
+  console.log(bookStock);
   return (
     <main>
       <Form method="post">
@@ -17,14 +18,14 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
         <div>
           <select name="bookMasterId">
             {
-              bookMasters.map((e) => <option value={e.id}>{e.name}</option>)
+              bookMasters.map((e) => <option selected={bookStock.bookMasterId === e.id} value={e.id}>{e.name}</option>)
             }
           </select>
         </div>
         <div>
           <select name="bookStockStatusId">
             {
-              bookStockStatuses.map((e) => <option value={e.id}>{e.name}</option>)
+              bookStockStatuses.map((e) => <option selected={bookStock.bookStockStatusId === e.id} value={e.id}>{e.name}</option>)
             }
           </select>
         </div>
