@@ -66,3 +66,9 @@ export const bookStockTable = pgTable("book_stock", {
   memo: text(),
 });
 
+export const customerTable = pgTable("customer", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  emailAddress: varchar({ length: 255 }).notNull(),
+});
+
