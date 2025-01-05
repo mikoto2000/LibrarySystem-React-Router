@@ -72,3 +72,12 @@ export const customerTable = pgTable("customer", {
   emailAddress: varchar({ length: 255 }).notNull(),
 });
 
+export const lendingSetTable = pgTable("lending_set", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  lendingStatusId: integer("lending_status_id").notNull().references(() => lendingStatusTable.id),
+  customerId: integer("customer_id").notNull().references(() => customerTable.id),
+  lendStartDate: date().notNull(),
+  lendDeadlineDate: date().notNull(),
+  returnDate: date(),
+  memo: text(),
+});
