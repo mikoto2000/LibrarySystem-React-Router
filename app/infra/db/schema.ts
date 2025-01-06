@@ -81,3 +81,40 @@ export const lendingSetTable = pgTable("lending_set", {
   returnDate: date(),
   memo: text(),
 });
+
+export const rendingSetToBookStockTable = pgTable(
+  'book_master_to_author',
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    bookMasterId: integer("book_master_id")
+      .notNull()
+      .references(() => bookMasterTable.id),
+    authorId: integer("author_id")
+      .notNull()
+      .references(() => authorTable.id),
+  },
+);
+
+export const lendingSetRelations = relations(bookMasterTable, ({ many }) => (
+  {
+    rendingSetToBookStock: many(bookMasterToAuthorTable),
+  }
+));
+
+export const bookStockRelations = relations(authorTable, ({ many }) => (
+  {
+    rendingSetToBookStock: many(bookMasterToAuthorTable)
+  }
+));
+
+export const rendingSetToBookStockRelations = relations(bookMasterToAuthorTable, ({ one }) => ({
+  bookMaster: one(lendingSetTable, {
+    fields: [rendingSetToBookStockTable.bookMasterId],
+    references: [lendingSetTable.id],
+  }),
+  user: one(bookStockTable, {
+    fields: [rendingSetToBookStockTable.authorId],
+    references: [bookStockTable.id],
+  }),
+}));
+
