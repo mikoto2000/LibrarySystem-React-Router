@@ -57,6 +57,13 @@
       "when": 1736111286963,
       "tag": "0007_happy_liz_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1736167566792,
+      "tag": "0008_modern_mandarin",
+      "breakpoints": true
     }
   ]
 }
