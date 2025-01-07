@@ -14,12 +14,17 @@ export const BookStockStatusPage = ({ bookStockStatuses }: BookStockStatusPagePr
         {
           bookStockStatuses
             ?
-            bookStockStatuses.map((e) => <li><Link to={`/bookStockStatuses/${e.id}`}>{e.id}: {e.name}</Link></li>)
+            bookStockStatuses.map((e) => <li><Link to={`/bookStockStatuses/${e.id}`}>{e.id}: </Link></li>)
             :
             <>表示要素がありませんでした</>
         }
       </ul>
       <Link to="/">トップに戻る</Link>
+      <pre>
+        {
+          JSON.stringify(bookStockStatuses, null, 2)
+        }
+      </pre>
     </main>
   )
 }

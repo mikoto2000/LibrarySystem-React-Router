@@ -33,3 +33,9 @@ export type Customer = {
   emailAddress: string,
 };
 
+export type LendingSet = {
+  id: number,
+  lendStartDate: Date,
+  lendDeadlineDate: Date,
+  returnDate: Date,
+};

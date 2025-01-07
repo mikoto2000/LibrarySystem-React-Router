@@ -83,7 +83,7 @@ export const lendingSetTable = pgTable("lending_set", {
 });
 
 export const lendingSetToBookStockTable = pgTable(
-  'book_master_to_author',
+  'lending_set_to_book_stock',
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     lendingSetId: integer("lending_set_id")

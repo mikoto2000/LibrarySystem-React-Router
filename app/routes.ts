@@ -26,4 +26,8 @@ export default [
   route("customers/create", "routes/customer/customerCreate.tsx"),
   route("customers/:id/edit", "routes/customer/customerEdit.tsx"),
   route("customers/:id", "routes/customer/customerDetail.tsx"),
+  route("lendingSets", "routes/lendingSet/lendingSet.tsx"),
+  route("lendingSets/create", "routes/lendingSet/lendingSetCreate.tsx"),
+  route("lendingSets/:id/edit", "routes/lendingSet/lendingSetEdit.tsx"),
+  route("lendingSets/:id", "routes/lendingSet/lendingSetDetail.tsx"),
 ] satisfies RouteConfig;

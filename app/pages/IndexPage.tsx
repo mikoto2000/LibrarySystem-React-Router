@@ -18,6 +18,7 @@ export function IndexPage() {
       </ul>
       <h2>貸出管理</h2>
       <ul>
+        <li><Link to="/lendingSets">Lending Set</Link></li>
         <li><Link to="/customers">Customer</Link></li>
       </ul>
     </main>
