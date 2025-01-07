@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingSet";
 import { LendingSetEditPage } from "../../pages/lendingSet/LendingSetEditPage";
 import { db } from "~/infra/db";
-import { authorTable, bookMasterTable, lendingSetStatusTable, lendingSetTable } from "~/infra/db/schema";
+import { authorTable, bookMasterTable, lendingStatusTable, lendingSetTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
@@ -33,7 +33,7 @@ export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
   const lendingSet = (await db.select().from(lendingSetTable).where(eq(lendingSetTable.id, Number(id))))[0];
   const bookMasters = (await db.select().from(bookMasterTable));
-  const lendingSetStatuses = (await db.select().from(lendingSetStatusTable));
+  const lendingSetStatuses = (await db.select().from(lendingStatusTable));
 
   return { lendingSet, bookMasters, lendingSetStatuses };
 }

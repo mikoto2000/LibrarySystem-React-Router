@@ -88,10 +88,10 @@ export const lendingSetToBookStockTable = pgTable(
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     lendingSetId: integer("lending_set_id")
       .notNull()
-      .references(() => bookMasterTable.id),
+      .references(() => lendingSetTable.id),
     bookStockId: integer("book_stock_id")
       .notNull()
-      .references(() => authorTable.id),
+      .references(() => bookStockTable.id),
   },
 );
 
@@ -107,13 +107,13 @@ export const bookStockRelations = relations(authorTable, ({ many }) => (
   }
 ));
 
-export const lendingSetToBookStockRelations = relations(bookMasterToAuthorTable, ({ one }) => ({
+export const lendingSetToBookStockRelations = relations(lendingSetToBookStockTable, ({ one }) => ({
   lendingSetId: one(lendingSetTable, {
-    fields: [lendingSetToBookStockTable.bookMasterId],
+    fields: [lendingSetToBookStockTable.lendingSetId],
     references: [lendingSetTable.id],
   }),
   bookStockId: one(bookStockTable, {
-    fields: [lendingSetToBookStockTable.authorId],
+    fields: [lendingSetToBookStockTable.bookStockId],
     references: [bookStockTable.id],
   }),
 }));
