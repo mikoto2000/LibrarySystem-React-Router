@@ -20,6 +20,11 @@ export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
         }
       </ul>
       <Link to="/">トップに戻る</Link>
+      <pre>
+       {
+         JSON.stringify(lendingSets, null, 2)
+       }
+      </pre>
     </main>
   )
 }

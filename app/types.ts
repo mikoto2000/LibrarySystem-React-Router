@@ -23,7 +23,7 @@ export type BookMaster = {
 export type BookStock = {
   id: number,
   bookStockStatusId: number,
-  bookMasterId: number,
+  bookMaster: BookMaster,
   memo: string,
 }
 
@@ -35,7 +35,8 @@ export type Customer = {
 
 export type LendingSet = {
   id: number,
-  lendStartDate: Date,
-  lendDeadlineDate: Date,
-  returnDate: Date,
+  lendStartDate: string,
+  lendDeadlineDate: string,
+  returnDate: string,
+  bookStocks: BookStock[],
 };

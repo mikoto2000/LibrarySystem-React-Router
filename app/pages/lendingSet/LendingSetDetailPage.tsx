@@ -13,7 +13,7 @@ export const LendingSetDetailPage = ({ lendingSet }: LendingSetDetailPageProps) 
           JSON.stringify(lendingSet, null, 2)
         }
       </pre>
-      <Link to={`/lendingSets/${lendingSet.book_stock.id}/edit`}>編集する</Link>
+      <Link to={`/lendingSets/${lendingSet.id}/edit`}>編集する</Link>
       {" "}
       <Link to="/lendingSets">一覧へ戻る</Link>
       {" "}
