@@ -20,6 +20,11 @@ export const BookMasterPage = ({ bookMasters }: BookMasterPageProps) => {
         }
       </ul>
       <Link to="/">トップに戻る</Link>
+      <pre>
+        {
+          JSON.stringify(bookMasters, null, 2)
+        }
+      </pre>
     </main>
   )
 }
