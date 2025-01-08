@@ -11,21 +11,27 @@ export const BookStockCreatePage = ({ bookMasters, bookStockStatuses }: BookStoc
     <main>
       <Form method="post">
         <div>
-          <select name="bookMasterId">
-            {
-              bookMasters.map((e) => <option value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>書籍情報:
+            <select name="bookMasterId">
+              {
+                bookMasters.map((e) => <option value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
-          <select name="bookStockStatusId">
-            {
-              bookStockStatuses.map((e) => <option value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>書籍状態:
+            <select name="bookStockStatusId">
+              {
+                bookStockStatuses.map((e) => <option value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
-          <input type="text" name="memo" placeholder="memo" />
+          <label>メモ:
+            <input type="text" name="memo" placeholder="memo" />
+          </label>
         </div>
         <div>
           <button type="submit">登録</button>

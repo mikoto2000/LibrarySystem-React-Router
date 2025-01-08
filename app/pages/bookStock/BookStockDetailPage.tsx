@@ -8,16 +8,16 @@ type BookStockDetailPageProps = {
 export const BookStockDetailPage = ({ bookStock }: BookStockDetailPageProps) => {
   return (
     <main>
+      <Link to={`/bookStocks/${bookStock.id}/edit`}>編集する</Link>
+      {" "}
+      <Link to="/bookStocks">一覧へ戻る</Link>
+      {" "}
+      <Link to="/">トップへ戻る</Link>
       <pre>
         {
           JSON.stringify(bookStock, null, 2)
         }
       </pre>
-      <Link to={`/bookStocks/${bookStock.book_stock.id}/edit`}>編集する</Link>
-      {" "}
-      <Link to="/bookStocks">一覧へ戻る</Link>
-      {" "}
-      <Link to="/">トップへ戻る</Link>
     </main>
   )
 }

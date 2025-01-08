@@ -17,14 +17,15 @@ export type BookMaster = {
   id: number,
   isbn: string,
   name: string,
-  authors: Author[],
+  // TODO: view 用に、画面ごとのの type を別途作成する
+  authors?: Author[],
 };
 
 export type BookStock = {
   id: number,
-  bookStockStatusId: number,
+  bookStockStatus: BookStockStatus,
   bookMaster: BookMaster,
-  memo: string,
+  memo?: string | null,
 }
 
 export type Customer = {
