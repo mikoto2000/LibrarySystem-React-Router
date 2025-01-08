@@ -6,7 +6,9 @@
     "build": "cross-env NODE_ENV=production react-router build",
     "dev": "react-router dev",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "drizzle:migrate": "npx drizzle-kit migrate",
+    "drizzle:generate": "npx drizzle-kit generate"
   },
   "dependencies": {
     "@react-router/node": "^7.1.1",
