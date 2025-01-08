@@ -12,6 +12,7 @@ export const BookStockDetailPage = ({ bookStock }: BookStockDetailPageProps) => 
         <li>Id: {bookStock.id}</li>
         <li>Book Name: {bookStock.bookMaster.name}</li>
         <li>Status: {bookStock.bookStockStatus.name}</li>
+        <li>Memo: {bookStock.memo}</li>
       </ul>
       <Link to={`/bookStocks/${bookStock.id}/edit`}>編集する</Link>
       {" "}

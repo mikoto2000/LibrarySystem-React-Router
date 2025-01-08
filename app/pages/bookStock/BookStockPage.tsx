@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import type { BookStock } from "~/types";
 
 type BookStockPageProps = {
-  bookStocks: BookStock[],
+  bookStocks: any[],
 }
 
 export const BookStockPage = ({ bookStocks }: BookStockPageProps) => {

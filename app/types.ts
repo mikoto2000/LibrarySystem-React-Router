@@ -22,7 +22,7 @@ export type BookMaster = {
 };
 
 export type BookStock = {
-  id: number,
+  id: string,
   bookStockStatus: BookStockStatus,
   bookMaster: BookMaster,
   memo?: string | null,

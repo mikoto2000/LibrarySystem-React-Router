@@ -13,24 +13,30 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
     <main>
       <Form method="post">
         <div>
-          <label>Id:<input type="text" name="id" value={bookStock.id}/></label>
+          <label>Id:<input type="text" name="id" value={bookStock.id} /></label>
         </div>
         <div>
-          <select name="bookMasterId">
-            {
-              bookMasters.map((e) => <option selected={bookStock.bookMasterId === e.id} value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>書籍:
+            <select name="bookMasterId">
+              {
+                bookMasters.map((e) => <option selected={bookStock.bookMaster.id === e.id} value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
-          <select name="bookStockStatusId">
-            {
-              bookStockStatuses.map((e) => <option selected={bookStock.bookStockStatusId === e.id} value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>在庫情報
+            <select name="bookStockStatusId">
+              {
+                bookStockStatuses.map((e) => <option selected={bookStock.bookStockStatus.id === e.id} value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
-          <input type="text" name="memo" defaultValue={bookStock.memo} placeholder="memo" />
+          <label>メモ:
+            <input type="text" name="memo" defaultValue={bookStock.memo ? bookStock.memo : ""} placeholder="memo" />
+          </label>
         </div>
         <div>
           <button type="submit">変更</button>
@@ -40,7 +46,12 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
       <Link to="/bookStocks">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>
-    </main>
+      <pre>
+        {
+          JSON.stringify(bookStock, null, 2)
+        }
+      </pre>
+    </main >
   )
 }
 

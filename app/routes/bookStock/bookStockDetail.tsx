@@ -5,29 +5,16 @@ import { authorTable, bookMasterTable, bookStockStatusTable, bookStockTable } fr
 
 import { eq } from "drizzle-orm";
 import type { BookStock } from "~/types";
+import { findBookStockById } from "./util";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
-  const selectResult = (await db.select().from(bookStockTable)
-    .leftJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
-    .leftJoin(bookStockStatusTable, eq(bookStockTable.bookStockStatusId, bookStockStatusTable.id))
-    .where(eq(bookStockTable.id, Number(id))))[0];
-
-  if (!selectResult.book_stock_status) {
-    throw "book_stock_status not found"
+  if (!id) {
+    throw "id not found";
   }
 
-  if (!selectResult.bookMaster) {
-    throw "bookMaster not found"
-  }
-
-  const bookStock: BookStock = {
-    id: selectResult.book_stock.id,
-    bookStockStatus: selectResult.book_stock_status,
-    bookMaster: selectResult.bookMaster,
-    memo: selectResult.book_stock.memo,
-  };
+  const bookStock = await findBookStockById(id);
 
   return { bookStock };
 }
