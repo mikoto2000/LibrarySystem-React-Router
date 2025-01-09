@@ -2,9 +2,10 @@ import type { Route } from "./+types/customer";
 import { CustomerPage } from "../../pages/customer/CustomerPage";
 import { db } from "~/infra/db";
 import { customerTable } from "~/infra/db/schema";
+import type { Customer } from "~/types";
 
 export async function loader() {
-  const customeres = await db.select().from(customerTable);
+  const customeres: Customer[] = await db.select().from(customerTable);
   return { customeres };
 }
 
