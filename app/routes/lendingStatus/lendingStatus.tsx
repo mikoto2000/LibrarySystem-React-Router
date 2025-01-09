@@ -2,9 +2,10 @@ import type { Route } from "./+types/lendingStatus";
 import { LendingStatusPage } from "../../pages/lendingStatus/LendingStatusPage";
 import { db } from "~/infra/db";
 import { lendingStatusTable } from "~/infra/db/schema";
+import type { LendingStatus } from "~/types";
 
 export async function loader() {
-  const lendingStatuses = await db.select().from(lendingStatusTable);
+  const lendingStatuses: LendingStatus[] = await db.select().from(lendingStatusTable);
   return { lendingStatuses };
 }
 

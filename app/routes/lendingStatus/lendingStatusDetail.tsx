@@ -1,4 +1,4 @@
-import type { Route } from "./+types/lendingStatus";
+import type { Route } from "./+types/lendingStatusDetail";
 import { LendingStatusDetailPage } from "../../pages/lendingStatus/LendingStatusDetailPage";
 import { db } from "~/infra/db";
 import { lendingStatusTable } from "~/infra/db/schema";
