@@ -1,4 +1,4 @@
-import type { Route } from "./+types/bookStock";
+import type { Route } from "./+types/bookStockDetail";
 import { BookStockDetailPage } from "../../pages/bookStock/BookStockDetailPage";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
@@ -14,7 +14,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     throw "id not found";
   }
 
-  const bookStock = await findBookStockById(id);
+  const bookStock = await findBookStockById(Number(id));
 
   return { bookStock };
 }

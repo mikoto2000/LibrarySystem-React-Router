@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
-import type { BookStock } from "~/types";
+import type { BookMaster, BookStock } from "~/types";
 
 export const findBookStockById = async (id: number) => {
   const selectResult = (await db.select().from(bookStockTable)
@@ -24,7 +24,7 @@ export const findBookStockById = async (id: number) => {
       id: selectResult.bookMaster.id,
       isbn: selectResult.bookMaster.isbn,
       name: selectResult.bookMaster.name,
-    },
+    } as BookMaster,
     memo: selectResult.book_stock.memo,
   };
 

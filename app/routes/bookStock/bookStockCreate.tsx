@@ -3,6 +3,7 @@ import { BookStockCreatePage } from "../../pages/bookStock/BookStockCreatePage";
 import { db } from "~/infra/db";
 import { bookStockTable, bookStockStatusTable, bookMasterTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
+import type { BookMasterWithoutAuthors } from "~/views/types";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -24,8 +25,16 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export async function loader({ }: Route.LoaderArgs) {
-  const bookMasters = (await db.select().from(bookMasterTable));
+  const selectStatus = (await db.select().from(bookMasterTable));
   const bookStockStatuses = (await db.select().from(bookStockStatusTable));
+
+  const bookMasters: BookMasterWithoutAuthors[] = selectStatus.map((e) => {
+    return {
+      id: e.id,
+      isbn: e.isbn,
+      name: e.name,
+    }
+  });
 
   return { bookMasters, bookStockStatuses };
 }
