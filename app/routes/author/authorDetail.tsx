@@ -8,12 +8,7 @@ import type { Author } from "~/types";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const selectResult = (await db.select().from(authorTable).where(eq(authorTable.id, Number(id))))[0];
-
-  const author: Author = {
-    id: selectResult.id,
-    name: selectResult.name,
-  };
+  const author: Author = (await db.select().from(authorTable).where(eq(authorTable.id, Number(id))))[0];
 
   return { author };
 }

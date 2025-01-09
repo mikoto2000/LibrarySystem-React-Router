@@ -1,10 +1,11 @@
-import type { Route } from "./+types/bookStockStatus";
+import type { Route } from "./+types/bookStockStatusEdit";
 import { BookStockStatusEditPage } from "../../pages/bookStockStatus/BookStockStatusEditPage";
 import { db } from "~/infra/db";
 import { bookStockStatusTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
+import type { BookStockStatus } from "~/types";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -24,7 +25,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const bookStockStatus = (await db.select().from(bookStockStatusTable).where(eq(bookStockStatusTable.id, Number(id))))[0];
+  const bookStockStatus: BookStockStatus = (await db.select().from(bookStockStatusTable).where(eq(bookStockStatusTable.id, Number(id))))[0];
 
   return { bookStockStatus };
 }
