@@ -4,10 +4,17 @@ import { db } from "~/infra/db";
 import { authorTable } from "~/infra/db/schema";
 
 import { eq } from "drizzle-orm";
+import type { Author } from "~/types";
 
-export async function loader({ params, request }: Route.LoaderArgs) {
+export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const author = (await db.select().from(authorTable).where(eq(authorTable.id, Number(id))))[0];
+  const selectResult = (await db.select().from(authorTable).where(eq(authorTable.id, Number(id))))[0];
+
+  const author: Author = {
+    id: selectResult.id,
+    name: selectResult.name,
+  };
+
   return { author };
 }
 

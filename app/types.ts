@@ -17,12 +17,11 @@ export type BookMaster = {
   id: number,
   isbn: string,
   name: string,
-  // TODO: view 用に、画面ごとのの type を別途作成する
-  authors?: Author[],
+  authors: Author[],
 };
 
 export type BookStock = {
-  id: string,
+  id: number,
   bookStockStatus: BookStockStatus,
   bookMaster: BookMaster,
   memo?: string | null,
@@ -36,8 +35,10 @@ export type Customer = {
 
 export type LendingSet = {
   id: number,
+  lendingStatus: LendingStatus,
   lendStartDate: string,
   lendDeadlineDate: string,
   returnDate: string,
   bookStocks: BookStock[],
+  memo?: string | null,
 };
