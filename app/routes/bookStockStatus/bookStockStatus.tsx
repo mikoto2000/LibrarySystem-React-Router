@@ -2,9 +2,10 @@ import type { Route } from "./+types/bookStockStatus";
 import { BookStockStatusPage } from "../../pages/bookStockStatus/BookStockStatusPage";
 import { db } from "~/infra/db";
 import { bookStockStatusTable } from "~/infra/db/schema";
+import type { BookStockStatus } from "~/types";
 
 export async function loader() {
-  const bookStockStatuses = await db.select().from(bookStockStatusTable);
+  const bookStockStatuses: BookStockStatus[] = await db.select().from(bookStockStatusTable);
   return { bookStockStatuses };
 }
 
