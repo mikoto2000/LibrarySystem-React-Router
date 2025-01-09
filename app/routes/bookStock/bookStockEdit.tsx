@@ -1,12 +1,11 @@
 import type { Route } from "./+types/bookStockEdit";
 import { BookStockEditPage } from "../../pages/bookStock/BookStockEditPage";
 import { db } from "~/infra/db";
-import { authorTable, bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
+import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
 import { findBookStockById } from "./util";
-import type { BookStock } from "~/types";
 
 export async function action({ request }: Route.ActionArgs) {
   console.dir(request);

@@ -1,10 +1,6 @@
 import type { Route } from "./+types/bookStockDetail";
 import { BookStockDetailPage } from "../../pages/bookStock/BookStockDetailPage";
-import { db } from "~/infra/db";
-import { authorTable, bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
-import type { BookStock } from "~/types";
 import { findBookStockById } from "./util";
 
 export async function loader({ params }: Route.LoaderArgs) {

@@ -6,7 +6,7 @@ export type BookMasterWithoutAuthors = {
   name: string,
 };
 
-export type BookMasterListItem = BookMasterWithoutAuthors[];
+export type BookMasterListItem = BookMasterWithoutAuthors;
 
 export type BookMasterList = BookMasterListItem[];
 

@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import type { BookMaster } from "~/types";
+import type { BookMasterList } from "~/views/types";
 
 type BookMasterPageProps = {
-  bookMasters: BookMaster[],
+  bookMasters: BookMasterList,
 }
 
 export const BookMasterPage = ({ bookMasters }: BookMasterPageProps) => {

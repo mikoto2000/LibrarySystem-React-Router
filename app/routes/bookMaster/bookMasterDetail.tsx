@@ -1,4 +1,4 @@
-import type { Route } from "./+types/bookMaster";
+import type { Route } from "./+types/bookMasterDetail";
 import { BookMasterDetailPage } from "../../pages/bookMaster/BookMasterDetailPage";
 
 import { findBookMasterById } from "./util";
