@@ -1,35 +1,13 @@
 import type { Route } from "./+types/bookMaster";
 import { BookMasterDetailPage } from "../../pages/bookMaster/BookMasterDetailPage";
-import { db } from "~/infra/db";
-import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
+import { findBookMasterById } from "./util";
 import type { BookMaster } from "~/types";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
-  const selectResult = (await db.select().from(bookMasterTable)
-    .leftJoin(bookMasterToAuthorTable, eq(bookMasterTable.id, bookMasterToAuthorTable.bookMasterId))
-    .leftJoin(authorTable, eq(bookMasterToAuthorTable.authorId, authorTable.id))
-    .where(eq(bookMasterTable.id, Number(id))));
-
-  const bookMaster = selectResult.reduce((acumulator, currentValue) => {
-    acumulator.id = currentValue.bookMaster.id;
-    acumulator.isbn = currentValue.bookMaster.isbn;
-    acumulator.name = currentValue.bookMaster.name;
-    currentValue.author
-    if (currentValue.author) {
-      acumulator.authors.push(currentValue.author)
-    }
-    return acumulator;
-  },
-    {
-      id: 0,
-      isbn: "",
-      name: "",
-      authors: [],
-    } as BookMaster);
+  const bookMaster: BookMaster = await findBookMasterById(Number(id));
 
   return { bookMaster };
 }
