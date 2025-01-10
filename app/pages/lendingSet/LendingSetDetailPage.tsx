@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { LendingSet } from "~/types";
+import type { LendingSet } from "~/views/types";
 
 type LendingSetDetailPageProps = {
   lendingSet: LendingSet,

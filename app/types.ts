@@ -36,8 +36,11 @@ export type Customer = {
 
 export type LendingSet = {
   id: number,
+  lendingStatus: LendingStatus,
   lendStartDate: string,
   lendDeadlineDate: string,
   returnDate: string,
   bookStocks: BookStock[],
+  memo: string,
 };
+

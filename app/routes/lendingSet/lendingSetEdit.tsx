@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingSetEdit";
 import { LendingSetEditPage } from "../../pages/lendingSet/LendingSetEditPage";
 import { db } from "~/infra/db";
-import { authorTable, bookMasterTable, lendingStatusTable, lendingSetTable } from "~/infra/db/schema";
+import { bookMasterTable, lendingStatusTable, lendingSetTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
@@ -16,7 +16,7 @@ export async function action({ request }: Route.ActionArgs) {
   if (id && bookMasterId && lendingSetStatusId) {
     const insertResult = await db.update(lendingSetTable)
       .set({
-        bookMasterId,
+        id,
         lendingSetStatusId,
         memo,
       })

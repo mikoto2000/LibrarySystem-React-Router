@@ -71,6 +71,13 @@
       "when": 1736167848579,
       "tag": "0009_bent_mesmero",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1736477779765,
+      "tag": "0010_right_ink",
+      "breakpoints": true
     }
   ]
 }
