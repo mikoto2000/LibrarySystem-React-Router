@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 import type { BookStock } from "~/types";
+import type { BookStockWithoutAuthor } from "~/views/types";
 
 type BookStockDetailPageProps = {
-  bookStock: BookStock,
+  bookStock: BookStockWithoutAuthor,
 }
 
 export const BookStockDetailPage = ({ bookStock }: BookStockDetailPageProps) => {

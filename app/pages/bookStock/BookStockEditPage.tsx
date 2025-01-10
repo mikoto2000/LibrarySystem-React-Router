@@ -1,9 +1,9 @@
 import { Form, Link } from "react-router";
-import type { BookStock, BookStockStatus } from "~/types";
-import type { BookMasterWithoutAuthors } from "~/views/types";
+import type { BookStockStatus } from "~/types";
+import type { BookMasterWithoutAuthors, BookStockWithoutAuthor } from "~/views/types";
 
 type BookStockEditPageProps = {
-  bookStock: BookStock,
+  bookStock: BookStockWithoutAuthor,
   bookMasters: BookMasterWithoutAuthors[],
   bookStockStatuses: BookStockStatus[],
 }

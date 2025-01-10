@@ -33,6 +33,7 @@ export async function loader({ }: Route.LoaderArgs) {
       id: e.id,
       isbn: e.isbn,
       name: e.name,
+      publicationDate: e.publicationDate,
     }
   });
 

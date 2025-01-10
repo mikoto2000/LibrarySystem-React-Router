@@ -12,6 +12,7 @@ export async function loader() {
       id: e.id,
       isbn: e.isbn,
       name: e.name,
+      publicationDate: e.publicationDate,
     }
   });
 

@@ -11,6 +11,13 @@ export type BookMasterListItem = BookMasterWithoutAuthors;
 
 export type BookMasterList = BookMasterListItem[];
 
+export type BookStockWithoutAuthor = {
+  id: number,
+  bookStockStatus: BookStockStatus,
+  bookMaster: BookMasterWithoutAuthors,
+  memo: string,
+};
+
 export type BookStockWithoutAuthorAndStatus = {
   id: number,
   bookMaster: BookMasterWithoutAuthors,
