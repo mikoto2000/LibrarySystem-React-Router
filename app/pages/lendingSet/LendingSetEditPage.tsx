@@ -1,48 +1,57 @@
 import { Form, Link } from "react-router";
-import type { BookMaster, LendingStatus } from "~/types";
-import type { LendingSet } from "~/views/types";
+import type { LendingStatus } from "~/types";
+import type { BookMasterList, LendingSet } from "~/views/types";
 
 type LendingSetEditPageProps = {
   lendingSet: LendingSet,
-  bookMasters: BookMaster[],
-  lendingSetStatuses: LendingStatus[],
+  bookMasters: BookMasterList,
+  lendingStatuses: LendingStatus[],
 }
 
-export const LendingSetEditPage = ({ lendingSet, bookMasters, lendingSetStatuses }: LendingSetEditPageProps) => {
+export const LendingSetEditPage = ({ lendingSet, bookMasters, lendingStatuses }: LendingSetEditPageProps) => {
   console.log(lendingSet);
-  const selectedBookStockMasterIds = lendingSet.bookStocks.map((e) => e.bookMaster.id);
+  const selectedBookStockIds = lendingSet.bookStocks.map((e) => e.id);
   return (
     <main>
       <Form method="post">
         <div>
-          <label>Id:<input type="text" name="id" value={lendingSet.id}/></label>
+          <label>Id:<input type="text" name="id" value={lendingSet.id} /></label>
         </div>
         <div>
-          <select name="bookMasterId">
-            {
-              bookMasters.map((e) => <option selected={selectedBookStockMasterIds.includes(e.id)} value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>貸出書籍:
+            <select name="bookStockId" multiple>
+              {
+                bookMasters.map((e) => <option selected={selectedBookStockIds.includes(e.id)} value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
-          <select name="lendingSetStatusId">
-            {
-              lendingSetStatuses.map((e) => <option selected={lendingSet.lendingStatus.id === e.id} value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>貸出状態:
+            <select name="lendingSetStatusId">
+              {
+                lendingStatuses.map((e) => <option selected={lendingSet.lendingStatus.id === e.id} value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
-          <input type="text" name="memo" defaultValue={lendingSet.memo} placeholder="memo" />
+          <label>メモ:
+            <input type="text" name="memo" defaultValue={lendingSet.memo} placeholder="memo" />
+          </label>
         </div>
-        <div>
-          <button type="submit">変更</button>
-        </div>
-      </Form>
+        <button type="submit">変更</button>
+      </Form >
       {" "}
-      <Link to="/lendingSets">一覧へ戻る</Link>
+      < Link to="/lendingSets" > 一覧へ戻る</Link >
       {" "}
-      <Link to="/">トップへ戻る</Link>
-    </main>
+      < Link to="/" > トップへ戻る</Link >
+      <pre>
+        {
+          JSON.stringify(lendingSet, null, 2)
+        }
+      </pre>
+    </main >
   )
 }
 
