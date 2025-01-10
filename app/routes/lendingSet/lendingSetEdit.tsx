@@ -1,4 +1,4 @@
-import type { Route } from "./+types/lendingSet";
+import type { Route } from "./+types/lendingSetEdit";
 import { LendingSetEditPage } from "../../pages/lendingSet/LendingSetEditPage";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, lendingStatusTable, lendingSetTable } from "~/infra/db/schema";
