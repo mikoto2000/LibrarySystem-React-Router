@@ -1,5 +1,6 @@
 import { Form, Link } from "react-router";
-import type { BookMaster, LendingSet, LendingStatus } from "~/types";
+import type { BookMaster, LendingStatus } from "~/types";
+import type { LendingSet } from "~/views/types";
 
 type LendingSetEditPageProps = {
   lendingSet: LendingSet,

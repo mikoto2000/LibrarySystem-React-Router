@@ -16,7 +16,7 @@ export async function action({ request }: Route.ActionArgs) {
   if (id && bookMasterId && lendingSetStatusId) {
     const insertResult = await db.update(lendingSetTable)
       .set({
-        id,
+        bookMasterId,
         lendingSetStatusId,
         memo,
       })
