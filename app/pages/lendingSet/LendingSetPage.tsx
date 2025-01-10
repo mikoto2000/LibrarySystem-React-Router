@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import type { LendingSet } from "~/types";
+import type { LendingSetList } from "~/views/types";
 
 type LendingSetPageProps = {
-  lendingSets: LendingSet[],
+  lendingSets: LendingSetList,
 }
 
 export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
@@ -10,15 +10,6 @@ export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
     <main>
       <h2>LendingSets</h2>
       <Link to="create">新規登録</Link>
-      <ul>
-        {
-          lendingSets
-            ?
-            lendingSets.map((e) => <li><Link to={`/lendingSets/${e.id}`}>{e.id}: </Link></li>)
-            :
-            <>表示要素がありませんでした</>
-        }
-      </ul>
       <Link to="/">トップに戻る</Link>
       <pre>
        {
