@@ -26,7 +26,7 @@ export const LendingSetCreatePage = ({ customers, bookStocks, lendingStatuses }:
           </label>
         </div>
         <div>
-          <label>貸出対象:
+          <label>貸出書籍:
             <select multiple name="bookStockIds">
               {
                 bookStocks.map((e) => <option value={e.id}>{e.id}: {e.bookName}, {e.memo}</option>)

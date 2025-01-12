@@ -1,9 +1,10 @@
 import { Form, Link } from "react-router";
-import type { LendingStatus } from "~/types";
+import type { Customer, LendingStatus } from "~/types";
 import type { BookMasterList, LendingSet } from "~/views/types";
 
 type LendingSetEditPageProps = {
   lendingSet: LendingSet,
+  customers: Customer[],
   bookStocks: {
     id: number,
     bookName: string
@@ -11,14 +12,22 @@ type LendingSetEditPageProps = {
   lendingStatuses: LendingStatus[],
 }
 
-export const LendingSetEditPage = ({ lendingSet, bookStocks, lendingStatuses }: LendingSetEditPageProps) => {
-  console.log(lendingSet);
+export const LendingSetEditPage = ({ lendingSet, customers, bookStocks, lendingStatuses }: LendingSetEditPageProps) => {
   const selectedBookStockIds = lendingSet.bookStocks.map((e) => e.id);
   return (
     <main>
       <Form method="post">
         <div>
           <label>Id:<input type="text" name="id" value={lendingSet.id} /></label>
+        </div>
+        <div>
+          <label>貸出先:
+            <select name="customerId">
+              {
+                customers.map((e) => <option value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </label>
         </div>
         <div>
           <label>貸出書籍:
@@ -31,11 +40,26 @@ export const LendingSetEditPage = ({ lendingSet, bookStocks, lendingStatuses }: 
         </div>
         <div>
           <label>貸出状態:
-            <select name="lendingSetStatusId">
+            <select name="lendingStatusId">
               {
                 lendingStatuses.map((e) => <option selected={lendingSet.lendingStatus.id === e.id} value={e.id}>{e.name}</option>)
               }
             </select>
+          </label>
+        </div>
+        <div>
+          <label>貸出開始日:
+            <input type="date" name="lendStartDate" defaultValue={lendingSet.lendStartDate} />
+          </label>
+        </div>
+        <div>
+          <label>貸出期限:
+            <input type="date" name="lendDeadlineDate" defaultValue={lendingSet.lendDeadlineDate} />
+          </label>
+        </div>
+        <div>
+          <label>返却日:
+            <input type="date" name="returnDate" defaultValue={lendingSet.returnDate} />
           </label>
         </div>
         <div>

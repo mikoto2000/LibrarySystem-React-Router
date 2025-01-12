@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingSetEdit";
 import { LendingSetEditPage } from "../../pages/lendingSet/LendingSetEditPage";
 import { db } from "~/infra/db";
-import { bookMasterTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, bookStockTable, bookStockStatusTable } from "~/infra/db/schema";
+import { bookMasterTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, bookStockTable, bookStockStatusTable, customerTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
@@ -9,7 +9,6 @@ import type { BookMasterList, LendingSet } from "~/views/types";
 import type { LendingStatus } from "~/types";
 
 export async function action({ request }: Route.ActionArgs) {
-  console.dir(request);
   const formData = await request.formData();
   const id = Number(formData.get("id")?.toString());
   const customerId = Number(formData.get("customerId")?.toString());
@@ -26,12 +25,17 @@ export async function action({ request }: Route.ActionArgs) {
         customerId,
         lendStartDate,
         lendDeadlineDate,
-        returnDate,
+        returnDate: returnDate !== "" ? returnDate : null,
         memo,
       })
       .where(eq(lendingSetTable.id, Number(id)))
       .returning();
 
+    // 中間テーブルの既存エントリー削除
+    await db.delete(lendingSetToBookStockTable)
+      .where(eq(lendingSetToBookStockTable.lendingSetId, id));
+
+    // 中間テーブルにエントリー登録
     const lendingSetToBookStocks = bookStockIds.map((e) => {
       return {
         lendingSetId: insertResult[0].id,
@@ -40,7 +44,7 @@ export async function action({ request }: Route.ActionArgs) {
     });
     await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
 
-    return redirect(`/lendingSets/${insertResult[0].id}`);
+    return redirect(`/lendingSets/${id}`);
   } else {
     throw new Response("Invalid Parameter", { status: 400 })
   }
@@ -64,7 +68,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     acumulator.id = currentValue.lending_set.id;
     acumulator.lendStartDate = currentValue.lending_set.lendStartDate;
     acumulator.lendDeadlineDate = currentValue.lending_set.lendDeadlineDate;
-    acumulator.returnDate = currentValue.lending_set.returnDate ? currentValue.lending_set.returnDate : "";
+    acumulator.returnDate = currentValue.lending_set.returnDate ? currentValue.lending_set.returnDate : undefined;
     acumulator.memo = currentValue.lending_set.memo ? currentValue.lending_set.memo : "";
     acumulator.bookStocks.push({
       id: currentValue.book_stock.id,
@@ -77,9 +81,9 @@ export async function loader({ params }: Route.LoaderArgs) {
     {
       id: 0,
       lendingStatus: { id: 1, name: "貸出中" },
-      lendStartDate: "",
-      lendDeadlineDate: "",
-      returnDate: "",
+      lendStartDate: new Date().toISOString(),
+      lendDeadlineDate: new Date().toISOString(),
+      returnDate: undefined,
       bookStocks: [],
       memo: "",
     } as LendingSet);
@@ -94,7 +98,9 @@ export async function loader({ params }: Route.LoaderArgs) {
     }
   });
 
-  return { lendingSet, bookStocks, lendingStatuses };
+  const customers = await db.select().from(customerTable);
+
+  return { lendingSet, customers, bookStocks, lendingStatuses };
 }
 
 export function meta({ }: Route.MetaArgs) {
@@ -107,6 +113,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function LendingSetEdit({ loaderData }: Route.ComponentProps) {
   return <LendingSetEditPage
     lendingSet={loaderData.lendingSet}
+    customers={loaderData.customers}
     bookStocks={loaderData.bookStocks}
     lendingStatuses={loaderData.lendingStatuses}
   />;
