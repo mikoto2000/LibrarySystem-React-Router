@@ -12,23 +12,29 @@ export async function action({ request }: Route.ActionArgs) {
   console.dir(request);
   const formData = await request.formData();
   const id = Number(formData.get("id")?.toString());
-  const bookMasterId = Number(formData.get("bookMasterId")?.toString());
+  const customerId = Number(formData.get("customerId")?.toString());
   const lendingStatusId = Number(formData.get("lendingStatusId")?.toString());
+  const lendStartDate = formData.get("lendStartDate")?.toString();
+  const lendDeadlineDate = formData.get("lendDeadlineDate")?.toString();
+  const returnDate = formData.get("returnDate")?.toString();
   const memo = formData.get("memo")?.toString();
-  if (id && bookMasterId && lendingStatusId) {
+  if (id && customerId && lendingStatusId && lendStartDate && lendDeadlineDate) {
     const insertResult = await db.update(lendingSetTable)
       .set({
-        bookMasterId,
         lendingStatusId,
-        memo,
-      })
+        customerId,
+        lendStartDate,
+        lendDeadlineDate,
+        returnDate,
+      memo,
+  })
       .where(eq(lendingSetTable.id, Number(id)))
-      .returning();
+    .returning();
 
-    return redirect(`/lendingSets/${insertResult[0].id}`);
-  } else {
-    throw new Response("Invalid Parameter", { status: 400 })
-  }
+  return redirect(`/lendingSets/${insertResult[0].id}`);
+} else {
+  throw new Response("Invalid Parameter", { status: 400 })
+}
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
