@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingSetEdit";
 import { LendingSetEditPage } from "../../pages/lendingSet/LendingSetEditPage";
 import { db } from "~/infra/db";
-import { bookMasterTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, bookStockTable } from "~/infra/db/schema";
+import { bookMasterTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, bookStockTable, bookStockStatusTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
@@ -17,6 +17,7 @@ export async function action({ request }: Route.ActionArgs) {
   const lendStartDate = formData.get("lendStartDate")?.toString();
   const lendDeadlineDate = formData.get("lendDeadlineDate")?.toString();
   const returnDate = formData.get("returnDate")?.toString();
+  const bookStockIds = formData.getAll("bookStockIds");
   const memo = formData.get("memo")?.toString();
   if (id && customerId && lendingStatusId && lendStartDate && lendDeadlineDate) {
     const insertResult = await db.update(lendingSetTable)
@@ -26,15 +27,23 @@ export async function action({ request }: Route.ActionArgs) {
         lendStartDate,
         lendDeadlineDate,
         returnDate,
-      memo,
-  })
+        memo,
+      })
       .where(eq(lendingSetTable.id, Number(id)))
-    .returning();
+      .returning();
 
-  return redirect(`/lendingSets/${insertResult[0].id}`);
-} else {
-  throw new Response("Invalid Parameter", { status: 400 })
-}
+    const lendingSetToBookStocks = bookStockIds.map((e) => {
+      return {
+        lendingSetId: insertResult[0].id,
+        bookStockId: Number(e.toString()),
+      }
+    });
+    await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
+
+    return redirect(`/lendingSets/${insertResult[0].id}`);
+  } else {
+    throw new Response("Invalid Parameter", { status: 400 })
+  }
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -74,7 +83,18 @@ export async function loader({ params }: Route.LoaderArgs) {
       bookStocks: [],
       memo: "",
     } as LendingSet);
-  return { lendingSet, bookMasters, lendingStatuses };
+
+  const bookStocksSelectResult = await db.select().from(bookStockTable)
+    .innerJoin(bookMasterTable, eq(bookMasterTable.id, bookStockTable.id))
+    .innerJoin(bookStockStatusTable, eq(bookStockStatusTable.id, bookStockTable.bookStockStatusId));
+  const bookStocks = bookStocksSelectResult.map((e) => {
+    return {
+      id: e.book_stock.id,
+      bookName: e.bookMaster.name,
+    }
+  });
+
+  return { lendingSet, bookStocks, lendingStatuses };
 }
 
 export function meta({ }: Route.MetaArgs) {
@@ -87,7 +107,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function LendingSetEdit({ loaderData }: Route.ComponentProps) {
   return <LendingSetEditPage
     lendingSet={loaderData.lendingSet}
-    bookMasters={loaderData.bookMasters}
+    bookStocks={loaderData.bookStocks}
     lendingStatuses={loaderData.lendingStatuses}
   />;
 }

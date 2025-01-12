@@ -4,11 +4,14 @@ import type { BookMasterList, LendingSet } from "~/views/types";
 
 type LendingSetEditPageProps = {
   lendingSet: LendingSet,
-  bookMasters: BookMasterList,
+  bookStocks: {
+    id: number,
+    bookName: string
+  }[],
   lendingStatuses: LendingStatus[],
 }
 
-export const LendingSetEditPage = ({ lendingSet, bookMasters, lendingStatuses }: LendingSetEditPageProps) => {
+export const LendingSetEditPage = ({ lendingSet, bookStocks, lendingStatuses }: LendingSetEditPageProps) => {
   console.log(lendingSet);
   const selectedBookStockIds = lendingSet.bookStocks.map((e) => e.id);
   return (
@@ -19,9 +22,9 @@ export const LendingSetEditPage = ({ lendingSet, bookMasters, lendingStatuses }:
         </div>
         <div>
           <label>貸出書籍:
-            <select name="bookStockId" multiple>
+            <select name="bookStockIds" multiple>
               {
-                bookMasters.map((e) => <option selected={selectedBookStockIds.includes(e.id)} value={e.id}>{e.name}</option>)
+                bookStocks.map((e) => <option selected={selectedBookStockIds.includes(e.id)} value={e.id}>{e.bookName}</option>)
               }
             </select>
           </label>

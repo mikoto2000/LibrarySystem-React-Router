@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingSetCreate";
 import { LendingSetCreatePage } from "../../pages/lendingSet/LendingSetCreatePage";
 import { db } from "~/infra/db";
-import { lendingSetTable, lendingStatusTable, bookMasterTable, bookStockTable, customerTable, bookStockStatusTable } from "~/infra/db/schema";
+import { lendingSetTable, lendingStatusTable, bookMasterTable, bookStockTable, customerTable, bookStockStatusTable, lendingSetToBookStockTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
@@ -13,6 +13,7 @@ export async function action({ request }: Route.ActionArgs) {
   const lendStartDate = formData.get("lendStartDate")?.toString();
   const lendDeadlineDate = formData.get("lendDeadlineDate")?.toString();
   const returnDate = formData.get("returnDate")?.toString();
+  const bookStockIds = formData.getAll("bookStockIds");
   const memo = formData.get("memo")?.toString();
   if (lendingStatusId && customerId && lendStartDate && lendDeadlineDate) {
     const lendingSet: typeof lendingSetTable.$inferInsert = {
@@ -24,6 +25,14 @@ export async function action({ request }: Route.ActionArgs) {
       memo,
     };
     const insertResult = await db.insert(lendingSetTable).values(lendingSet).returning();
+
+    const lendingSetToBookStocks = bookStockIds.map((e) => {
+      return {
+        lendingSetId: insertResult[0].id,
+        bookStockId: Number(e.toString()),
+      }
+    });
+    await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
 
     return redirect(`/lendingSets/${insertResult[0].id}`);
   } else {
