@@ -10,13 +10,28 @@ import { findBookMasterById } from "./util";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
-  const id = formData.get("id")?.toString()
-  const name = formData.get("name")?.toString()
+  const id = Number(formData.get("id")?.toString());
+  const name = formData.get("name")?.toString();
+  const authorIds = formData.getAll("authorIds");
   if (id && name) {
     const insertResult = await db.update(bookMasterTable)
       .set({ name })
       .where(eq(bookMasterTable.id, Number(id)))
       .returning();
+
+    // 中間テーブルの既存エントリー削除
+    await db.delete(bookMasterToAuthorTable)
+      .where(eq(bookMasterToAuthorTable.bookMasterId, id));
+
+    // 中間テーブルにエントリー登録
+    const bookMasterToAuthors = authorIds.map((e) => {
+      return {
+        bookMasterId: insertResult[0].id,
+        authorId: Number(e.toString()),
+      }
+    });
+    await db.insert(bookMasterToAuthorTable).values(bookMasterToAuthors).returning();
+
 
     return redirect(`/bookMasters/${insertResult[0].id}`);
   } else {

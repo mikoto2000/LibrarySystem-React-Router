@@ -18,7 +18,7 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
           <label>Name: <input type="text" name="name" defaultValue={bookMaster.name} /></label>
         </div>
         <div>
-          <select multiple name="authors">
+          <select multiple name="authorIds">
             {
               authors.map((e) => <option selected={authorIds.includes(e.id)} value={e.id}>{e.name}</option>)
             }
