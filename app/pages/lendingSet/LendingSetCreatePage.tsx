@@ -62,6 +62,11 @@ export const LendingSetCreatePage = ({ customers, bookStocks, lendingStatuses }:
           <button type="submit">登録</button>
         </div>
       </Form>
+      <pre>
+        {
+          JSON.stringify(bookStocks, null, 2)
+        }
+      </pre>
       <Link to="../bookStocks">一覧に戻る</Link>
     </main >
   )

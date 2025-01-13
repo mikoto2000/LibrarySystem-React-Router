@@ -16,13 +16,13 @@ export async function action({ request }: Route.ActionArgs) {
   const returnDate = formData.get("returnDate")?.toString();
   const bookStockIds = formData.getAll("bookStockIds");
   const memo = formData.get("memo")?.toString();
+  console.log("👺customerId: "+ customerId);
   if (lendingStatusId && customerId && lendStartDate && lendDeadlineDate) {
     const lendingSet: typeof lendingSetTable.$inferInsert = {
       lendingStatusId,
       customerId,
       lendStartDate,
       lendDeadlineDate,
-      returnDate,
       memo,
     };
     const insertResult = await db.insert(lendingSetTable).values(lendingSet).returning();
@@ -50,12 +50,15 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ }: Route.LoaderArgs) {
   const bookStocksSelectResult = await db.select().from(bookStockTable)
-    .innerJoin(bookMasterTable, eq(bookMasterTable.id, bookStockTable.id))
-    .innerJoin(bookStockStatusTable, eq(bookStockStatusTable.id, bookStockTable.bookStockStatusId));
+    .leftJoin(bookMasterTable, eq(bookMasterTable.id, bookStockTable.id))
+    .leftJoin(bookStockStatusTable, eq(bookStockStatusTable.id, bookStockTable.bookStockStatusId));
+
+  console.log(bookStocksSelectResult);
+
   const bookStocks = bookStocksSelectResult.map((e) => {
     return {
       id: e.book_stock.id,
-      bookName: e.bookMaster.name,
+      bookName: e.bookMaster?.name,
       bookStockStatus: e.book_stock_status,
       memo: e.book_stock.memo,
     }
