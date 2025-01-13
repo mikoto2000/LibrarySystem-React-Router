@@ -50,8 +50,8 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ }: Route.LoaderArgs) {
   const bookStocksSelectResult = await db.select().from(bookStockTable)
-    .leftJoin(bookMasterTable, eq(bookMasterTable.id, bookStockTable.id))
-    .leftJoin(bookStockStatusTable, eq(bookStockStatusTable.id, bookStockTable.bookStockStatusId));
+    .innerJoin(bookMasterTable, eq(bookMasterTable.id, bookStockTable.bookMasterId))
+    .innerJoin(bookStockStatusTable, eq(bookStockStatusTable.id, bookStockTable.bookStockStatusId));
 
   console.log(bookStocksSelectResult);
 
