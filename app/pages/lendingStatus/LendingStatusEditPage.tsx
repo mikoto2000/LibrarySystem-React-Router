@@ -14,6 +14,8 @@ export const LendingStatusEditPage = ({ lendingStatus }: LendingStatusEditPagePr
         <button type="submit">変更</button>
       </Form>
       {" "}
+      <Link to={`/lendingStatuses/${lendingStatus.id}`}>詳細へ戻る</Link>
+      {" "}
       <Link to="/lendingStatuses">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>

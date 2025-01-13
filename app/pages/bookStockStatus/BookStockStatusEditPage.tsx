@@ -14,6 +14,8 @@ export const BookStockStatusEditPage = ({ bookStockStatus }: BookStockStatusEdit
         <button type="submit">変更</button>
       </Form>
       {" "}
+      <Link to={`/bookStockStatuses/${bookStockStatus.id}`}>詳細へ戻る</Link>
+      {" "}
       <Link to="/bookStockStatuses">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>

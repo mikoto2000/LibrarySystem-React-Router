@@ -14,7 +14,7 @@ export const CustomerPage = ({ customeres }: CustomerPageProps) => {
         {
           customeres
             ?
-            customeres.map((e) => <li><Link to={`/customeres/${e.id}`}>{e.id}: {e.name}</Link></li>)
+            customeres.map((e) => <li><Link to={`/customers/${e.id}`}>{e.id}: {e.name}</Link></li>)
             :
             <>表示要素がありませんでした</>
         }

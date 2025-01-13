@@ -44,6 +44,8 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
         </div>
       </Form>
       {" "}
+      <Link to={`/bookStocks/${bookStock.id}`}>詳細へ戻る</Link>
+      {" "}
       <Link to="/bookStocks">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>

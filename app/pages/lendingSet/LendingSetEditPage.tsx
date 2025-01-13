@@ -70,6 +70,8 @@ export const LendingSetEditPage = ({ lendingSet, customers, bookStocks, lendingS
         <button type="submit">変更</button>
       </Form >
       {" "}
+      <Link to={`/lendingSets/${lendingSet.id}`}>詳細へ戻る</Link>
+      {" "}
       < Link to="/lendingSets" > 一覧へ戻る</Link >
       {" "}
       < Link to="/" > トップへ戻る</Link >

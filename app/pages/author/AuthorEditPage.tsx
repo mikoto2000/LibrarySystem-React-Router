@@ -14,6 +14,8 @@ export const AuthorEditPage = ({ author }: AuthorEditPageProps) => {
         <button type="submit">変更</button>
       </Form>
       {" "}
+      <Link to={`/authors/${author.id}`}>詳細へ戻る</Link>
+      {" "}
       <Link to="/authors">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>

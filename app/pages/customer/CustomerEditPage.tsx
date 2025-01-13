@@ -21,6 +21,8 @@ export const CustomerEditPage = ({ customer }: CustomerEditPageProps) => {
         <button type="submit">変更</button>
       </Form>
       {" "}
+      <Link to={`/customers/${customer.id}`}>詳細へ戻る</Link>
+      {" "}
       <Link to="/customers">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>

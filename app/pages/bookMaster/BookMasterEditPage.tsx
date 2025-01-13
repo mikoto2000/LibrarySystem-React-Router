@@ -27,6 +27,8 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
         <button type="submit">変更</button>
       </Form>
       {" "}
+      <Link to={`/bookMasters/${bookMaster.id}`}>詳細へ戻る</Link>
+      {" "}
       <Link to="/bookMasters">一覧へ戻る</Link>
       {" "}
       <Link to="/">トップへ戻る</Link>
