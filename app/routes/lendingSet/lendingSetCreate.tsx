@@ -4,9 +4,10 @@ import { db } from "~/infra/db";
 import { lendingSetTable, lendingStatusTable, bookMasterTable, bookStockTable, customerTable, bookStockStatusTable, lendingSetToBookStockTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 export async function action({ request }: Route.ActionArgs) {
+  // リクエストフォームから作成のための情報をもらう
   const formData = await request.formData();
   const lendingStatusId = Number(formData.get("lendingStatusId")?.toString());
   const customerId = Number(formData.get("customerId")?.toString());
@@ -26,6 +27,7 @@ export async function action({ request }: Route.ActionArgs) {
     };
     const insertResult = await db.insert(lendingSetTable).values(lendingSet).returning();
 
+    // LendingSet to BookStock の中間テーブルを更新
     const lendingSetToBookStocks = bookStockIds.map((e) => {
       return {
         lendingSetId: insertResult[0].id,
@@ -33,6 +35,12 @@ export async function action({ request }: Route.ActionArgs) {
       }
     });
     await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
+
+    // BookStock を「貸出不可」に更新
+    await db.update(bookStockTable).set({
+      bookStockStatusId: 2,
+    })
+    .where(inArray(bookStockTable.id, bookStockIds.map((e) => Number(e))));
 
     return redirect(`/lendingSets/${insertResult[0].id}`);
   } else {
