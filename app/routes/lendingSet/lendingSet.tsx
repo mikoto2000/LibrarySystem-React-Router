@@ -24,9 +24,11 @@ export async function loader() {
       return { lendingSets: [] };
     }
 
+    console.log(tmp);
     const lendingSet = tmp.reduce((acumulator, currentValue) => {
       acumulator.id = Number(currentValue.lending_set.id);
       acumulator.customer = currentValue.customer.name;
+      acumulator.lendingStatus = currentValue.lending_status;
       acumulator.lendStartDate = currentValue.lending_set.lendStartDate;
       acumulator.lendDeadlineDate = currentValue.lending_set.lendDeadlineDate;
       acumulator.returnDate = currentValue.lending_set.returnDate;
@@ -36,6 +38,7 @@ export async function loader() {
     }, {
       id: 0,
       customer: "",
+      lendingStatus: {},
       lendStartDate: "",
       lendDeadlineDate: "",
       returnDate: undefined,
