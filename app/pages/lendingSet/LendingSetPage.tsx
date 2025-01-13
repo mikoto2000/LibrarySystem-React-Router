@@ -14,7 +14,7 @@ export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
         {
           lendingSets
             ?
-            lendingSets.map((e) => <li><Link to={`/lendingSets/${e.id}`}>{e.id}: {e.customer}: {e.bookStocks.toString()}</Link></li>)
+            lendingSets.map((e) => <li><Link to={`/lendingSets/${e.id}`}>{e.id}: {e.customer}: Books[{e.bookStocks.toString()}]</Link></li>)
             :
             <>表示要素がありませんでした</>
         }
