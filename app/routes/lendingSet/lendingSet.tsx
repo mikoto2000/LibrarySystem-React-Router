@@ -26,7 +26,8 @@ export async function loader() {
 
     const lendingSet = tmp.reduce((acumulator, currentValue) => {
       acumulator.id = Number(currentValue.lending_set.id);
-      acumulator.customer = currentValue.customer.name;
+      // TODO: 必須なので Create の修正が終わり次第 ? を削除
+      acumulator.customer = currentValue.customer?.name;
       acumulator.lendStartDate = currentValue.lending_set.lendStartDate;
       acumulator.lendDeadlineDate = currentValue.lending_set.lendDeadlineDate;
       acumulator.returnDate = currentValue.lending_set.returnDate;
