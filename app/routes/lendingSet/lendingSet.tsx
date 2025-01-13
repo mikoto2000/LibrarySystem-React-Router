@@ -12,7 +12,7 @@ export async function loader() {
     .leftJoin(lendingSetToBookStockTable, eq(lendingSetTable.id, lendingSetToBookStockTable.lendingSetId))
     .leftJoin(bookStockTable, eq(bookStockTable.id, lendingSetToBookStockTable.bookStockId))
     .leftJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
-    .leftJoin(customerTable, eq(customerTable.id, lendingSetTable.id))
+    .leftJoin(customerTable, eq(customerTable.id, lendingSetTable.customerId))
 
   const groupedLendingSets = Object.groupBy(selectResult, (e: any) => e.lending_set.id);
 
@@ -26,8 +26,7 @@ export async function loader() {
 
     const lendingSet = tmp.reduce((acumulator, currentValue) => {
       acumulator.id = Number(currentValue.lending_set.id);
-      // TODO: 必須なので Create の修正が終わり次第 ? を削除
-      acumulator.customer = currentValue.customer?.name;
+      acumulator.customer = currentValue.customer.name;
       acumulator.lendStartDate = currentValue.lending_set.lendStartDate;
       acumulator.lendDeadlineDate = currentValue.lending_set.lendDeadlineDate;
       acumulator.returnDate = currentValue.lending_set.returnDate;
