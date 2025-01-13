@@ -26,6 +26,7 @@ export type BookStockWithoutAuthorAndStatus = {
 
 export type LendingSetWithoutAuthor = {
   id: number,
+  customer: string,
   lendStartDate: string,
   lendDeadlineDate: string,
   returnDate: string,

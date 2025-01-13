@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingSet";
 import { LendingSetPage } from "../../pages/lendingSet/LendingSetPage";
 import { db } from "~/infra/db";
-import { bookMasterTable, bookStockTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable } from "~/infra/db/schema";
+import { bookMasterTable, bookStockTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, customerTable } from "~/infra/db/schema";
 import { eq } from "drizzle-orm";
 import type { LendingSetListItem } from "~/views/types";
 
@@ -12,6 +12,7 @@ export async function loader() {
     .leftJoin(lendingSetToBookStockTable, eq(lendingSetTable.id, lendingSetToBookStockTable.lendingSetId))
     .leftJoin(bookStockTable, eq(bookStockTable.id, lendingSetToBookStockTable.bookStockId))
     .leftJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
+    .leftJoin(customerTable, eq(customerTable.id, lendingSetTable.id))
 
   const groupedLendingSets = Object.groupBy(selectResult, (e: any) => e.lending_set.id);
 
@@ -25,6 +26,7 @@ export async function loader() {
 
     const lendingSet = tmp.reduce((acumulator, currentValue) => {
       acumulator.id = Number(currentValue.lending_set.id);
+      acumulator.customer = currentValue.customer.name;
       acumulator.lendStartDate = currentValue.lending_set.lendStartDate;
       acumulator.lendDeadlineDate = currentValue.lending_set.lendDeadlineDate;
       acumulator.returnDate = currentValue.lending_set.returnDate;
@@ -33,6 +35,7 @@ export async function loader() {
       return acumulator;
     }, {
       id: 0,
+      customer: "",
       lendStartDate: "",
       lendDeadlineDate: "",
       returnDate: undefined,
