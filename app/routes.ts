@@ -11,6 +11,7 @@ export default [
   route("bookMasters/create", "routes/bookMaster/bookMasterCreate.tsx"),
   route("bookMasters/:id/edit", "routes/bookMaster/bookMasterEdit.tsx"),
   route("bookMasters/:id", "routes/bookMaster/bookMasterDetail.tsx"),
+  route("bookMasters/:id/delete", "routes/bookMaster/bookMasterDelete.tsx"),
   route("bookStockStatuses", "routes/bookStockStatus/bookStockStatus.tsx"),
   route("bookStockStatuses/create", "routes/bookStockStatus/bookStockStatusCreate.tsx"),
   route("bookStockStatuses/:id/edit", "routes/bookStockStatus/bookStockStatusEdit.tsx"),
