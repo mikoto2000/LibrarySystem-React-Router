@@ -26,6 +26,7 @@ export default [
   route("lendingStatuses/create", "routes/lendingStatus/lendingStatusCreate.tsx"),
   route("lendingStatuses/:id/edit", "routes/lendingStatus/lendingStatusEdit.tsx"),
   route("lendingStatuses/:id", "routes/lendingStatus/lendingStatusDetail.tsx"),
+  route("lendingStatuses/:id/delete", "routes/lendingStatus/lendingStatusDelete.tsx"),
   route("customers", "routes/customer/customer.tsx"),
   route("customers/create", "routes/customer/customerCreate.tsx"),
   route("customers/:id/edit", "routes/customer/customerEdit.tsx"),
