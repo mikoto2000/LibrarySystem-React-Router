@@ -20,6 +20,7 @@ export default [
   route("bookStocks/create", "routes/bookStock/bookStockCreate.tsx"),
   route("bookStocks/:id/edit", "routes/bookStock/bookStockEdit.tsx"),
   route("bookStocks/:id", "routes/bookStock/bookStockDetail.tsx"),
+  route("bookStocks/:id/delete", "routes/bookStock/bookStockDelete.tsx"),
   route("lendingStatuses", "routes/lendingStatus/lendingStatus.tsx"),
   route("lendingStatuses/create", "routes/lendingStatus/lendingStatusCreate.tsx"),
   route("lendingStatuses/:id/edit", "routes/lendingStatus/lendingStatusEdit.tsx"),
