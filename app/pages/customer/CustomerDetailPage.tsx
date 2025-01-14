@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Form, Link } from "react-router";
 import type { Customer } from "~/types";
 
 type CustomerDetailPageProps = {
@@ -14,6 +14,10 @@ export const CustomerDetailPage = ({ customer }: CustomerDetailPageProps) => {
         <li>Email Address: {customer.emailAddress}</li>
       </ul>
       <Link to={`/customers/${customer.id}/edit`}>編集する</Link>
+      {" "}
+      <Form method="post" action={`/customers/${customer.id}/delete`}>
+        <button type="submit">削除する</button>
+      </Form>
       {" "}
       <Link to="/customers">一覧へ戻る</Link>
       {" "}
