@@ -67,3 +67,10 @@ export const createBookMaster = async (bookMasters: { isbn: string, name: string
   return insertResult;
 }
 
+export const deleteBookMaster = async (id: number) => {
+  await db.delete(bookMasterToAuthorTable)
+    .where(eq(bookMasterToAuthorTable.bookMasterId, Number(id)));
+  await db.delete(bookMasterTable)
+    .where(eq(bookMasterTable.id, Number(id)));
+}
+
