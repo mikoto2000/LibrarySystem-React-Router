@@ -36,4 +36,5 @@ export default [
   route("lendingSets/create", "routes/lendingSet/lendingSetCreate.tsx"),
   route("lendingSets/:id/edit", "routes/lendingSet/lendingSetEdit.tsx"),
   route("lendingSets/:id", "routes/lendingSet/lendingSetDetail.tsx"),
+  route("lendingSets/:id/delete", "routes/lendingSet/lendingSetDelete.tsx"),
 ] satisfies RouteConfig;
