@@ -44,3 +44,22 @@ export const findBookMasterById = async (id: number): Promise<BookMaster> => {
 
   return bookMaster;
 }
+
+export const createBookMaster = async (bookMasters: { isbn: string, name: string, publicationDate: string, authorIds: number[] }[]): Promise<{ id: number, isbn: string, name: string, publicationDate: string }[]> => {
+
+  const insertResult = await db.insert(bookMasterTable).values(bookMasters).returning();
+
+  for (var i = 0; i < insertResult.length; i++) {
+    const authorIds = bookMasters[i].authorIds;
+    const bm2autherEntries = authorIds.map((e) => {
+      return {
+        bookMasterId: insertResult[i].id,
+        authorId: e,
+      }
+    });
+    await db.insert(bookMasterToAuthorTable).values(bm2autherEntries);
+  }
+
+  return insertResult;
+}
+
