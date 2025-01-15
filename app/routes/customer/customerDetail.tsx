@@ -1,5 +1,5 @@
 import type { Route } from "./+types/customerDetail";
-import { CustomerDetailPage } from "../../pages/customer/CustomerDetailPage";
+import { CustomerDetailPage } from "../../views/pages/customer/CustomerDetailPage";
 import { db } from "~/infra/db";
 import { customerTable } from "~/infra/db/schema";
 

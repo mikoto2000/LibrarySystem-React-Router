@@ -1,5 +1,5 @@
 import type { Route } from "./+types/bookStockCreate";
-import { BookStockCreatePage } from "../../pages/bookStock/BookStockCreatePage";
+import { BookStockCreatePage } from "../../views/pages/bookStock/BookStockCreatePage";
 import { db } from "~/infra/db";
 import { bookStockTable, bookStockStatusTable, bookMasterTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

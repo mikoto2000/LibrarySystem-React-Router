@@ -1,5 +1,5 @@
 import type { Route } from "./+types/customerEdit";
-import { CustomerEditPage } from "../../pages/customer/CustomerEditPage";
+import { CustomerEditPage } from "../../views/pages/customer/CustomerEditPage";
 import { db } from "~/infra/db";
 import { customerTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

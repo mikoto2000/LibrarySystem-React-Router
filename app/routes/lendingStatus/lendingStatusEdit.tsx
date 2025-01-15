@@ -1,5 +1,5 @@
 import type { Route } from "./+types/lendingStatusEdit";
-import { LendingStatusEditPage } from "../../pages/lendingStatus/LendingStatusEditPage";
+import { LendingStatusEditPage } from "../../views/pages/lendingStatus/LendingStatusEditPage";
 import { db } from "~/infra/db";
 import { lendingStatusTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

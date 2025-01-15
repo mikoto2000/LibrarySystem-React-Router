@@ -1,5 +1,5 @@
 import type { Route } from "./+types/bookMasterDetail";
-import { BookMasterDetailPage } from "../../pages/bookMaster/BookMasterDetailPage";
+import { BookMasterDetailPage } from "../../views/pages/bookMaster/BookMasterDetailPage";
 
 import { findBookMasterById } from "./util";
 import type { BookMaster } from "~/types";

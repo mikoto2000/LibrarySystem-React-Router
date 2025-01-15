@@ -1,5 +1,5 @@
 import type { Route } from "./+types/lendingStatusCreate";
-import { LendingStatusCreatePage } from "../../pages/lendingStatus/LendingStatusCreatePage";
+import { LendingStatusCreatePage } from "../../views/pages/lendingStatus/LendingStatusCreatePage";
 import { db } from "~/infra/db";
 import { lendingStatusTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

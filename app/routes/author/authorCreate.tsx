@@ -1,5 +1,5 @@
 import type { Route } from "./+types/authorCreate";
-import { AuthorCreatePage } from "../../pages/author/AuthorCreatePage";
+import { AuthorCreatePage } from "../../views/pages/author/AuthorCreatePage";
 import { db } from "~/infra/db";
 import { authorTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

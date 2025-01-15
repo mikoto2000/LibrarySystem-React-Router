@@ -1,5 +1,5 @@
 import type { Route } from "./+types/lendingSetEdit";
-import { LendingSetEditPage } from "../../pages/lendingSet/LendingSetEditPage";
+import { LendingSetEditPage } from "../../views/pages/lendingSet/LendingSetEditPage";
 import { db } from "~/infra/db";
 import { bookMasterTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, bookStockTable, bookStockStatusTable, customerTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

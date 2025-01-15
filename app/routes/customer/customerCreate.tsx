@@ -1,5 +1,5 @@
 import type { Route } from "./+types/customerCreate";
-import { CustomerCreatePage } from "../../pages/customer/CustomerCreatePage";
+import { CustomerCreatePage } from "../../views/pages/customer/CustomerCreatePage";
 import { db } from "~/infra/db";
 import { customerTable } from "~/infra/db/schema";
 import { redirect } from "react-router";

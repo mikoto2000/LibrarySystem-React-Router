@@ -1,5 +1,5 @@
 import type { Route } from "./+types/bookStockDetail";
-import { BookStockDetailPage } from "../../pages/bookStock/BookStockDetailPage";
+import { BookStockDetailPage } from "../../views/pages/bookStock/BookStockDetailPage";
 
 import { findBookStockById } from "./util";
 import type { BookStockWithoutAuthor } from "~/views/types";

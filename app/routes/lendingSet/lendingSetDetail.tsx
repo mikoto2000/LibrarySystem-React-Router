@@ -1,5 +1,5 @@
 import type { Route } from "./+types/lendingSetDetail";
-import { LendingSetDetailPage } from "../../pages/lendingSet/LendingSetDetailPage";
+import { LendingSetDetailPage } from "../../views/pages/lendingSet/LendingSetDetailPage";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, bookStockTable } from "~/infra/db/schema";
 

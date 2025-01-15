@@ -1,5 +1,5 @@
 import type { Route } from "./+types/lendingSet";
-import { LendingSetPage } from "../../pages/lendingSet/LendingSetPage";
+import { LendingSetPage } from "../../views/pages/lendingSet/LendingSetPage";
 import { db } from "~/infra/db";
 import { bookMasterTable, bookStockTable, lendingStatusTable, lendingSetTable, lendingSetToBookStockTable, customerTable } from "~/infra/db/schema";
 import { eq } from "drizzle-orm";

@@ -1,5 +1,5 @@
 import type { Route } from "./+types/bookStockStatus";
-import { BookStockStatusPage } from "../../pages/bookStockStatus/BookStockStatusPage";
+import { BookStockStatusPage } from "../../views/pages/bookStockStatus/BookStockStatusPage";
 import { db } from "~/infra/db";
 import { bookStockStatusTable } from "~/infra/db/schema";
 import type { BookStockStatus } from "~/types";

@@ -1,5 +1,5 @@
 import type { Route } from "./+types/bookStock";
-import { BookStockPage } from "../../pages/bookStock/BookStockPage";
+import { BookStockPage } from "../../views/pages/bookStock/BookStockPage";
 import { db } from "~/infra/db";
 import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
 import { eq } from "drizzle-orm";

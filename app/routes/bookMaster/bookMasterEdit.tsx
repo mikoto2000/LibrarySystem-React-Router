@@ -1,5 +1,5 @@
 import type { Route } from "./+types/bookMasterEdit";
-import { BookMasterEditPage } from "../../pages/bookMaster/BookMasterEditPage";
+import { BookMasterEditPage } from "../../views/pages/bookMaster/BookMasterEditPage";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
