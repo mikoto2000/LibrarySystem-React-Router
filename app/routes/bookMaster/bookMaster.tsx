@@ -1,20 +1,11 @@
 import type { Route } from "./+types/bookMaster";
 import { BookMasterPage } from "../../views/pages/bookMaster/BookMasterPage";
-import { db } from "~/infra/db";
-import { bookMasterTable } from "~/infra/db/schema";
 import type { BookMasterList } from "~/views/types";
+import { findAllBookMaster } from "./util";
 
 export async function loader() {
-  const selectResult = await db.select().from(bookMasterTable);
 
-  const bookMasters: BookMasterList = selectResult.map((e) => {
-    return {
-      id: e.id,
-      isbn: e.isbn,
-      name: e.name,
-      publicationDate: e.publicationDate,
-    }
-  });
+  const bookMasters: BookMasterList = await findAllBookMaster();
 
   return { bookMasters };
 }

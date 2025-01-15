@@ -1,7 +1,22 @@
+// TODO: service 層に移動
 import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import type { BookMaster } from "~/types";
+import type { BookMasterList } from "~/views/types";
+
+export const findAllBookMaster = async (): Promise<BookMasterList> => {
+  const selectResult = await db.select().from(bookMasterTable);
+
+  return selectResult.map((e) => {
+    return {
+      id: e.id,
+      isbn: e.isbn,
+      name: e.name,
+      publicationDate: e.publicationDate,
+    }
+  });
+};
 
 export const findBookMasterById = async (id: number): Promise<BookMaster> => {
   const selectResult = (await db.select()
