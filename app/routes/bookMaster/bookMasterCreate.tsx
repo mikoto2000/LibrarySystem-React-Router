@@ -1,9 +1,7 @@
 import type { Route } from "./+types/bookMasterCreate";
 import { BookMasterCreatePage } from "../../views/pages/bookMaster/BookMasterCreatePage";
-import { db } from "~/infra/db";
-import { authorTable, bookMasterTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
-import { createBookMaster } from "./util";
+import { createBookMaster, findAllAuthor } from "./util";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -28,7 +26,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export async function loader({ }: Route.LoaderArgs) {
-  const authors = (await db.select().from(authorTable));
+  const authors = await findAllAuthor();
 
   return { authors };
 }

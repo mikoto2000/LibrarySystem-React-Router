@@ -2,8 +2,12 @@
 import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
-import type { BookMaster } from "~/types";
+import type { Author, BookMaster } from "~/types";
 import type { BookMasterList } from "~/views/types";
+
+export const findAllAuthor = async (): Promise<Author[]> => {
+  return (await db.select().from(authorTable));
+}
 
 export const findAllBookMaster = async (): Promise<BookMasterList> => {
   const selectResult = await db.select().from(bookMasterTable);
