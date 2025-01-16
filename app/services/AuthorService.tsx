@@ -8,6 +8,9 @@ export const findAllAuthor = async (): Promise<Author[]> => {
   return (await db.select().from(authorTable));
 }
 
+export const findAuthorById = async (id: number): Promise<Author> => {
+  return (await db.select().from(authorTable).where(eq(authorTable.id, id)))[0]
+}
 
 export const createAuthor = async (authors: { name: string }[]): Promise<{ id: number, name: string }[]> => {
   return await db.insert(authorTable).values(authors).returning();

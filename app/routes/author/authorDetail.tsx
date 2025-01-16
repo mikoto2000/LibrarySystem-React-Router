@@ -1,14 +1,11 @@
 import type { Route } from "./+types/authorDetail";
 import { AuthorDetailPage } from "../../views/pages/author/AuthorDetailPage";
-import { db } from "~/infra/db";
-import { authorTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
-import type { Author } from "~/types";
+import { findAuthorById } from "~/services/AuthorService";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const author: Author = (await db.select().from(authorTable).where(eq(authorTable.id, Number(id))))[0];
+  const author = await findAuthorById(Number(id));
 
   return { author };
 }
