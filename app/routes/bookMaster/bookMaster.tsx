@@ -1,7 +1,7 @@
 import type { Route } from "./+types/bookMaster";
 import { BookMasterPage } from "../../views/pages/bookMaster/BookMasterPage";
 import type { BookMasterList } from "~/views/types";
-import { findAllBookMaster } from "./util";
+import { findAllBookMaster } from "~/services/BookMasterService";
 
 export async function loader() {
 

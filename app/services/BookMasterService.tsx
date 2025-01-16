@@ -1,4 +1,4 @@
-// TODO: service 層に移動
+// TODO: interface を切って drizzle 実装として実装しなおす
 import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
@@ -102,4 +102,5 @@ export const deleteBookMaster = async (id: number) => {
   await db.delete(bookMasterTable)
     .where(eq(bookMasterTable.id, Number(id)));
 }
+
 

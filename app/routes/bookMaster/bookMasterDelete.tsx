@@ -1,7 +1,7 @@
+import { deleteBookMaster } from "~/services/BookMasterService";
 import type { Route } from "./+types/bookMasterDelete";
 
 import { redirect } from "react-router";
-import { deleteBookMaster } from "./util";
 
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;

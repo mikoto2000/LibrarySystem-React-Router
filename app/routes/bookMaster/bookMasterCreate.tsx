@@ -1,7 +1,7 @@
 import type { Route } from "./+types/bookMasterCreate";
 import { BookMasterCreatePage } from "../../views/pages/bookMaster/BookMasterCreatePage";
 import { redirect } from "react-router";
-import { createBookMaster } from "./util";
+import { createBookMaster } from "~/services/BookMasterService";
 import { findAllAuthor } from "~/services/AuthorService";
 
 export async function action({ request }: Route.ActionArgs) {

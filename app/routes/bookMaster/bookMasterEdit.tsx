@@ -3,8 +3,8 @@ import { BookMasterEditPage } from "../../views/pages/bookMaster/BookMasterEditP
 import { redirect } from "react-router";
 
 import type { BookMaster } from "~/types";
-import { findBookMasterById, updateBookMaster } from "./util";
 import { findAllAuthor } from "~/services/AuthorService";
+import { findBookMasterById, updateBookMaster } from "~/services/BookMasterService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
