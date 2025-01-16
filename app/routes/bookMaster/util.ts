@@ -2,7 +2,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
-import type { Author, BookMaster } from "~/types";
+import type { BookMaster } from "~/types";
 import type { BookMasterList } from "~/views/types";
 
 export const findAllBookMaster = async (): Promise<BookMasterList> => {
