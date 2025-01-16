@@ -1,8 +1,26 @@
+// TODO: interface を切って drizzle 実装として実装しなおす
+// TODO: View の type を剥がして service のモデルとして再定義
 import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
-import type { BookMaster } from "~/types";
 import type { BookStockWithoutAuthor } from "~/views/types";
+
+
+export const findAllBookStock = async (): Promise<BookStockWithoutAuthor[]> => {
+  const selectResult = await db.select()
+    .from(bookStockTable)
+    .innerJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
+    .innerJoin(bookStockStatusTable, eq(bookStockTable.bookStockStatusId, bookStockStatusTable.id));
+
+  return selectResult.map((e) => {
+    return {
+      id: e.book_stock.id,
+      bookStockStatus: e.book_stock_status,
+      bookMaster: e.bookMaster,
+      memo: e.book_stock.memo ? e.book_stock.memo : ""
+    }
+  });
+}
 
 export const findBookStockById = async (id: number) => {
   const selectResult = (await db.select().from(bookStockTable)
@@ -32,3 +50,4 @@ export const findBookStockById = async (id: number) => {
 
   return bookStock;
 }
+

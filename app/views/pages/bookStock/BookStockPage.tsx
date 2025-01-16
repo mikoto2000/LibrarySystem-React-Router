@@ -13,12 +13,17 @@ export const BookStockPage = ({ bookStocks }: BookStockPageProps) => {
         {
           bookStocks
             ?
-            bookStocks.map((e) => <li><Link to={`/bookStocks/${e.book_stock.id}`}>{e.book_stock.id}: {e.bookMaster.name}, {e.book_stock_status.name}</Link></li>)
+            bookStocks.map((e) => <li><Link to={`/bookStocks/${e.id}`}>{e.id}: {e.bookMaster.name}, {e.bookStockStatus.name}</Link></li>)
             :
             <>表示要素がありませんでした</>
         }
       </ul>
       <Link to="/">トップに戻る</Link>
+      <pre>
+        {
+          JSON.stringify(bookStocks, null, 2)
+        }
+      </pre>
     </main>
   )
 }
