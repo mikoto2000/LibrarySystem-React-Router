@@ -1,10 +1,9 @@
 import type { Route } from "./+types/author";
 import { AuthorPage } from "../../views/pages/author/AuthorPage";
-import { db } from "~/infra/db";
-import { authorTable } from "~/infra/db/schema";
+import { findAllAuthor } from "~/services/AuthorService";
 
 export async function loader() {
-  const authors = await db.select().from(authorTable);
+  const authors = await findAllAuthor();
   return { authors };
 }
 
