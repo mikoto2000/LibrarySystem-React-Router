@@ -1,39 +1,26 @@
 import type { Route } from "./+types/bookMasterEdit";
 import { BookMasterEditPage } from "../../views/pages/bookMaster/BookMasterEditPage";
-import { db } from "~/infra/db";
-import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
-import { eq } from "drizzle-orm";
 import type { BookMaster } from "~/types";
-import { findBookMasterById } from "./util";
+import { findAllAuthor, findBookMasterById, updateBookMaster } from "./util";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const id = Number(formData.get("id")?.toString());
+  const isbn = formData.get("isbn")?.toString();
   const name = formData.get("name")?.toString();
-  const authorIds = formData.getAll("authorIds");
-  if (id && name) {
-    const insertResult = await db.update(bookMasterTable)
-      .set({ name })
-      .where(eq(bookMasterTable.id, Number(id)))
-      .returning();
+  const publicationDate = formData.get("publicationDate")?.toString();
+  const authorIds = formData.getAll("authorIds").map((e) => Number(e));
+  if (id && isbn && name && publicationDate) {
+     await updateBookMaster(Number(id), {
+       isbn,
+       name,
+       publicationDate,
+       authorIds,
+     });
 
-    // 中間テーブルの既存エントリー削除
-    await db.delete(bookMasterToAuthorTable)
-      .where(eq(bookMasterToAuthorTable.bookMasterId, id));
-
-    // 中間テーブルにエントリー登録
-    const bookMasterToAuthors = authorIds.map((e) => {
-      return {
-        bookMasterId: insertResult[0].id,
-        authorId: Number(e.toString()),
-      }
-    });
-    await db.insert(bookMasterToAuthorTable).values(bookMasterToAuthors).returning();
-
-
-    return redirect(`/bookMasters/${insertResult[0].id}`);
+    return redirect(`/bookMasters/${id}`);
   } else {
     throw new Response("Invalid Parameter", { status: 400 })
   }
@@ -41,7 +28,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const authors = (await db.select().from(authorTable));
+  const authors = await findAllAuthor();
 
   const bookMaster: BookMaster = await findBookMasterById(Number(id));
 

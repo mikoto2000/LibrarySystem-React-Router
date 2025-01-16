@@ -67,6 +67,37 @@ export const createBookMaster = async (bookMasters: { isbn: string, name: string
   return insertResult;
 }
 
+export const updateBookMaster = async (id: number, values: {
+  isbn: string,
+  name: string,
+  publicationDate: string,
+  authorIds: number[],
+}) => {
+
+  // 指定 ID のエンティティを更新
+  const insertResult = await db.update(bookMasterTable)
+    .set({
+      isbn: values.isbn,
+      name: values.name,
+      publicationDate: values.publicationDate,
+    })
+    .where(eq(bookMasterTable.id, Number(id)))
+    .returning();
+
+    // 中間テーブルの既存エントリー削除
+    await db.delete(bookMasterToAuthorTable)
+      .where(eq(bookMasterToAuthorTable.bookMasterId, id));
+
+    // 中間テーブルにエントリー登録
+    const bookMasterToAuthors = values.authorIds.map((e) => {
+      return {
+        bookMasterId: insertResult[0].id,
+        authorId: Number(e.toString()),
+      }
+    });
+    await db.insert(bookMasterToAuthorTable).values(bookMasterToAuthors).returning();
+}
+
 export const deleteBookMaster = async (id: number) => {
   await db.delete(bookMasterToAuthorTable)
     .where(eq(bookMasterToAuthorTable.bookMasterId, Number(id)));
