@@ -1,17 +1,13 @@
 import type { Route } from "./+types/authorCreate";
 import { AuthorCreatePage } from "../../views/pages/author/AuthorCreatePage";
-import { db } from "~/infra/db";
-import { authorTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
+import { createAuthor } from "~/services/AuthorService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name")?.toString()
   if (name) {
-    const author: typeof authorTable.$inferInsert = {
-      name,
-    };
-    const insertResult = await db.insert(authorTable).values(author).returning();
+    const insertResult = await createAuthor([{ name }]);
 
     return redirect(`/authors/${insertResult[0].id}`);
   } else {
