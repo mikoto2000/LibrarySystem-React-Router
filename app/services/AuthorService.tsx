@@ -16,6 +16,13 @@ export const createAuthor = async (authors: { name: string }[]): Promise<{ id: n
   return await db.insert(authorTable).values(authors).returning();
 }
 
+export const updateAuthor = async (id: number, author: { name: string }) => {
+  return await db.update(authorTable)
+    .set(author)
+    .where(eq(authorTable.id, Number(id)))
+    .returning();
+}
+
 export const deleteAuthor = async (id: number) => {
   await db.delete(authorTable)
     .where(eq(authorTable.id, id));
