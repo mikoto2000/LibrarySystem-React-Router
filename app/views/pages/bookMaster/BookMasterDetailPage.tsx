@@ -12,6 +12,7 @@ export const BookMasterDetailPage = ({ bookMaster }: BookMasterDetailPageProps) 
         <li>Id: {bookMaster.id}</li>
         <li>Isbn: {bookMaster.isbn}</li>
         <li>Name: {bookMaster.name}</li>
+        <li>Publication Date: {bookMaster.publicationDate}</li>
         <li>Authors: {bookMaster.authors.map((e) => `${e.id}: ${e.name}`).join(", ")}</li>
       </ul>
       <Link to={`/bookMasters/${bookMaster.id}/edit`}>編集する</Link>
