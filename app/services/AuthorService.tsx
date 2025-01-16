@@ -1,3 +1,4 @@
+// TODO: interface を切って drizzle 実装として実装しなおす
 import { db } from "~/infra/db";
 import { authorTable } from "~/infra/db/schema";
 import type { Author } from "~/types";
