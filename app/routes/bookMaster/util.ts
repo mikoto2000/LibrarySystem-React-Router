@@ -5,10 +5,6 @@ import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/d
 import type { Author, BookMaster } from "~/types";
 import type { BookMasterList } from "~/views/types";
 
-export const findAllAuthor = async (): Promise<Author[]> => {
-  return (await db.select().from(authorTable));
-}
-
 export const findAllBookMaster = async (): Promise<BookMasterList> => {
   const selectResult = await db.select().from(bookMasterTable);
 
