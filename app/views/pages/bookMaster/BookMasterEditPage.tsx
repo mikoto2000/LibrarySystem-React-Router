@@ -15,7 +15,13 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
           <label>Id: <input type="text" name="id" defaultValue={bookMaster.id} readOnly /></label>
         </div>
         <div>
+          <label>Isbn: <input type="text" name="isbn" defaultValue={bookMaster.isbn} /></label>
+        </div>
+        <div>
           <label>Name: <input type="text" name="name" defaultValue={bookMaster.name} /></label>
+        </div>
+        <div>
+          <label>Publication Date: <input type="date" name="publicationDate" defaultValue={bookMaster.publicationDate} /></label>
         </div>
         <div>
           <select multiple name="authorIds">

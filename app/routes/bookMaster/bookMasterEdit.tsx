@@ -22,6 +22,7 @@ export async function action({ request }: Route.ActionArgs) {
 
     return redirect(`/bookMasters/${id}`);
   } else {
+    console.log("👺: KITAYOOOOOOO");
     throw new Response("Invalid Parameter", { status: 400 })
   }
 }

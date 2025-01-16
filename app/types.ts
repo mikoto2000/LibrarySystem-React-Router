@@ -17,6 +17,7 @@ export type BookMaster = {
   id: number,
   isbn: string,
   name: string,
+  publicationDate: string,
   authors: Author[],
 };
 

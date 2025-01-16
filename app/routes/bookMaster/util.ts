@@ -33,6 +33,7 @@ export const findBookMasterById = async (id: number): Promise<BookMaster> => {
     acumulator.id = currentValue.bookMaster.id;
     acumulator.isbn = currentValue.bookMaster.isbn;
     acumulator.name = currentValue.bookMaster.name;
+    acumulator.publicationDate = currentValue.bookMaster.publicationDate;
     currentValue.author
     if (currentValue.author) {
       acumulator.authors.push(currentValue.author)
@@ -43,6 +44,7 @@ export const findBookMasterById = async (id: number): Promise<BookMaster> => {
       id: 0,
       isbn: "",
       name: "",
+      publicationDate: "",
       authors: [],
     } as BookMaster);
 
