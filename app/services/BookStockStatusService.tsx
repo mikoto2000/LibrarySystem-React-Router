@@ -7,6 +7,10 @@ export const findAllBookStockStatus = async (): Promise<BookStockStatus[]> => {
   return await db.select().from(bookStockStatusTable);
 }
 
+export const findBookStockStatusById = async (id: number): Promise<BookStockStatus> => {
+  return (await db.select().from(bookStockStatusTable).where(eq(bookStockStatusTable.id, id)))[0]
+}
+
 export const createBookStockStatus = async (bookStockStatus: { name: string }[]): Promise<{ id: number, name: string }[]> => {
   return await db.insert(bookStockStatusTable).values(bookStockStatus).returning();
 }

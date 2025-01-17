@@ -1,14 +1,12 @@
 import type { Route } from "./+types/bookStockStatusDetail";
 import { BookStockStatusDetailPage } from "../../views/pages/bookStockStatus/BookStockStatusDetailPage";
-import { db } from "~/infra/db";
-import { bookStockStatusTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
 import type { BookStockStatus } from "~/types";
+import { findBookStockStatusById } from "~/services/BookStockStatusService";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const bookStockStatus: BookStockStatus = (await db.select().from(bookStockStatusTable).where(eq(bookStockStatusTable.id, Number(id))))[0];
+  const bookStockStatus: BookStockStatus = await findBookStockStatusById(Number(id));
 
   return { bookStockStatus };
 }
