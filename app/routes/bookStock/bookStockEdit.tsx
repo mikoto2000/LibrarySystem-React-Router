@@ -5,7 +5,7 @@ import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/d
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
-import { findBookStockById } from "~/services/bookStockService";
+import { findBookStockById } from "~/services/BookStockService";
 
 export async function action({ request }: Route.ActionArgs) {
   console.dir(request);

@@ -1,6 +1,6 @@
 import type { Route } from "./+types/bookStock";
 import { BookStockPage } from "../../views/pages/bookStock/BookStockPage";
-import { findAllBookStock } from "~/services/bookStockService";
+import { findAllBookStock } from "~/services/BookStockService";
 
 export async function loader() {
   const bookStocks = await findAllBookStock();

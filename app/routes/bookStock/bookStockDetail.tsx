@@ -2,7 +2,7 @@ import type { Route } from "./+types/bookStockDetail";
 import { BookStockDetailPage } from "../../views/pages/bookStock/BookStockDetailPage";
 
 import type { BookStockWithoutAuthor } from "~/views/types";
-import { findBookStockById } from "~/services/bookStockService";
+import { findBookStockById } from "~/services/BookStockService";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
