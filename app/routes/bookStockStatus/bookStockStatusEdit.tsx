@@ -1,21 +1,16 @@
 import type { Route } from "./+types/bookStockStatusEdit";
 import { BookStockStatusEditPage } from "../../views/pages/bookStockStatus/BookStockStatusEditPage";
-import { db } from "~/infra/db";
-import { bookStockStatusTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
-import { eq } from "drizzle-orm";
 import type { BookStockStatus } from "~/types";
+import { findBookStockStatusById, updateBookStockStatus } from "~/services/BookStockStatusService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const id = formData.get("id")?.toString()
   const name = formData.get("name")?.toString()
   if (id && name) {
-    const insertResult = await db.update(bookStockStatusTable)
-      .set({ name })
-      .where(eq(bookStockStatusTable.id, Number(id)))
-      .returning();
+    const insertResult = await updateBookStockStatus(Number(id), { name });
 
     return redirect(`/bookStockStatuses/${insertResult[0].id}`);
   } else {
@@ -25,7 +20,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const bookStockStatus: BookStockStatus = (await db.select().from(bookStockStatusTable).where(eq(bookStockStatusTable.id, Number(id))))[0];
+  const bookStockStatus: BookStockStatus = await findBookStockStatusById(Number(id));
 
   return { bookStockStatus };
 }
