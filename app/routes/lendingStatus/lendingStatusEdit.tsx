@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingStatusEdit";
 import { LendingStatusEditPage } from "../../views/pages/lendingStatus/LendingStatusEditPage";
 import { redirect } from "react-router";
-import { findLendingStatusById, updateLendingStatus } from "~/services/LendingSetService";
+import { findLendingStatusById, updateLendingStatus } from "~/services/LendingStatusService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();

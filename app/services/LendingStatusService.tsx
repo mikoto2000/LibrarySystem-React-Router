@@ -28,4 +28,3 @@ export const deleteLendingStatus = async (id: number) => {
     .where(eq(lendingStatusTable.id, id));
 }
 
-

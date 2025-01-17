@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingStatusDetail";
 import { LendingStatusDetailPage } from "../../views/pages/lendingStatus/LendingStatusDetailPage";
 
-import { findLendingStatusById } from "~/services/LendingSetService";
+import { findLendingStatusById } from "~/services/LendingStatusService";
 
 export async function loader({ params, request }: Route.LoaderArgs) {
   const id = params.id;

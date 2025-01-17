@@ -1,7 +1,7 @@
 import type { Route } from "./+types/lendingStatusDelete";
 
 import { redirect } from "react-router";
-import { findLendingStatusById } from "~/services/LendingSetService";
+import { findLendingStatusById } from "~/services/LendingStatusService";
 
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;
