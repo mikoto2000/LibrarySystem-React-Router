@@ -1,13 +1,11 @@
 import type { Route } from "./+types/lendingStatusDetail";
 import { LendingStatusDetailPage } from "../../views/pages/lendingStatus/LendingStatusDetailPage";
-import { db } from "~/infra/db";
-import { lendingStatusTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
+import { findLendingStatusById } from "~/services/LendingSetService";
 
 export async function loader({ params, request }: Route.LoaderArgs) {
   const id = params.id;
-  const lendingStatus = (await db.select().from(lendingStatusTable).where(eq(lendingStatusTable.id, Number(id))))[0];
+  const lendingStatus = await findLendingStatusById(Number(id));
   return { lendingStatus };
 }
 

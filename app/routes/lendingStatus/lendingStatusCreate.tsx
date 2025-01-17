@@ -1,17 +1,13 @@
 import type { Route } from "./+types/lendingStatusCreate";
 import { LendingStatusCreatePage } from "../../views/pages/lendingStatus/LendingStatusCreatePage";
-import { db } from "~/infra/db";
-import { lendingStatusTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
+import { createLendingStatus } from "~/services/LendingSetService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name")?.toString()
   if (name) {
-    const lendingStatus: typeof lendingStatusTable.$inferInsert = {
-      name,
-    };
-    const insertResult = await db.insert(lendingStatusTable).values(lendingStatus).returning();
+    const insertResult = await createLendingStatus([{ name }]);
 
     return redirect(`/lendingStatuses/${insertResult[0].id}`);
   } else {

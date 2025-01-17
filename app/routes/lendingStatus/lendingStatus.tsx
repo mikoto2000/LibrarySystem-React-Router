@@ -3,9 +3,10 @@ import { LendingStatusPage } from "../../views/pages/lendingStatus/LendingStatus
 import { db } from "~/infra/db";
 import { lendingStatusTable } from "~/infra/db/schema";
 import type { LendingStatus } from "~/types";
+import { findAllLendingStatus } from "~/services/LendingSetService";
 
 export async function loader() {
-  const lendingStatuses: LendingStatus[] = await db.select().from(lendingStatusTable);
+  const lendingStatuses: LendingStatus[] = await findAllLendingStatus();
   return { lendingStatuses };
 }
 
