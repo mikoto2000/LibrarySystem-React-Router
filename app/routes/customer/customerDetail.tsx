@@ -1,14 +1,11 @@
 import type { Route } from "./+types/customerDetail";
 import { CustomerDetailPage } from "../../views/pages/customer/CustomerDetailPage";
-import { db } from "~/infra/db";
-import { customerTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
-import type { Customer } from "~/types";
+import { findCustomerById } from "~/services/CustomerService";
 
-export async function loader({ params, request }: Route.LoaderArgs) {
+export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const customer: Customer = (await db.select().from(customerTable).where(eq(customerTable.id, Number(id))))[0];
+  const customer = await findCustomerById(Number(id));
   return { customer };
 }
 

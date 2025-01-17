@@ -1,11 +1,10 @@
 import type { Route } from "./+types/customer";
 import { CustomerPage } from "../../views/pages/customer/CustomerPage";
-import { db } from "~/infra/db";
-import { customerTable } from "~/infra/db/schema";
 import type { Customer } from "~/types";
+import { findAllCustomer } from "~/services/CustomerService";
 
 export async function loader() {
-  const customeres: Customer[] = await db.select().from(customerTable);
+  const customeres: Customer[] = await findAllCustomer();
   return { customeres };
 }
 

@@ -1,16 +1,12 @@
 import type { Route } from "./+types/customerDelete";
-import { db } from "~/infra/db";
-import { customerTable } from "~/infra/db/schema";
 
-import { eq } from "drizzle-orm";
-import type { Customer } from "~/types";
 import { redirect } from "react-router";
+import { deleteCustomer } from "~/services/CustomerService";
 
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;
   if (id) {
-    await db.delete(customerTable)
-      .where(eq(customerTable.id, Number(id)));
+    await deleteCustomer(Number(id));
 
     return redirect(`/customers`);
   } else {

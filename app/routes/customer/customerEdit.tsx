@@ -1,21 +1,16 @@
 import type { Route } from "./+types/customerEdit";
 import { CustomerEditPage } from "../../views/pages/customer/CustomerEditPage";
-import { db } from "~/infra/db";
-import { customerTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
-import { eq } from "drizzle-orm";
-import type { Customer } from "~/types";
+import { findCustomerById, updateCustomer } from "~/services/CustomerService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const id = formData.get("id")?.toString()
   const name = formData.get("name")?.toString()
-  if (id && name) {
-    const insertResult = await db.update(customerTable)
-      .set({ name })
-      .where(eq(customerTable.id, Number(id)))
-      .returning();
+  const emailAddress = formData.get("emailAddress")?.toString()
+  if (id && name && emailAddress) {
+    const insertResult = await updateCustomer(Number(id), { name, emailAddress });
 
     return redirect(`/customers/${insertResult[0].id}`);
   } else {
@@ -25,8 +20,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const customer: Customer = (await db.select().from(customerTable).where(eq(customerTable.id, Number(id))))[0];
-
+  const customer = await findCustomerById(Number(id))
   return { customer };
 }
 
