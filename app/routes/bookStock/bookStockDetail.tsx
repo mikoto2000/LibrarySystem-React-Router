@@ -2,7 +2,7 @@ import type { Route } from "./+types/bookStockDetail";
 import { BookStockDetailPage } from "../../views/pages/bookStock/BookStockDetailPage";
 
 import type { BookStockWithoutAuthor } from "~/views/types";
-import { findBookStockById } from "~/services/BookStockService";
+import { bookStockRepository } from "~/di";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
@@ -11,7 +11,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     throw "id not found";
   }
 
-  const bookStock: BookStockWithoutAuthor = await findBookStockById(Number(id));
+  const bookStock: BookStockWithoutAuthor = await bookStockRepository.findBookStockById(Number(id));
 
   return { bookStock };
 }

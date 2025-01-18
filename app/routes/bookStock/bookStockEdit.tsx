@@ -5,7 +5,7 @@ import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/d
 import { redirect } from "react-router";
 
 import { eq } from "drizzle-orm";
-import { findBookStockById } from "~/services/BookStockService";
+import { bookStockRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   console.dir(request);
@@ -37,7 +37,7 @@ export async function loader({ params }: Route.LoaderArgs) {
     throw "id not found";
   }
 
-  const bookStock = await findBookStockById(Number(id));
+  const bookStock = await bookStockRepository.findBookStockById(Number(id));
   const bookMasters = (await db.select().from(bookMasterTable));
   const bookStockStatuses = (await db.select().from(bookStockStatusTable));
 

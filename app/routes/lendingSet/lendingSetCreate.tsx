@@ -5,7 +5,7 @@ import { redirect } from "react-router";
 import { createLendingSet } from "~/services/LendingSetService";
 import { findAllLendingStatus } from "~/services/LendingStatusService";
 import { findAllCustomer } from "~/services/CustomerService";
-import { findAllBookStock } from "~/services/BookStockService";
+import { bookStockRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   // リクエストフォームから作成のための情報をもらう
@@ -33,7 +33,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export async function loader({ }: Route.LoaderArgs) {
-  const bookStocks = await findAllBookStock();
+  const bookStocks = await bookStockRepository.findAllBookStock();
   const lendingStatuses = await findAllLendingStatus();
   const customers = await findAllCustomer();
 
