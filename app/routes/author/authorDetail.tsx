@@ -1,11 +1,10 @@
 import type { Route } from "./+types/authorDetail";
 import { AuthorDetailPage } from "../../views/pages/author/AuthorDetailPage";
-
-import { findAuthorById } from "~/services/AuthorService";
+import { authorRepository } from "~/di";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const author = await findAuthorById(Number(id));
+  const author = await authorRepository.findAuthorById(Number(id));
 
   return { author };
 }

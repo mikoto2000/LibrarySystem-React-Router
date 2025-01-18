@@ -1,15 +1,14 @@
 import type { Route } from "./+types/authorEdit";
 import { AuthorEditPage } from "../../views/pages/author/AuthorEditPage";
 import { redirect } from "react-router";
-
-import { findAuthorById, updateAuthor } from "~/services/AuthorService";
+import { authorRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const id = formData.get("id")?.toString()
   const name = formData.get("name")?.toString()
   if (id && name) {
-    const updateResult = await updateAuthor(Number(id), { name });
+    const updateResult = await authorRepository.updateAuthor(Number(id), { name });
 
     return redirect(`/authors/${updateResult[0].id}`);
   } else {
@@ -19,7 +18,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const author = await findAuthorById(Number(id));
+  const author = await authorRepository.findAuthorById(Number(id));
 
   return { author };
 }

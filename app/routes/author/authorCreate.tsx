@@ -1,13 +1,13 @@
 import type { Route } from "./+types/authorCreate";
 import { AuthorCreatePage } from "../../views/pages/author/AuthorCreatePage";
 import { redirect } from "react-router";
-import { createAuthor } from "~/services/AuthorService";
+import { authorRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name")?.toString()
   if (name) {
-    const insertResult = await createAuthor([{ name }]);
+    const insertResult = await authorRepository.createAuthor([{ name }]);
 
     return redirect(`/authors/${insertResult[0].id}`);
   } else {

@@ -3,8 +3,8 @@ import { BookMasterEditPage } from "../../views/pages/bookMaster/BookMasterEditP
 import { redirect } from "react-router";
 
 import type { BookMaster } from "~/types";
-import { findAllAuthor } from "~/services/AuthorService";
 import { findBookMasterById, updateBookMaster } from "~/services/BookMasterService";
+import { authorRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -30,7 +30,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const authors = await findAllAuthor();
+  const authors = await authorRepository.findAllAuthor();
 
   const bookMaster: BookMaster = await findBookMasterById(Number(id));
 

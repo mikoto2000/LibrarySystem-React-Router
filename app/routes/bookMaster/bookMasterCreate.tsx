@@ -2,7 +2,7 @@ import type { Route } from "./+types/bookMasterCreate";
 import { BookMasterCreatePage } from "../../views/pages/bookMaster/BookMasterCreatePage";
 import { redirect } from "react-router";
 import { createBookMaster } from "~/services/BookMasterService";
-import { findAllAuthor } from "~/services/AuthorService";
+import { authorRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -27,7 +27,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export async function loader({ }: Route.LoaderArgs) {
-  const authors = await findAllAuthor();
+  const authors = await authorRepository.findAllAuthor();
 
   return { authors };
 }

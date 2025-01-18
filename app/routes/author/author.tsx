@@ -1,9 +1,9 @@
 import type { Route } from "./+types/author";
 import { AuthorPage } from "../../views/pages/author/AuthorPage";
-import { findAllAuthor } from "~/services/AuthorService";
+import { authorRepository } from "~/di";
 
 export async function loader() {
-  const authors = await findAllAuthor();
+  const authors = await authorRepository.findAllAuthor();
   return { authors };
 }
 
