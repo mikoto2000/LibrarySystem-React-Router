@@ -114,6 +114,33 @@ export const createLendingSet = async (lendingSet: { lendingStatusId: number, cu
   return insertResult.map((e) => { return { id: e.id } });
 }
 
+export const updateLendingSet = async (id: number, lendingSet: {lendingStatusId: number, customerId: number, lendStartDate: string, lendDeadlineDate: string, returnDate?: string | null, bookStockIds: number[], memo?: string | null}) => {
+    const insertResult = await db.update(lendingSetTable)
+      .set({
+        lendingStatusId: lendingSet.lendingStatusId,
+        customerId: lendingSet.customerId,
+        lendStartDate: lendingSet.lendStartDate,
+        lendDeadlineDate: lendingSet.lendDeadlineDate,
+        returnDate: lendingSet.returnDate !== "" ? lendingSet.returnDate : null,
+        memo: lendingSet.memo,
+      })
+      .where(eq(lendingSetTable.id, Number(id)))
+      .returning();
+
+    // 中間テーブルの既存エントリー削除
+    await db.delete(lendingSetToBookStockTable)
+      .where(eq(lendingSetToBookStockTable.lendingSetId, id));
+
+    // 中間テーブルにエントリー登録
+    const lendingSetToBookStocks = lendingSet.bookStockIds.map((e) => {
+      return {
+        lendingSetId: insertResult[0].id,
+        bookStockId: Number(e.toString()),
+      }
+    });
+    await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
+}
+
 export const deleteLendingSet = async (id: number) => {
   await db.delete(lendingSetToBookStockTable)
     .where(eq(lendingSetToBookStockTable.lendingSetId, Number(id)));
