@@ -76,3 +76,11 @@ export const createLendingSet = async (lendingSet: { lendingStatusId: number, cu
   // 返却用オブジェクトを作成
   return insertResult.map((e) => { return { id: e.id } });
 }
+
+export const deleteLendingSet = async (id: number) => {
+  await db.delete(lendingSetToBookStockTable)
+    .where(eq(lendingSetToBookStockTable.lendingSetId, Number(id)));
+  await db.delete(lendingSetTable)
+    .where(eq(lendingSetTable.id, Number(id)));
+}
+
