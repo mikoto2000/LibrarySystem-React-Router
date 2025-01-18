@@ -3,8 +3,9 @@ import { eq } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
 import type { BookStockWithoutAuthor } from "~/views/types";
+import type { BookStockRepositoryService } from "../BookStockRepositoryService";
 
-export class BookStockRepositoryForDrizzle {
+export class BookStockRepositoryForDrizzle implements BookStockRepositoryService {
 
   findAllBookStock = async (): Promise<BookStockWithoutAuthor[]> => {
     const selectResult = await db.select()
@@ -49,6 +50,33 @@ export class BookStockRepositoryForDrizzle {
     };
 
     return bookStock;
+  }
+
+  createBookStock = async (bookStock: {
+    bookMasterId: number,
+    bookStockStatusId: number,
+    memo?: string | null,
+  }[]): Promise<{ id: number }[]> => {
+    return (await db.insert(bookStockTable).values(bookStock).returning()).map((e) => {
+      return { id: e.id }
+    });
+  }
+
+  updateBookStock = async (id: number,
+    bookStock: {
+      bookMasterId: number,
+      bookStockStatusId: number,
+      memo?: string | null
+    }) => {
+    await db.update(bookStockTable)
+      .set(bookStock)
+      .where(eq(bookStockTable.id, Number(id)))
+      .returning();
+  }
+
+  deleteBookStock = async (id: number) => {
+    await db.delete(bookStockTable)
+      .where(eq(bookStockTable.id, Number(id)));
   }
 }
 

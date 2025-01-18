@@ -1,11 +1,9 @@
 import type { Route } from "./+types/bookStockEdit";
 import { BookStockEditPage } from "../../views/pages/bookStock/BookStockEditPage";
-import { db } from "~/infra/db";
-import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
 import { redirect } from "react-router";
 
-import { eq } from "drizzle-orm";
-import { bookStockRepository } from "~/di";
+import { bookMasterRepository, bookStockRepository } from "~/di";
+import { findAllBookStockStatus } from "~/services/BookStockStatusService";
 
 export async function action({ request }: Route.ActionArgs) {
   console.dir(request);
@@ -15,16 +13,13 @@ export async function action({ request }: Route.ActionArgs) {
   const bookStockStatusId = Number(formData.get("bookStockStatusId")?.toString());
   const memo = formData.get("memo")?.toString();
   if (id && bookMasterId && bookStockStatusId) {
-    const insertResult = await db.update(bookStockTable)
-      .set({
-        bookMasterId,
-        bookStockStatusId,
-        memo,
-      })
-      .where(eq(bookStockTable.id, Number(id)))
-      .returning();
+    bookStockRepository.updateBookStock(id, {
+      bookMasterId,
+      bookStockStatusId,
+      memo,
+    });
 
-    return redirect(`/bookStocks/${insertResult[0].id}`);
+    return redirect(`/bookStocks/${id}`);
   } else {
     throw new Response("Invalid Parameter", { status: 400 })
   }
@@ -38,8 +33,8 @@ export async function loader({ params }: Route.LoaderArgs) {
   }
 
   const bookStock = await bookStockRepository.findBookStockById(Number(id));
-  const bookMasters = (await db.select().from(bookMasterTable));
-  const bookStockStatuses = (await db.select().from(bookStockStatusTable));
+  const bookMasters = await bookMasterRepository.findAllBookMaster();
+  const bookStockStatuses = await findAllBookStockStatus();
 
   return { bookStock, bookMasters, bookStockStatuses };
 }

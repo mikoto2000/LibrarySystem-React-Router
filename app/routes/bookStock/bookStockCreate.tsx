@@ -1,9 +1,10 @@
 import type { Route } from "./+types/bookStockCreate";
 import { BookStockCreatePage } from "../../views/pages/bookStock/BookStockCreatePage";
-import { db } from "~/infra/db";
-import { bookStockTable, bookStockStatusTable, bookMasterTable } from "~/infra/db/schema";
+
 import { redirect } from "react-router";
 import type { BookMasterWithoutAuthors } from "~/views/types";
+import { bookMasterRepository, bookStockRepository } from "~/di";
+import { findAllBookStockStatus } from "~/services/BookStockStatusService";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -11,12 +12,11 @@ export async function action({ request }: Route.ActionArgs) {
   const bookStockStatusId = Number(formData.get("bookStockStatusId")?.toString());
   const memo = formData.get("memo")?.toString();
   if (bookMasterId && bookStockStatusId) {
-    const bookStock: typeof bookStockTable.$inferInsert = {
+    const insertResult = await bookStockRepository.createBookStock([{
       bookMasterId,
       bookStockStatusId,
       memo,
-    };
-    const insertResult = await db.insert(bookStockTable).values(bookStock).returning();
+    }]);
 
     return redirect(`/bookStocks/${insertResult[0].id}`);
   } else {
@@ -25,8 +25,8 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export async function loader({ }: Route.LoaderArgs) {
-  const selectStatus = (await db.select().from(bookMasterTable));
-  const bookStockStatuses = (await db.select().from(bookStockStatusTable));
+  const selectStatus = await bookMasterRepository.findAllBookMaster();
+  const bookStockStatuses = await findAllBookStockStatus();
 
   const bookMasters: BookMasterWithoutAuthors[] = selectStatus.map((e) => {
     return {

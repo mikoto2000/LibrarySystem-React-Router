@@ -3,8 +3,9 @@ import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import type { BookMaster } from "~/types";
 import type { BookMasterList } from "~/views/types";
+import type { BookMasterRepositoryService } from "../BookMasterRepositoryService";
 
-export class BookMasterRepositoryForDrizzle {
+export class BookMasterRepositoryForDrizzle implements BookMasterRepositoryService {
   findAllBookMaster = async (): Promise<BookMasterList> => {
     const selectResult = await db.select().from(bookMasterTable);
 
