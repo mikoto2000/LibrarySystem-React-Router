@@ -1,14 +1,10 @@
 import { Form, Link } from "react-router"
 import type { BookMaster, BookStockStatus, Customer, LendingStatus } from "~/types"
+import type { BookStockWithoutAuthor } from "~/views/types"
 
 type LendingSetCreatePageProps = {
   customers: Customer[],
-  bookStocks: {
-    id: number,
-    bookStockStatus: BookStockStatus,
-    bookName: string,
-    memo: string | null,
-  }[],
+  bookStocks: BookStockWithoutAuthor[],
   lendingStatuses: LendingStatus[],
 }
 
@@ -29,7 +25,7 @@ export const LendingSetCreatePage = ({ customers, bookStocks, lendingStatuses }:
           <label>貸出書籍:
             <select multiple name="bookStockIds">
               {
-                bookStocks.map((e) => <option value={e.id}>{e.id}: {e.bookName}, {e.memo}</option>)
+                bookStocks.map((e) => <option value={e.id}>{e.id}: {e.bookMaster.name}, {e.memo}</option>)
               }
             </select>
           </label>
