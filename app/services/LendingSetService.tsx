@@ -2,8 +2,8 @@ import { db } from "~/infra/db";
 import { bookMasterTable, bookStockTable, customerTable, lendingSetTable, lendingSetToBookStockTable, lendingStatusTable } from "~/infra/db/schema";
 
 
-import { eq } from "drizzle-orm";
-import type { LendingSetList } from "~/views/types";
+import { eq, inArray } from "drizzle-orm";
+import type { LendingSet, LendingSetList } from "~/views/types";
 
 export const findAllLendingSet = async (): Promise<LendingSetList> => {
   // テーブルから情報取得
@@ -53,4 +53,26 @@ export const findAllLendingSet = async (): Promise<LendingSetList> => {
   }
 
   return lendingSets;
+}
+
+export const createLendingSet = async (lendingSet: { lendingStatusId: number, customerId: number, lendStartDate: string, lendDeadlineDate: string, bookStockIds: number[], memo?: string | null }): Promise<{ id: number }[]> => {
+  const insertResult = await db.insert(lendingSetTable).values(lendingSet).returning();
+
+  // LendingSet to BookStock の中間テーブルを更新
+  const lendingSetToBookStocks = lendingSet.bookStockIds.map((e) => {
+    return {
+      lendingSetId: insertResult[0].id,
+      bookStockId: Number(e.toString()),
+    }
+  });
+  await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
+
+  // BookStock を「貸出不可」に更新
+  await db.update(bookStockTable).set({
+    bookStockStatusId: 2,
+  })
+    .where(inArray(bookStockTable.id, lendingSet.bookStockIds.map((e) => Number(e))));
+
+  // 返却用オブジェクトを作成
+  return insertResult.map((e) => { return { id: e.id } });
 }

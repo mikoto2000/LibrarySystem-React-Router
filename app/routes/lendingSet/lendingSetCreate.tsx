@@ -5,6 +5,7 @@ import { lendingSetTable, lendingStatusTable, bookMasterTable, bookStockTable, c
 import { redirect } from "react-router";
 
 import { eq, inArray } from "drizzle-orm";
+import { createLendingSet } from "~/services/LendingSetService";
 
 export async function action({ request }: Route.ActionArgs) {
   // リクエストフォームから作成のための情報をもらう
@@ -13,34 +14,18 @@ export async function action({ request }: Route.ActionArgs) {
   const customerId = Number(formData.get("customerId")?.toString());
   const lendStartDate = formData.get("lendStartDate")?.toString();
   const lendDeadlineDate = formData.get("lendDeadlineDate")?.toString();
-  const returnDate = formData.get("returnDate")?.toString();
-  const bookStockIds = formData.getAll("bookStockIds");
+  const bookStockIds = formData.getAll("bookStockIds").map((e) => Number(e));
   const memo = formData.get("memo")?.toString();
-  console.log("👺customerId: "+ customerId);
-  if (lendingStatusId && customerId && lendStartDate && lendDeadlineDate) {
-    const lendingSet: typeof lendingSetTable.$inferInsert = {
+  console.log("👺customerId: " + customerId);
+  if (lendingStatusId && customerId && lendStartDate && lendDeadlineDate && bookStockIds) {
+    const insertResult = await createLendingSet({
       lendingStatusId,
       customerId,
       lendStartDate,
       lendDeadlineDate,
+      bookStockIds,
       memo,
-    };
-    const insertResult = await db.insert(lendingSetTable).values(lendingSet).returning();
-
-    // LendingSet to BookStock の中間テーブルを更新
-    const lendingSetToBookStocks = bookStockIds.map((e) => {
-      return {
-        lendingSetId: insertResult[0].id,
-        bookStockId: Number(e.toString()),
-      }
     });
-    await db.insert(lendingSetToBookStockTable).values(lendingSetToBookStocks).returning();
-
-    // BookStock を「貸出不可」に更新
-    await db.update(bookStockTable).set({
-      bookStockStatusId: 2,
-    })
-    .where(inArray(bookStockTable.id, bookStockIds.map((e) => Number(e))));
 
     return redirect(`/lendingSets/${insertResult[0].id}`);
   } else {
