@@ -55,6 +55,43 @@ export const findAllLendingSet = async (): Promise<LendingSetList> => {
   return lendingSets;
 }
 
+export const findLendingSetById = async (id: number) => {
+  const selectResult = await db.select()
+    .from(lendingSetTable)
+    .innerJoin(lendingStatusTable, eq(lendingSetTable.lendingStatusId, lendingStatusTable.id))
+    .innerJoin(lendingSetToBookStockTable, eq(lendingSetTable.id, lendingSetToBookStockTable.lendingSetId))
+    .innerJoin(bookStockTable, eq(bookStockTable.id, lendingSetToBookStockTable.bookStockId))
+    .innerJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
+    .where(eq(lendingSetTable.id, id));
+
+  //const lendingSet = selectResult;
+  const lendingSet = selectResult.reduce((acumulator, currentValue) => {
+    acumulator.id = currentValue.lending_set.id;
+    acumulator.lendStartDate = currentValue.lending_set.lendStartDate;
+    acumulator.lendDeadlineDate = currentValue.lending_set.lendDeadlineDate;
+    acumulator.returnDate = currentValue.lending_set.returnDate ? currentValue.lending_set.returnDate : "";
+    acumulator.memo = currentValue.lending_set.memo ? currentValue.lending_set.memo : "";
+    acumulator.bookStocks.push({
+      id: currentValue.book_stock.id,
+      bookMaster: currentValue.bookMaster,
+      memo: currentValue.book_stock.memo ? currentValue.book_stock.memo : "",
+
+    })
+    return acumulator;
+  },
+    {
+      id: 0,
+      lendingStatus: { id: 1, name: "貸出中" },
+      lendStartDate: "",
+      lendDeadlineDate: "",
+      returnDate: "",
+      bookStocks: [],
+      memo: "",
+    } as LendingSet);
+
+  return lendingSet;
+}
+
 export const createLendingSet = async (lendingSet: { lendingStatusId: number, customerId: number, lendStartDate: string, lendDeadlineDate: string, bookStockIds: number[], memo?: string | null }): Promise<{ id: number }[]> => {
   const insertResult = await db.insert(lendingSetTable).values(lendingSet).returning();
 
