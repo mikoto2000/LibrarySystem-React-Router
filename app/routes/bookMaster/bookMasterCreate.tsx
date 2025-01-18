@@ -1,8 +1,7 @@
 import type { Route } from "./+types/bookMasterCreate";
 import { BookMasterCreatePage } from "../../views/pages/bookMaster/BookMasterCreatePage";
 import { redirect } from "react-router";
-import { createBookMaster } from "~/services/BookMasterService";
-import { authorRepository } from "~/di";
+import { authorRepository, bookMasterRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -11,7 +10,7 @@ export async function action({ request }: Route.ActionArgs) {
   const publicationDate = formData.get("publicationDate")?.toString();
   const authorIds = formData.getAll("authors").map((e) => Number(e));
   if (isbn && name && publicationDate && authorIds) {
-    const bookMaster = await createBookMaster([
+    const bookMaster = await bookMasterRepository.createBookMaster([
       {
         isbn,
         name,

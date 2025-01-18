@@ -3,8 +3,7 @@ import { BookMasterEditPage } from "../../views/pages/bookMaster/BookMasterEditP
 import { redirect } from "react-router";
 
 import type { BookMaster } from "~/types";
-import { findBookMasterById, updateBookMaster } from "~/services/BookMasterService";
-import { authorRepository } from "~/di";
+import { authorRepository, bookMasterRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -14,7 +13,7 @@ export async function action({ request }: Route.ActionArgs) {
   const publicationDate = formData.get("publicationDate")?.toString();
   const authorIds = formData.getAll("authorIds").map((e) => Number(e));
   if (id && isbn && name && publicationDate) {
-     await updateBookMaster(Number(id), {
+     await bookMasterRepository.updateBookMaster(Number(id), {
        isbn,
        name,
        publicationDate,
@@ -32,7 +31,7 @@ export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
   const authors = await authorRepository.findAllAuthor();
 
-  const bookMaster: BookMaster = await findBookMasterById(Number(id));
+  const bookMaster: BookMaster = await bookMasterRepository.findBookMasterById(Number(id));
 
   return { bookMaster, authors };
 }

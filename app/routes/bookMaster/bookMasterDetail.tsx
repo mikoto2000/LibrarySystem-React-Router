@@ -1,12 +1,12 @@
 import type { Route } from "./+types/bookMasterDetail";
 import { BookMasterDetailPage } from "../../views/pages/bookMaster/BookMasterDetailPage";
 
-import { findBookMasterById } from "~/services/BookMasterService";
+import { bookMasterRepository } from "~/di";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
-  const bookMaster = await findBookMasterById(Number(id));
+  const bookMaster = await bookMasterRepository.findBookMasterById(Number(id));
 
   return { bookMaster };
 }

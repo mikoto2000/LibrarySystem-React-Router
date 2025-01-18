@@ -1,11 +1,11 @@
 import type { Route } from "./+types/bookMaster";
 import { BookMasterPage } from "../../views/pages/bookMaster/BookMasterPage";
 import type { BookMasterList } from "~/views/types";
-import { findAllBookMaster } from "~/services/BookMasterService";
+import { bookMasterRepository } from "~/di";
 
 export async function loader() {
 
-  const bookMasters: BookMasterList = await findAllBookMaster();
+  const bookMasters: BookMasterList = await bookMasterRepository.findAllBookMaster();
 
   return { bookMasters };
 }
