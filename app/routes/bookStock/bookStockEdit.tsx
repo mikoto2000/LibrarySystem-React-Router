@@ -2,8 +2,7 @@ import type { Route } from "./+types/bookStockEdit";
 import { BookStockEditPage } from "../../views/pages/bookStock/BookStockEditPage";
 import { redirect } from "react-router";
 
-import { bookMasterRepository, bookStockRepository } from "~/di";
-import { findAllBookStockStatus } from "~/services/BookStockStatusService";
+import { bookMasterRepository, bookStockRepository, bookStockStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   console.dir(request);
@@ -34,7 +33,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
   const bookStock = await bookStockRepository.findBookStockById(Number(id));
   const bookMasters = await bookMasterRepository.findAllBookMaster();
-  const bookStockStatuses = await findAllBookStockStatus();
+  const bookStockStatuses = await bookStockStatusRepository.findAllBookStockStatus();
 
   return { bookStock, bookMasters, bookStockStatuses };
 }

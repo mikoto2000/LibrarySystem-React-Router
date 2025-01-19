@@ -1,14 +1,14 @@
 import type { Route } from "./+types/customerCreate";
 import { CustomerCreatePage } from "../../views/pages/customer/CustomerCreatePage";
 import { redirect } from "react-router";
-import { createCustomer } from "~/services/CustomerService";
+import { customerRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name")?.toString()
   const emailAddress = formData.get("emailAddress")?.toString()
   if (name && emailAddress) {
-    const insertResult = await createCustomer([{ name, emailAddress }]);
+    const insertResult = await customerRepository.createCustomer([{ name, emailAddress }]);
 
     return redirect(`/customers/${insertResult[0].id}`);
   } else {

@@ -3,8 +3,7 @@ import { BookStockCreatePage } from "../../views/pages/bookStock/BookStockCreate
 
 import { redirect } from "react-router";
 import type { BookMasterWithoutAuthors } from "~/views/types";
-import { bookMasterRepository, bookStockRepository } from "~/di";
-import { findAllBookStockStatus } from "~/services/BookStockStatusService";
+import { bookMasterRepository, bookStockRepository, bookStockStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -26,7 +25,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ }: Route.LoaderArgs) {
   const selectStatus = await bookMasterRepository.findAllBookMaster();
-  const bookStockStatuses = await findAllBookStockStatus();
+  const bookStockStatuses = await bookStockStatusRepository.findAllBookStockStatus();
 
   const bookMasters: BookMasterWithoutAuthors[] = selectStatus.map((e) => {
     return {

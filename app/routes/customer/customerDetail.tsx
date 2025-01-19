@@ -1,11 +1,11 @@
 import type { Route } from "./+types/customerDetail";
 import { CustomerDetailPage } from "../../views/pages/customer/CustomerDetailPage";
 
-import { findCustomerById } from "~/services/CustomerService";
+import { customerRepository } from "~/di";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const customer = await findCustomerById(Number(id));
+  const customer = await customerRepository.findCustomerById(Number(id));
   return { customer };
 }
 

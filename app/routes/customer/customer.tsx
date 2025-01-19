@@ -1,10 +1,10 @@
 import type { Route } from "./+types/customer";
 import { CustomerPage } from "../../views/pages/customer/CustomerPage";
 import type { Customer } from "~/types";
-import { findAllCustomer } from "~/services/CustomerService";
+import { customerRepository } from "~/di";
 
 export async function loader() {
-  const customeres: Customer[] = await findAllCustomer();
+  const customeres: Customer[] = await customerRepository.findAllCustomer();
   return { customeres };
 }
 

@@ -2,7 +2,7 @@ import type { Route } from "./+types/customerEdit";
 import { CustomerEditPage } from "../../views/pages/customer/CustomerEditPage";
 import { redirect } from "react-router";
 
-import { findCustomerById, updateCustomer } from "~/services/CustomerService";
+import { customerRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -10,7 +10,7 @@ export async function action({ request }: Route.ActionArgs) {
   const name = formData.get("name")?.toString()
   const emailAddress = formData.get("emailAddress")?.toString()
   if (id && name && emailAddress) {
-    const insertResult = await updateCustomer(Number(id), { name, emailAddress });
+    const insertResult = await customerRepository.updateCustomer(Number(id), { name, emailAddress });
 
     return redirect(`/customers/${insertResult[0].id}`);
   } else {
@@ -20,7 +20,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
-  const customer = await findCustomerById(Number(id))
+  const customer = await customerRepository.findCustomerById(Number(id))
   return { customer };
 }
 

@@ -4,8 +4,7 @@ import { redirect } from "react-router";
 
 import { findLendingSetById, updateLendingSet } from "~/services/LendingSetService";
 import { findAllLendingStatus } from "~/services/LendingStatusService";
-import { findAllCustomer } from "~/services/CustomerService";
-import { bookStockRepository } from "~/di";
+import { bookStockRepository, customerRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -40,7 +39,7 @@ export async function loader({ params }: Route.LoaderArgs) {
   const lendingSet = await findLendingSetById(Number(id));
   const lendingStatuses = await findAllLendingStatus();
   const bookStocks = await bookStockRepository.findAllBookStock();
-  const customers = await findAllCustomer();
+  const customers = await customerRepository.findAllCustomer();
 
   return { lendingSet, customers, bookStocks, lendingStatuses };
 }

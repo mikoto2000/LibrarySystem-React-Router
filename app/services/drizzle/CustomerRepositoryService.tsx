@@ -4,7 +4,7 @@ import { customerTable } from "~/infra/db/schema";
 import type { Customer } from "~/types";
 import type { CustomerRepositoryService } from "../CustomerRepositoryService";
 
-export class CustomerRepositoryServiceForDrizzle implements CustomerRepositoryService {
+export class CustomerRepositoryForDrizzle implements CustomerRepositoryService {
   findAllCustomer = async (): Promise<Customer[]> => {
     return (await db.select().from(customerTable));
   }

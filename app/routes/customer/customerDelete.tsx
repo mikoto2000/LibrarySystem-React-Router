@@ -1,12 +1,12 @@
 import type { Route } from "./+types/customerDelete";
 
 import { redirect } from "react-router";
-import { deleteCustomer } from "~/services/CustomerService";
+import { customerRepository } from "~/di";
 
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;
   if (id) {
-    await deleteCustomer(Number(id));
+    await customerRepository.deleteCustomer(Number(id));
 
     return redirect(`/customers`);
   } else {
