@@ -3,8 +3,7 @@ import { LendingSetCreatePage } from "../../views/pages/lendingSet/LendingSetCre
 import { redirect } from "react-router";
 
 import { createLendingSet } from "~/services/LendingSetService";
-import { findAllLendingStatus } from "~/services/LendingStatusService";
-import { bookStockRepository, customerRepository } from "~/di";
+import { bookStockRepository, customerRepository, lendingStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   // リクエストフォームから作成のための情報をもらう
@@ -33,7 +32,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export async function loader({ }: Route.LoaderArgs) {
   const bookStocks = await bookStockRepository.findAllBookStock();
-  const lendingStatuses = await findAllLendingStatus();
+  const lendingStatuses = await lendingStatusRepository.findAllLendingStatus();
   const customers = await customerRepository.findAllCustomer();
 
   return { bookStocks, lendingStatuses, customers };

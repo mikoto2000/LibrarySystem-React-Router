@@ -1,12 +1,12 @@
 import type { Route } from "./+types/lendingStatusDelete";
 
 import { redirect } from "react-router";
-import { findLendingStatusById } from "~/services/LendingStatusService";
+import { lendingStatusRepository } from "~/di";
 
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;
   if (id) {
-    await findLendingStatusById(Number(id));
+    await lendingStatusRepository.findLendingStatusById(Number(id));
 
     return redirect(`/lendingStatuses`);
   } else {

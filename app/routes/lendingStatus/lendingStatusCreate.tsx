@@ -1,13 +1,13 @@
 import type { Route } from "./+types/lendingStatusCreate";
 import { LendingStatusCreatePage } from "../../views/pages/lendingStatus/LendingStatusCreatePage";
 import { redirect } from "react-router";
-import { createLendingStatus } from "~/services/LendingStatusService";
+import { lendingStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const name = formData.get("name")?.toString()
   if (name) {
-    const insertResult = await createLendingStatus([{ name }]);
+    const insertResult = await lendingStatusRepository.createLendingStatus([{ name }]);
 
     return redirect(`/lendingStatuses/${insertResult[0].id}`);
   } else {

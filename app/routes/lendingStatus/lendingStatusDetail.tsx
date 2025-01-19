@@ -1,11 +1,11 @@
 import type { Route } from "./+types/lendingStatusDetail";
 import { LendingStatusDetailPage } from "../../views/pages/lendingStatus/LendingStatusDetailPage";
 
-import { findLendingStatusById } from "~/services/LendingStatusService";
+import { lendingStatusRepository } from "~/di";
 
 export async function loader({ params, request }: Route.LoaderArgs) {
   const id = params.id;
-  const lendingStatus = await findLendingStatusById(Number(id));
+  const lendingStatus = await lendingStatusRepository.findLendingStatusById(Number(id));
   return { lendingStatus };
 }
 

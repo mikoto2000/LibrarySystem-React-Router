@@ -1,12 +1,10 @@
 import type { Route } from "./+types/lendingStatus";
 import { LendingStatusPage } from "../../views/pages/lendingStatus/LendingStatusPage";
-import { db } from "~/infra/db";
-import { lendingStatusTable } from "~/infra/db/schema";
 import type { LendingStatus } from "~/types";
-import { findAllLendingStatus } from "~/services/LendingStatusService";
+import { lendingStatusRepository } from "~/di";
 
 export async function loader() {
-  const lendingStatuses: LendingStatus[] = await findAllLendingStatus();
+  const lendingStatuses: LendingStatus[] = await lendingStatusRepository.findAllLendingStatus();
   return { lendingStatuses };
 }
 

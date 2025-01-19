@@ -3,8 +3,7 @@ import { LendingSetEditPage } from "../../views/pages/lendingSet/LendingSetEditP
 import { redirect } from "react-router";
 
 import { findLendingSetById, updateLendingSet } from "~/services/LendingSetService";
-import { findAllLendingStatus } from "~/services/LendingStatusService";
-import { bookStockRepository, customerRepository } from "~/di";
+import { bookStockRepository, customerRepository, lendingStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -37,7 +36,7 @@ export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
   const lendingSet = await findLendingSetById(Number(id));
-  const lendingStatuses = await findAllLendingStatus();
+  const lendingStatuses = await lendingStatusRepository.findAllLendingStatus();
   const bookStocks = await bookStockRepository.findAllBookStock();
   const customers = await customerRepository.findAllCustomer();
 

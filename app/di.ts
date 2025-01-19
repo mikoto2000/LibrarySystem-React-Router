@@ -3,6 +3,7 @@ import { BookMasterRepositoryForDrizzle } from "./services/drizzle/BookMasterRep
 import { BookStockRepositoryForDrizzle } from "./services/drizzle/BookStockRepositoryService";
 import { BookStockStatusRepositoryForDrizzle } from "./services/drizzle/BookStockStatusRepositoryService";
 import { CustomerRepositoryForDrizzle } from "./services/drizzle/CustomerRepositoryService";
+import { LendingStatusRepositoryForDrizzle } from "./services/drizzle/LendingStatusService";
 
 export const authorRepository = new AuthorRepositoryForDrizzle();
 export const bookMasterRepository = new BookMasterRepositoryForDrizzle();
@@ -10,3 +11,4 @@ export const bookStockRepository = new BookStockRepositoryForDrizzle();
 export const bookStockStatusRepository = new BookStockStatusRepositoryForDrizzle();
 export const customerRepository = new CustomerRepositoryForDrizzle();
 
+export const lendingStatusRepository = new LendingStatusRepositoryForDrizzle();
