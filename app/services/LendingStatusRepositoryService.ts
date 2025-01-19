@@ -4,7 +4,7 @@ export interface LendingStatusRepositoryService {
   findAllLendingStatus(): Promise<LendingStatus[]>;
   findLendingStatusById(id: number): Promise<LendingStatus>;
 
-  createLendingStatus(bookStock: {
+  createLendingStatus(lendingStatus: {
     name: string
   }[]): Promise<{ id: number, name: string }[]>;
 

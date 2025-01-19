@@ -2,8 +2,7 @@ import type { Route } from "./+types/lendingSetEdit";
 import { LendingSetEditPage } from "../../views/pages/lendingSet/LendingSetEditPage";
 import { redirect } from "react-router";
 
-import { findLendingSetById, updateLendingSet } from "~/services/LendingSetService";
-import { bookStockRepository, customerRepository, lendingStatusRepository } from "~/di";
+import { bookStockRepository, customerRepository, lendingSetRepository, lendingStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
@@ -16,7 +15,7 @@ export async function action({ request }: Route.ActionArgs) {
   const bookStockIds = formData.getAll("bookStockIds").map((e) => Number(e));
   const memo = formData.get("memo")?.toString();
   if (id && customerId && lendingStatusId && lendStartDate && lendDeadlineDate) {
-    await updateLendingSet(Number(id), {
+    await lendingSetRepository.updateLendingSet(Number(id), {
         lendingStatusId,
         customerId,
         lendStartDate,
@@ -35,7 +34,7 @@ export async function action({ request }: Route.ActionArgs) {
 export async function loader({ params }: Route.LoaderArgs) {
   const id = params.id;
 
-  const lendingSet = await findLendingSetById(Number(id));
+  const lendingSet = await lendingSetRepository.findLendingSetById(Number(id));
   const lendingStatuses = await lendingStatusRepository.findAllLendingStatus();
   const bookStocks = await bookStockRepository.findAllBookStock();
   const customers = await customerRepository.findAllCustomer();

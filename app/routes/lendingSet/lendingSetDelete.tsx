@@ -1,12 +1,12 @@
 import type { Route } from "./+types/lendingSetDelete";
 
 import { redirect } from "react-router";
-import { deleteLendingSet } from "~/services/LendingSetService";
+import { lendingSetRepository } from "~/di";
 
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;
   if (id) {
-    await deleteLendingSet(Number(id));
+    await lendingSetRepository.deleteLendingSet(Number(id));
 
     return redirect(`/lendingSets`);
   } else {

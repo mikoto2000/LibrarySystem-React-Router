@@ -2,8 +2,7 @@ import type { Route } from "./+types/lendingSetCreate";
 import { LendingSetCreatePage } from "../../views/pages/lendingSet/LendingSetCreatePage";
 import { redirect } from "react-router";
 
-import { createLendingSet } from "~/services/LendingSetService";
-import { bookStockRepository, customerRepository, lendingStatusRepository } from "~/di";
+import { bookStockRepository, customerRepository, lendingSetRepository, lendingStatusRepository } from "~/di";
 
 export async function action({ request }: Route.ActionArgs) {
   // リクエストフォームから作成のための情報をもらう
@@ -15,7 +14,7 @@ export async function action({ request }: Route.ActionArgs) {
   const bookStockIds = formData.getAll("bookStockIds").map((e) => Number(e));
   const memo = formData.get("memo")?.toString();
   if (lendingStatusId && customerId && lendStartDate && lendDeadlineDate && bookStockIds) {
-    const insertResult = await createLendingSet({
+    const insertResult = await lendingSetRepository.createLendingSet({
       lendingStatusId,
       customerId,
       lendStartDate,

@@ -1,10 +1,10 @@
 import type { Route } from "./+types/lendingSet";
 import { LendingSetPage } from "../../views/pages/lendingSet/LendingSetPage";
-import { findAllLendingSet } from "~/services/LendingSetService";
+import { lendingSetRepository } from "~/di";
 
 export async function loader() {
 
-  const lendingSets = await findAllLendingSet();
+  const lendingSets = await lendingSetRepository.findAllLendingSet();
   return { lendingSets };
 }
 
