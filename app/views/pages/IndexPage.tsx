@@ -1,26 +1,62 @@
 import { Link } from "react-router"
+import { Toc } from "~/components/toc/Toc";
 export function IndexPage() {
+  const tocItems = [
+    {
+      title: "マスタ管理",
+      item: [
+        {
+          label: "Book Stock Status",
+          to: "/bookStockStatuses",
+        },
+        {
+          label: "Lending Status",
+          to: "/lendingStatuses",
+        },
+      ]
+    },
+    {
+      title: "書籍管理",
+      item: [
+        {
+          label: "Authors",
+          to: "/authors",
+        },
+        {
+          label: "Book Masters",
+          to: "/bookMasters",
+        },
+      ]
+    },
+    {
+      title: "在庫管理",
+      item: [
+        {
+          label: "Book Stocks",
+          to: "/bookStocks",
+        },
+      ]
+    },
+    {
+      title: "貸出管理",
+      item: [
+        {
+          label: "Lending Set",
+          to: "/lendingSets",
+        },
+        {
+          label: "Customer",
+          to: "/customers",
+        },
+      ]
+    },
+  ];
+
   return (
-    <main>
-      <h2>マスタ管理</h2>
-      <ul>
-        <li><Link to="/bookStockStatuses">Book Stock Status</Link></li>
-        <li><Link to="/lendingStatuses">Lending Status</Link></li>
-      </ul>
-      <h2>書籍管理</h2>
-      <ul>
-        <li><Link to="/authors">Authors</Link></li>
-        <li><Link to="/bookMasters">Book Masters</Link></li>
-      </ul>
-      <h2>在庫管理</h2>
-      <ul>
-        <li><Link to="/bookStocks">Book Stocks</Link></li>
-      </ul>
-      <h2>貸出管理</h2>
-      <ul>
-        <li><Link to="/lendingSets">Lending Set</Link></li>
-        <li><Link to="/customers">Customer</Link></li>
-      </ul>
+    <main className="bold p-8">
+      <Toc
+        toc={tocItems}
+      />
     </main>
   );
 }
