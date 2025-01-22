@@ -1,4 +1,6 @@
 import { Link } from "react-router";
+import { Button } from "~/components/button/Button";
+import { Table } from "~/components/table/Table";
 import type { LendingStatus } from "~/types";
 
 type LendingStatusPageProps = {
@@ -8,18 +10,50 @@ type LendingStatusPageProps = {
 export const LendingStatusPage = ({ lendingStatuses }: LendingStatusPageProps) => {
   return (
     <main>
-      <h2>LendingStatuses</h2>
-      <Link to="create">新規登録</Link>
-      <ul>
-        {
-          lendingStatuses
-            ?
-            lendingStatuses.map((e) => <li><Link to={`/lendingStatuses/${e.id}`}>{e.id}: {e.name}</Link></li>)
-            :
-            <>表示要素がありませんでした</>
-        }
-      </ul>
-      <Link to="/">トップに戻る</Link>
+      <div className="pb-3">
+        <h2 className="font-bold text-2xl mt-2 mb-1 ">LendingStatuses</h2>
+        <Button
+          label="新規作成"
+          to="create"
+        />
+      </div>
+      <Table<LendingStatus>
+        linkTo="lendingStatuses"
+        headerInfo={[
+          {
+            name: "Id",
+            onClick: () => { },
+          },
+          {
+            name: "Name",
+            onClick: () => { },
+          },
+        ]}
+        contentInfo={[
+          {
+            getValueFunc: (e) => e.id.toString()
+          },
+          {
+            getValueFunc: (e) => e.name
+          },
+        ]}
+        content={lendingStatuses}
+      ></Table>
+      <Link
+        className="text-blue-600 dark:text-blue-500 hover:underline"
+        to="/"
+      >トップに戻る</Link>
+      {
+        import.meta.env.DEV
+          ?
+          <pre>
+            {
+              JSON.stringify(lendingStatuses, null, 2)
+            }
+          </pre>
+          :
+          <></>
+      }
     </main>
   )
 }
