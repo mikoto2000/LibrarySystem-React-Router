@@ -24,7 +24,13 @@ export const Toc: React.FC<TocProps> = (props: TocProps) => {
               {
                 e.item.map((i) => (
                   <>
-                    <li><Link className="text-blue-600 dark:text-blue-500 hover:underline" to={i.to}>{i.label}</Link></li>
+                    <li>
+                      <Link
+                        className="text-blue-600 dark:text-blue-500 hover:underline"
+                        to={i.to}>
+                        {i.label}
+                      </Link>
+                    </li>
                   </>
                 ))
               }
