@@ -17,6 +17,7 @@ export const AuthorPage = ({ authors }: AuthorPageProps) => {
           to="create">新規登録</Link>
       </div>
       <Table<Author>
+        linkTo="authors"
         headerInfo={[
           {
             name: "Id",
