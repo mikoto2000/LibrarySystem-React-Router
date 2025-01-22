@@ -18,7 +18,7 @@ export const BookMasterPage = ({ bookMasters }: BookMasterPageProps) => {
         />
       </div>
       <Table<BookMasterWithoutAuthors>
-        linkTo="lendingStatuses"
+        linkTo="bookMasters"
         headerInfo={[
           {
             name: "Id",

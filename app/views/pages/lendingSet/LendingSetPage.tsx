@@ -18,7 +18,7 @@ export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
         />
       </div>
       <Table<LendingSetWithoutAuthor>
-        linkTo="lendingStatuses"
+        linkTo="lendingSets"
         headerInfo={[
           {
             name: "Id",

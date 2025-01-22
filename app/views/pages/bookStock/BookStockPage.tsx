@@ -18,7 +18,7 @@ export const BookStockPage = ({ bookStocks }: BookStockPageProps) => {
         />
       </div>
       <Table<any>
-        linkTo="lendingStatuses"
+        linkTo="bookStocks"
         headerInfo={[
           {
             name: "Id",
