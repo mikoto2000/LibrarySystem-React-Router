@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router";
+import { Table } from "~/components/table/Table";
 import type { Author } from "~/types";
 
 type AuthorPageProps = {
@@ -15,35 +16,27 @@ export const AuthorPage = ({ authors }: AuthorPageProps) => {
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           to="create">新規登録</Link>
       </div>
-      <table
-        className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-      >
-        <thead
-          className="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-        >
-          <tr>
-            <td>Id</td>
-            <td>Name</td>
-          </tr>
-        </thead>
-        <tbody>
+      <Table<Author>
+        headerInfo={[
           {
-            authors
-              ?
-              authors.map((e) => (
-                <tr
-                  className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 text-blue-600 dark:text-blue-500 hover:underline"
-                  onClick={() => navigate(`/authors/${e.id}`)}
-                >
-                  <td>{e.id}</td>
-                  <td>{e.name}</td>
-                </tr>)
-              )
-              :
-              <>表示要素がありませんでした</>
-          }
-        </tbody>
-      </table>
+            name: "Id",
+            onClick: () => {},
+          },
+          {
+            name: "Name",
+            onClick: () => {},
+          },
+        ]}
+        contentInfo={[
+          {
+            getValueFunc: (e) => e.id.toString()
+          },
+          {
+            getValueFunc: (e) => e.name
+          },
+        ]}
+        content={authors}
+      ></Table>
       <Link
         className="text-blue-600 dark:text-blue-500 hover:underline"
         to="/"
