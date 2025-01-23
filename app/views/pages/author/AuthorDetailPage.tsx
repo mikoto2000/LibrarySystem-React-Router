@@ -1,5 +1,5 @@
 import { Form } from "react-router";
-import { Button } from "~/components/button/Button";
+import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { Link } from "~/components/link/Link";
 import type { Author } from "~/types";
 
@@ -28,7 +28,7 @@ export const AuthorDetailPage = ({ author }: AuthorDetailPageProps) => {
         </tbody>
       </table>
       <div className="pl-1 pt-3 pb-1">
-        <Button
+        <LinkButton
           label="編集する"
           to={`/authors/${author.id}/edit`}
         />

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Button } from "~/components/button/Button";
+import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { Table } from "~/components/table/Table";
 import type { LendingSetList, LendingSetWithoutAuthor } from "~/views/types";
 
@@ -12,7 +12,7 @@ export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
     <main>
       <div className="pb-3">
         <h2 className="font-bold text-2xl mt-2 mb-1 ">LendingSets</h2>
-        <Button
+        <LinkButton
           label="新規作成"
           to="create"
         />

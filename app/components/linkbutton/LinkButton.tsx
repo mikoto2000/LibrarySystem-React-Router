@@ -5,7 +5,7 @@ type ButtonProps = {
   to: string,
 };
 
-export const Button: React.FC<ButtonProps> = ({ label, to }) => {
+export const LinkButton: React.FC<ButtonProps> = ({ label, to }) => {
 
 
   return (
