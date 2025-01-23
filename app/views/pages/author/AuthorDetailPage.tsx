@@ -1,5 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
 import { Button } from "~/components/button/Button";
+import { Link } from "~/components/link/Link";
 import type { Author } from "~/types";
 
 type AuthorDetailPageProps = {
@@ -26,24 +27,26 @@ export const AuthorDetailPage = ({ author }: AuthorDetailPageProps) => {
           </tr>
         </tbody>
       </table>
-      <div className="pl-1 pt-3 pb-3">
+      <div className="pl-1 pt-3 pb-1">
         <Button
           label="編集する"
           to={`/authors/${author.id}/edit`}
         />
-        <Button
-          label="削除する"
-          to={`/authors/${author.id}/delete`}
-        />
+        {" "}
+        <Form className="inline" method="post" action={`/authors/${author.id}/delete`}>
+          <button
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            type="submit">削除する</button>
+        </Form>
       </div>
       <div>
         <Link
-          className="text-blue-600 dark:text-blue-500 hover:underline"
-          to="/authors">一覧へ戻る</Link>
+          label="一覧へ戻る"
+          to="/authors" />
         {" "}
         <Link
-          className="text-blue-600 dark:text-blue-500 hover:underline"
-          to="/">トップへ戻る</Link>
+          label="トップへ戻る"
+          to="/" />
       </div>
     </main>
   )
