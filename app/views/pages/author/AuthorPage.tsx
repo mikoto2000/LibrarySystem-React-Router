@@ -8,7 +8,6 @@ type AuthorPageProps = {
 }
 
 export const AuthorPage = ({ authors }: AuthorPageProps) => {
-  const navigate = useNavigate();
   return (
     <main>
       <div className="pb-3">
