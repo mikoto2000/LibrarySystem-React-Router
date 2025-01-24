@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import type { LendingSet } from "~/views/types";
 
@@ -14,13 +15,15 @@ export const LendingSetDetailPage = ({ lendingSet }: LendingSetDetailPageProps) 
           JSON.stringify(lendingSet, null, 2)
         }
       </pre>
-      <Link to={`/lendingSets/${lendingSet.id}/edit`}>編集する</Link>
-      {" "}
-      <Form method="post" action={`/lendingSets/${lendingSet.id}/delete`}>
-        <SubmitButton
-          label="削除する"
-        />
-      </Form>
+      <div className="pl-1 pt-3 pb-1">
+        <LinkButton label="編集する" to={`/lendingSets/${lendingSet.id}/edit`} />
+        {" "}
+        <Form className="inline" method="post" action={`/lendingSets/${lendingSet.id}/delete`}>
+          <SubmitButton
+            label="削除する"
+          />
+        </Form>
+      </div>
       {" "}
       <Link to="/lendingSets">一覧へ戻る</Link>
       {" "}

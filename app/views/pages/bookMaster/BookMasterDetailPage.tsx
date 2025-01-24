@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookMaster } from "~/types";
 
@@ -16,7 +17,7 @@ export const BookMasterDetailPage = ({ bookMaster }: BookMasterDetailPageProps) 
         <li>Publication Date: {bookMaster.publicationDate}</li>
         <li>Authors: {bookMaster.authors.map((e) => `${e.id}: ${e.name}`).join(", ")}</li>
       </ul>
-      <Link to={`/bookMasters/${bookMaster.id}/edit`}>編集する</Link>
+      <LinkButton label="編集する" to={`/bookMasters/${bookMaster.id}/edit`} />
       {" "}
       <Form method="post" action={`/bookMasters/${bookMaster.id}/delete`}>
         <SubmitButton
