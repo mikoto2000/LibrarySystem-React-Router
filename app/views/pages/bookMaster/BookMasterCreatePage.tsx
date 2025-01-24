@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router"
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Author } from "~/types"
 
 type BookMasterCreatePageProps = {
@@ -26,7 +27,9 @@ export const BookMasterCreatePage = ({ authors }: BookMasterCreatePageProps) => 
           </select>
         </div>
         <div>
-          <button type="submit">登録</button>
+          <SubmitButton
+            label="登録"
+          />
         </div>
       </Form>
       <Link to="../bookMasters">一覧に戻る</Link>

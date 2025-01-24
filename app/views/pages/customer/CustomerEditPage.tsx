@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Customer } from "~/types";
 
 type CustomerEditPageProps = {
@@ -18,7 +19,9 @@ export const CustomerEditPage = ({ customer }: CustomerEditPageProps) => {
         <div>
           <label>Email Address: <input type="text" name="emailAddress" defaultValue={customer.emailAddress} /></label>
         </div>
-        <button type="submit">変更</button>
+        <SubmitButton
+          label="変更"
+        />
       </Form>
       {" "}
       <Link to={`/customers/${customer.id}`}>詳細へ戻る</Link>

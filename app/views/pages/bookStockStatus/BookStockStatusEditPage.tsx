@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types";
 
 type BookStockStatusEditPageProps = {
@@ -9,9 +10,11 @@ export const BookStockStatusEditPage = ({ bookStockStatus }: BookStockStatusEdit
   return (
     <main>
       <Form method="post" name="edit">
-        <label>Id: <input type="text" name="id" defaultValue={bookStockStatus.id} readOnly/></label>
-        <label>Name: <input type="text" name="name" defaultValue={bookStockStatus.name}/></label>
-        <button type="submit">変更</button>
+        <label>Id: <input type="text" name="id" defaultValue={bookStockStatus.id} readOnly /></label>
+        <label>Name: <input type="text" name="name" defaultValue={bookStockStatus.name} /></label>
+        <SubmitButton
+          label="変更"
+        />
       </Form>
       {" "}
       <Link to={`/bookStockStatuses/${bookStockStatus.id}`}>詳細へ戻る</Link>

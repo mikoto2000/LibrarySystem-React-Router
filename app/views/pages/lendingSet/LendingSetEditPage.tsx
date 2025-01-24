@@ -1,6 +1,7 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import type { Customer, LendingStatus } from "~/types";
-import type { BookMasterList, BookStockWithoutAuthor, LendingSet } from "~/views/types";
+import type { BookStockWithoutAuthor, LendingSet } from "~/views/types";
 
 type LendingSetEditPageProps = {
   lendingSet: LendingSet,
@@ -64,7 +65,9 @@ export const LendingSetEditPage = ({ lendingSet, customers, bookStocks, lendingS
             <input type="text" name="memo" defaultValue={lendingSet.memo} placeholder="memo" />
           </label>
         </div>
-        <button type="submit">変更</button>
+        <SubmitButton
+          label="変更"
+        />
       </Form >
       {" "}
       <Link to={`/lendingSets/${lendingSet.id}`}>詳細へ戻る</Link>

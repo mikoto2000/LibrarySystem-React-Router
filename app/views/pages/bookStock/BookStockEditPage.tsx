@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types";
 import type { BookMasterWithoutAuthors, BookStockWithoutAuthor } from "~/views/types";
 
@@ -40,7 +41,9 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
           </label>
         </div>
         <div>
-          <button type="submit">変更</button>
+          <SubmitButton
+            label="変更"
+          />
         </div>
       </Form>
       {" "}

@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import type { LendingSet } from "~/views/types";
 
 type LendingSetDetailPageProps = {
@@ -16,7 +17,9 @@ export const LendingSetDetailPage = ({ lendingSet }: LendingSetDetailPageProps) 
       <Link to={`/lendingSets/${lendingSet.id}/edit`}>編集する</Link>
       {" "}
       <Form method="post" action={`/lendingSets/${lendingSet.id}/delete`}>
-        <button type="submit">削除する</button>
+        <SubmitButton
+          label="削除する"
+        />
       </Form>
       {" "}
       <Link to="/lendingSets">一覧へ戻る</Link>

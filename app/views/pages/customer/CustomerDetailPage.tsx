@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Customer } from "~/types";
 
 type CustomerDetailPageProps = {
@@ -16,7 +17,9 @@ export const CustomerDetailPage = ({ customer }: CustomerDetailPageProps) => {
       <Link to={`/customers/${customer.id}/edit`}>編集する</Link>
       {" "}
       <Form method="post" action={`/customers/${customer.id}/delete`}>
-        <button type="submit">削除する</button>
+        <SubmitButton
+          label="削除する"
+        />
       </Form>
       {" "}
       <Link to="/customers">一覧へ戻る</Link>

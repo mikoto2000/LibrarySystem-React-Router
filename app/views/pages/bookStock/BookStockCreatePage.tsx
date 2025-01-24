@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router"
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types"
 import type { BookMasterWithoutAuthors } from "~/views/types"
 
@@ -35,7 +36,9 @@ export const BookStockCreatePage = ({ bookMasters, bookStockStatuses }: BookStoc
           </label>
         </div>
         <div>
-          <button type="submit">登録</button>
+          <SubmitButton
+            label="登録"
+          />
         </div>
       </Form>
       <Link to="../bookStocks">一覧に戻る</Link>

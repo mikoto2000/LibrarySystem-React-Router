@@ -1,5 +1,6 @@
 import { Form, Link } from "react-router"
-import type { BookMaster, BookStockStatus, Customer, LendingStatus } from "~/types"
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
+import type { Customer, LendingStatus } from "~/types"
 import type { BookStockWithoutAuthor } from "~/views/types"
 
 type LendingSetCreatePageProps = {
@@ -55,7 +56,9 @@ export const LendingSetCreatePage = ({ customers, bookStocks, lendingStatuses }:
           </label>
         </div>
         <div>
-          <button type="submit">登録</button>
+          <SubmitButton
+            label="登録"
+          />
         </div>
       </Form>
       <pre>

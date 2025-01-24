@@ -1,4 +1,5 @@
 import { Form, Link } from "react-router";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Author, BookMaster } from "~/types";
 
 type BookMasterEditPageProps = {
@@ -30,7 +31,9 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
             }
           </select>
         </div>
-        <button type="submit">変更</button>
+        <SubmitButton
+          label="変更"
+        />
       </Form>
       {" "}
       <Link to={`/bookMasters/${bookMaster.id}`}>詳細へ戻る</Link>

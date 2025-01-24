@@ -1,5 +1,6 @@
 import { Form } from "react-router";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import { Link } from "~/components/link/Link";
 import type { Author } from "~/types";
 
@@ -34,9 +35,9 @@ export const AuthorDetailPage = ({ author }: AuthorDetailPageProps) => {
         />
         {" "}
         <Form className="inline" method="post" action={`/authors/${author.id}/delete`}>
-          <button
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            type="submit">削除する</button>
+          <SubmitButton
+            label="削除する"
+          />
         </Form>
       </div>
       <div>

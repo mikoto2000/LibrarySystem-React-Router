@@ -1,5 +1,5 @@
 import { Form, Link } from "react-router";
-import type { BookStock } from "~/types";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockWithoutAuthor } from "~/views/types";
 
 type BookStockDetailPageProps = {
@@ -18,7 +18,9 @@ export const BookStockDetailPage = ({ bookStock }: BookStockDetailPageProps) => 
       <Link to={`/bookStocks/${bookStock.id}/edit`}>編集する</Link>
       {" "}
       <Form method="post" action={`/bookStocks/${bookStock.id}/delete`}>
-        <button type="submit">削除する</button>
+        <SubmitButton
+          label="削除する"
+        />
       </Form>
       {" "}
       <Link to="/bookStocks">一覧へ戻る</Link>
