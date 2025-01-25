@@ -6,7 +6,7 @@ import { lendingStatusRepository } from "~/di";
 export async function action({ params }: Route.ActionArgs) {
   const id = params.id;
   if (id) {
-    await lendingStatusRepository.findLendingStatusById(Number(id));
+    await lendingStatusRepository.deleteLendingStatus(Number(id));
 
     return redirect(`/lendingStatuses`);
   } else {
