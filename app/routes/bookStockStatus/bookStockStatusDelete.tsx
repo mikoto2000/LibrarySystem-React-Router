@@ -8,7 +8,7 @@ export async function action({ params }: Route.ActionArgs) {
   if (id) {
     await bookStockStatusRepository.deleteBookStockStatus(Number(id));
 
-    return redirect(`/bookStockStatuss`);
+    return redirect(`/bookStockStatuses`);
   } else {
     throw new Response("Invalid Parameter", { status: 400 })
   }

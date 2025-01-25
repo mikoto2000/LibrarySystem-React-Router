@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { DetailView } from "~/components/detailview/DetailView";
+import { Link } from "~/components/link/Link";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types";
@@ -10,12 +12,24 @@ type BookStockStatusDetailPageProps = {
 export const BookStockStatusDetailPage = ({ bookStockStatus }: BookStockStatusDetailPageProps) => {
   return (
     <main>
-      <ul>
-        <li>Id: {bookStockStatus.id}</li>
-        <li>Name: {bookStockStatus.name}</li>
-      </ul>
+      <DetailView<BookStockStatus>
+        content={bookStockStatus}
+        valueInfos={[
+          {
+            name: "Id",
+            getValueFunc: (e) => e.id.toString()
+          },
+          {
+            name: "name",
+            getValueFunc: (e) => e.name
+          }
+        ]}
+      />
       <div className="pl-1 pt-3 pb-1">
-        <LinkButton label="編集する" to={`/bookStockStatuses/${bookStockStatus.id}/edit`} />
+        <LinkButton
+          label="編集する"
+          to={`/bookStockStatuses/${bookStockStatus.id}/edit`}
+        />
         {" "}
         <Form className="inline" method="post" action={`/bookStockStatuses/${bookStockStatus.id}/delete`}>
           <SubmitButton
@@ -23,10 +37,24 @@ export const BookStockStatusDetailPage = ({ bookStockStatus }: BookStockStatusDe
           />
         </Form>
       </div>
-      {" "}
-      <Link to="/bookStockStatuses">一覧へ戻る</Link>
-      {" "}
-      <Link to="/">トップへ戻る</Link>
+      <div>
+        <Link
+          label="一覧へ戻る"
+          to="/authors" />
+        {" "}
+        <Link
+          label="トップへ戻る"
+          to="/" />
+      </div>
+      <pre>
+        {
+          import.meta.env.DEV
+            ?
+            JSON.stringify(bookStockStatus, null, 2)
+            :
+            <></>
+        }
+      </pre>
     </main>
   )
 }
