@@ -47,6 +47,15 @@ export const AuthorDetailPage = ({ author }: AuthorDetailPageProps) => {
           label="トップへ戻る"
           to="/" />
       </div>
+      <pre>
+        {
+          import.meta.env.DEV
+            ?
+            JSON.stringify(author, null, 2)
+            :
+            <></>
+        }
+      </pre>
     </main>
   )
 }
