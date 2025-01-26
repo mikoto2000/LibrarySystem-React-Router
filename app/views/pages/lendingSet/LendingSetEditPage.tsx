@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import type { Customer, LendingStatus } from "~/types";
 import type { BookStockWithoutAuthor, LendingSet } from "~/views/types";
@@ -16,7 +18,13 @@ export const LendingSetEditPage = ({ lendingSet, customers, bookStocks, lendingS
     <main>
       <Form method="post">
         <div>
-          <label>Id:<input type="text" name="id" value={lendingSet.id} /></label>
+          <LabelAndInput
+            label="Id"
+            inputType="text"
+            inputName="id"
+            inputDefaultValue={lendingSet.id}
+            readOnly
+          />
         </div>
         <div>
           <label>貸出先:
@@ -46,40 +54,51 @@ export const LendingSetEditPage = ({ lendingSet, customers, bookStocks, lendingS
           </label>
         </div>
         <div>
-          <label>貸出開始日:
-            <input type="date" name="lendStartDate" defaultValue={lendingSet.lendStartDate} />
-          </label>
+          <LabelAndInput
+            label="貸出開始日"
+            inputType="text"
+            inputName="lendStartDate"
+            inputDefaultValue={lendingSet.lendStartDate}
+            required
+          />
         </div>
         <div>
-          <label>貸出期限:
-            <input type="date" name="lendDeadlineDate" defaultValue={lendingSet.lendDeadlineDate} />
-          </label>
+          <LabelAndInput
+            label="貸出期限"
+            inputType="text"
+            inputName="lendDeadlineDate"
+            inputDefaultValue={lendingSet.lendDeadlineDate}
+            required
+          />
         </div>
         <div>
-          <label>返却日:
-            <input type="date" name="returnDate" defaultValue={lendingSet.returnDate} />
-          </label>
+          <LabelAndInput
+            label="返却日"
+            inputType="text"
+            inputName="returnDate"
+            inputDefaultValue={lendingSet.returnDate}
+          />
         </div>
         <div>
-          <label>メモ:
-            <input type="text" name="memo" defaultValue={lendingSet.memo} placeholder="memo" />
-          </label>
+          <LabelAndInput
+            label="メモ"
+            inputType="text"
+            inputName="memo"
+            inputDefaultValue={lendingSet.memo}
+          />
         </div>
-        <SubmitButton
-          label="変更"
-        />
+        <div className="pt-2" >
+          <SubmitButton
+            label="変更"
+          />
+        </div>
       </Form >
       {" "}
-      <Link to={`/lendingSets/${lendingSet.id}`}>詳細へ戻る</Link>
+      <Link label="詳細へ戻る" to={`/lendingSets/${lendingSet.id}`}></Link>
       {" "}
-      < Link to="/lendingSets" > 一覧へ戻る</Link >
+      <Link label="一覧へ戻る" to="/lendingSets"></Link>
       {" "}
-      < Link to="/" > トップへ戻る</Link >
-      <pre>
-        {
-          JSON.stringify(lendingSet, null, 2)
-        }
-      </pre>
+      <Link label="トップへ戻る" to="/"></Link>
     </main >
   )
 }
