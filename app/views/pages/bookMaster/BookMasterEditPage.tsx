@@ -1,5 +1,6 @@
 import { Form } from "react-router";
 import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect";
 import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Author, BookMaster } from "~/types";
@@ -51,20 +52,23 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
           />
         </div>
         <div>
-          <label>Authors:</label>
-          <div>
-            <select multiple required name="authorIds">
-              {
-                authors.map((e) => <option selected={authorIds.includes(e.id)} value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </div>
+          <LabelAndSelect
+            label="Authors"
+            selectName="authorIds"
+            multiple
+            required
+          >
+            {
+              authors.map((e) => <option selected={authorIds.includes(e.id)} value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
-        <SubmitButton
-          label="変更"
-        />
+        <div className="pt-2">
+          <SubmitButton
+            label="変更"
+          />
+        </div>
       </Form>
-      {" "}
       <Link label="詳細へ戻る" to={`/bookMasters/${bookMaster.id}`}></Link>
       {" "}
       <Link label="一覧へ戻る" to="/bookMasters"></Link>
