@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types";
 import type { BookMasterWithoutAuthors, BookStockWithoutAuthor } from "~/views/types";
@@ -10,12 +12,17 @@ type BookStockEditPageProps = {
 }
 
 export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }: BookStockEditPageProps) => {
-  console.log(bookStock);
   return (
     <main>
       <Form method="post">
         <div>
-          <label>Id:<input type="text" name="id" value={bookStock.id} /></label>
+          <LabelAndInput
+            label="Id"
+            inputType="text"
+            inputName="id"
+            inputDefaultValue={bookStock.id}
+            readOnly
+          />
         </div>
         <div>
           <label>書籍:
@@ -36,9 +43,12 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
           </label>
         </div>
         <div>
-          <label>メモ:
-            <input type="text" name="memo" defaultValue={bookStock.memo ? bookStock.memo : ""} placeholder="memo" />
-          </label>
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={bookStock.memo}
+          />
         </div>
         <div>
           <SubmitButton
@@ -47,14 +57,18 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
         </div>
       </Form>
       {" "}
-      <Link to={`/bookStocks/${bookStock.id}`}>詳細へ戻る</Link>
+      <Link label="詳細へ戻る" to={`/bookStocks/${bookStock.id}`}></Link>
       {" "}
-      <Link to="/bookStocks">一覧へ戻る</Link>
+      <Link label="一覧へ戻る" to="/bookStocks"></Link>
       {" "}
-      <Link to="/">トップへ戻る</Link>
+      <Link label="トップへ戻る" to="/"></Link>
       <pre>
         {
-          JSON.stringify(bookStock, null, 2)
+          import.meta.env.DEV
+            ?
+            JSON.stringify(bookStock, null, 2)
+            :
+            <></>
         }
       </pre>
     </main >
