@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Customer } from "~/types";
 
@@ -11,24 +13,44 @@ export const CustomerEditPage = ({ customer }: CustomerEditPageProps) => {
     <main>
       <Form method="post" name="edit">
         <div>
-          <label>Id: <input type="text" name="id" defaultValue={customer.id} readOnly /></label>
+          <LabelAndInput
+            label="Id"
+            inputType="text"
+            inputName="id"
+            inputDefaultValue={customer.id}
+            readOnly
+          />
         </div>
         <div>
-          <label>Name: <input type="text" name="name" defaultValue={customer.name} /></label>
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={customer.name}
+            required
+          />
         </div>
         <div>
-          <label>Email Address: <input type="text" name="emailAddress" defaultValue={customer.emailAddress} /></label>
+          <LabelAndInput
+            label="Email Address"
+            inputType="text"
+            inputName="emailAddress"
+            inputDefaultValue={customer.emailAddress}
+            required
+          />
         </div>
-        <SubmitButton
-          label="変更"
-        />
+        <div className="pt-2" >
+          <SubmitButton
+            label="変更"
+          />
+        </div>
       </Form>
       {" "}
-      <Link to={`/customers/${customer.id}`}>詳細へ戻る</Link>
+      <Link label="詳細へ戻る" to={`/customers/${customer.id}`}></Link>
       {" "}
-      <Link to="/customers">一覧へ戻る</Link>
+      <Link label="一覧へ戻る" to="/customers"></Link>
       {" "}
-      <Link to="/">トップへ戻る</Link>
+      <Link label="トップへ戻る" to="/"></Link>
     </main>
   )
 }
