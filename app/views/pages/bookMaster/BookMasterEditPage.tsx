@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Author, BookMaster } from "~/types";
 
@@ -13,34 +15,61 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
     <main>
       <Form method="post" name="edit">
         <div>
-          <label>Id: <input type="text" name="id" defaultValue={bookMaster.id} readOnly /></label>
+          <LabelAndInput
+            label="Id"
+            inputType="text"
+            inputName="id"
+            inputDefaultValue={bookMaster.id}
+            readOnly
+          />
         </div>
         <div>
-          <label>Isbn: <input type="text" name="isbn" defaultValue={bookMaster.isbn} /></label>
+          <LabelAndInput
+            label="Isbn"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={bookMaster.isbn}
+            required
+          />
         </div>
         <div>
-          <label>Name: <input type="text" name="name" defaultValue={bookMaster.name} /></label>
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={bookMaster.name}
+            required
+          />
         </div>
         <div>
-          <label>Publication Date: <input type="date" name="publicationDate" defaultValue={bookMaster.publicationDate} /></label>
+          <LabelAndInput
+            label="Publication Date"
+            inputType="date"
+            inputName="name"
+            inputDefaultValue={bookMaster.publicationDate}
+            required
+          />
         </div>
         <div>
-          <select multiple name="authorIds">
-            {
-              authors.map((e) => <option selected={authorIds.includes(e.id)} value={e.id}>{e.name}</option>)
-            }
-          </select>
+          <label>Authors:</label>
+          <div>
+            <select multiple required name="authorIds">
+              {
+                authors.map((e) => <option selected={authorIds.includes(e.id)} value={e.id}>{e.name}</option>)
+              }
+            </select>
+          </div>
         </div>
         <SubmitButton
           label="変更"
         />
       </Form>
       {" "}
-      <Link to={`/bookMasters/${bookMaster.id}`}>詳細へ戻る</Link>
+      <Link label="詳細へ戻る" to={`/bookMasters/${bookMaster.id}`}></Link>
       {" "}
-      <Link to="/bookMasters">一覧へ戻る</Link>
+      <Link label="一覧へ戻る" to="/bookMasters"></Link>
       {" "}
-      <Link to="/">トップへ戻る</Link>
+      <Link label="トップへ戻る" to="/"></Link>
     </main>
   )
 }
