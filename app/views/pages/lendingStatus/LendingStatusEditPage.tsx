@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import type { LendingStatus } from "~/types";
 
@@ -10,18 +12,36 @@ export const LendingStatusEditPage = ({ lendingStatus }: LendingStatusEditPagePr
   return (
     <main>
       <Form method="post" name="edit">
-        <label>Id: <input type="text" name="id" defaultValue={lendingStatus.id} readOnly /></label>
-        <label>Name: <input type="text" name="name" defaultValue={lendingStatus.name} /></label>
-        <SubmitButton
-          label="変更"
-        />
+        <div>
+          <LabelAndInput
+            label="Id"
+            inputType="text"
+            inputName="id"
+            inputDefaultValue={lendingStatus.id}
+            readOnly
+          />
+        </div>
+        <div>
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={lendingStatus.name}
+            required
+          />
+        </div>
+        <div className="pt-2" >
+          <SubmitButton
+            label="変更"
+          />
+        </div>
       </Form>
       {" "}
-      <Link to={`/lendingStatuses/${lendingStatus.id}`}>詳細へ戻る</Link>
+      <Link label="詳細へ戻る" to={`/lendingStatuses/${lendingStatus.id}`}></Link>
       {" "}
-      <Link to="/lendingStatuses">一覧へ戻る</Link>
+      <Link label="一覧へ戻る" to="/lendingStatuses"></Link>
       {" "}
-      <Link to="/">トップへ戻る</Link>
+      <Link label="トップへ戻る" to="/"></Link>
     </main>
   )
 }
