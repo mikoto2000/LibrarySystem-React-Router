@@ -2,7 +2,7 @@ type LabelAndInputProps = {
   label: string,
   inputType: string,
   inputName: string,
-  inputDefaultValue: any,
+  inputDefaultValue?: any,
   readOnly?: boolean,
   required?: boolean,
 };

@@ -46,7 +46,7 @@ export const BookMasterEditPage = ({ bookMaster, authors }: BookMasterEditPagePr
           <LabelAndInput
             label="Publication Date"
             inputType="date"
-            inputName="name"
+            inputName="publicationDate"
             inputDefaultValue={bookMaster.publicationDate}
             required
           />
