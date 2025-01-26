@@ -1,4 +1,6 @@
 import { Form, Link } from "react-router"
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput"
+import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect"
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Customer, LendingStatus } from "~/types"
 import type { BookStockWithoutAuthor } from "~/views/types"
@@ -14,48 +16,64 @@ export const LendingSetCreatePage = ({ customers, bookStocks, lendingStatuses }:
     <main>
       <Form method="post">
         <div>
-          <label>貸出先:
-            <select name="customerId">
-              {
-                customers.map((e) => <option value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="貸出先"
+            selectName="customerId"
+            required
+          >
+            {
+              customers.map((e) => <option value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
-          <label>貸出書籍:
-            <select multiple name="bookStockIds">
-              {
-                bookStocks.map((e) => <option value={e.id}>{e.id}: {e.bookMaster.name}, {e.memo}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="貸出書籍"
+            selectName="bookStockIds"
+            multiple
+            required
+          >
+            {
+              bookStocks.map((e) => <option value={e.id}>{e.id}: {e.bookMaster.name}, {e.memo}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
-          <label>貸出ステータス:
-            <select name="lendingStatusId">
-              {
-                lendingStatuses.map((e) => <option value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="貸出ステータス"
+            selectName="lendingStatusId"
+            required
+          >
+            {
+              lendingStatuses.map((e) => <option value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
-          <label>貸出開始日:
-            <input type="date" name="lendStartDate" />
-          </label>
+          <LabelAndInput
+            label="貸出開始日"
+            inputType="date"
+            inputName="lendStartDate"
+            required
+          />
         </div>
         <div>
-          <label>貸出期限:
-            <input type="date" name="lendDeadlineDate" />
-          </label>
+          <LabelAndInput
+            label="貸出期限"
+            inputType="date"
+            inputName="lendDeadlineDate"
+            required
+          />
         </div>
         <div>
-          <label>memo:
-            <input type="text" name="memo" placeholder="memo" />
-          </label>
+          <LabelAndInput
+            label="メモ"
+            inputType="text"
+            inputName="memo"
+            required
+          />
         </div>
-        <div>
+        <div className="pt-2">
           <SubmitButton
             label="登録"
           />
