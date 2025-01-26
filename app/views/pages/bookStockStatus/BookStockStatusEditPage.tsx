@@ -1,4 +1,6 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types";
 
@@ -10,18 +12,36 @@ export const BookStockStatusEditPage = ({ bookStockStatus }: BookStockStatusEdit
   return (
     <main>
       <Form method="post" name="edit">
-        <label>Id: <input type="text" name="id" defaultValue={bookStockStatus.id} readOnly /></label>
-        <label>Name: <input type="text" name="name" defaultValue={bookStockStatus.name} /></label>
-        <SubmitButton
-          label="変更"
-        />
+        <div>
+          <LabelAndInput
+            label="Id"
+            inputType="text"
+            inputName="id"
+            inputDefaultValue={bookStockStatus.id}
+            readOnly
+          />
+        </div>
+        <div>
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={bookStockStatus.name}
+            required
+          />
+        </div>
+        <div className="pt-2" >
+          <SubmitButton
+            label="変更"
+          />
+        </div>
       </Form>
       {" "}
-      <Link to={`/bookStockStatuses/${bookStockStatus.id}`}>詳細へ戻る</Link>
+      <Link label="詳細へ戻る" to={`/bookStockStatuses/${bookStockStatus.id}`}></Link>
       {" "}
-      <Link to="/bookStockStatuses">一覧へ戻る</Link>
+      <Link label="一覧へ戻る" to="/bookStockStatuses"></Link>
       {" "}
-      <Link to="/">トップへ戻る</Link>
+      <Link label="トップへ戻る" to="/"></Link>
     </main>
   )
 }
