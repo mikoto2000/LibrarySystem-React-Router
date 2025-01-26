@@ -1,5 +1,6 @@
 import { Form } from "react-router";
 import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect";
 import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import type { Customer, LendingStatus } from "~/types";
@@ -27,31 +28,38 @@ export const LendingSetEditPage = ({ lendingSet, customers, bookStocks, lendingS
           />
         </div>
         <div>
-          <label>貸出先:
-            <select name="customerId">
-              {
-                customers.map((e) => <option value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="貸出先"
+            selectName="customerId"
+            required
+          >
+            {
+              customers.map((e) => <option value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
-          <label>貸出書籍:
-            <select name="bookStockIds" multiple>
-              {
-                bookStocks.map((e) => <option selected={selectedBookStockIds.includes(e.id)} value={e.id}>{e.bookMaster.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="貸出書籍"
+            selectName="bookStockIds"
+            multiple
+            required
+          >
+            {
+              bookStocks.map((e) => <option selected={selectedBookStockIds.includes(e.id)} value={e.id}>{e.bookMaster.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
-          <label>貸出状態:
-            <select name="lendingStatusId">
-              {
-                lendingStatuses.map((e) => <option selected={lendingSet.lendingStatus.id === e.id} value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="貸出状態"
+            selectName="lendingStatusId"
+            required
+          >
+            {
+              lendingStatuses.map((e) => <option selected={lendingSet.lendingStatus.id === e.id} value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
           <LabelAndInput
