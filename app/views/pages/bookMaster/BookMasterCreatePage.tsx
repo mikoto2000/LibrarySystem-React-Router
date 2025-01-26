@@ -1,4 +1,7 @@
-import { Form, Link } from "react-router"
+import { Form } from "react-router"
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput"
+import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect"
+import { Link } from "~/components/link/Link"
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Author } from "~/types"
 
@@ -11,20 +14,43 @@ export const BookMasterCreatePage = ({ authors }: BookMasterCreatePageProps) => 
     <main>
       <Form method="post">
         <div>
-          <input type="text" name="isbn" placeholder="isbn" />
+          <LabelAndInput
+            label="Isbn"
+            inputType="text"
+            inputName="isbn"
+            inputDefaultValue=""
+            required
+          />
         </div>
         <div>
-          <input type="text" name="name" placeholder="name" />
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue=""
+            required
+          />
         </div>
         <div>
-          <input type="date" name="publicationDate" placeholder="公開日" />
+          <LabelAndInput
+            label="Publication Date"
+            inputType="date"
+            inputName="publicationDate"
+            inputDefaultValue=""
+            required
+          />
         </div>
         <div>
-          <select multiple name="authors">
+          <LabelAndSelect
+            label="Authors"
+            selectName="authors"
+            multiple
+            required
+          >
             {
               authors.map((e) => <option value={e.id}>{e.name}</option>)
             }
-          </select>
+          </LabelAndSelect>
         </div>
         <div>
           <SubmitButton
@@ -32,7 +58,7 @@ export const BookMasterCreatePage = ({ authors }: BookMasterCreatePageProps) => 
           />
         </div>
       </Form>
-      <Link to="../bookMasters">一覧に戻る</Link>
+      <Link label="一覧に戻る" to="../bookMasters"></Link>
     </main>
   )
 }
