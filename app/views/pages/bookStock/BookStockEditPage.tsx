@@ -1,5 +1,6 @@
 import { Form } from "react-router";
 import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
+import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect";
 import { Link } from "~/components/link/Link";
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types";
@@ -25,22 +26,26 @@ export const BookStockEditPage = ({ bookStock, bookMasters, bookStockStatuses }:
           />
         </div>
         <div>
-          <label>書籍:
-            <select name="bookMasterId">
-              {
-                bookMasters.map((e) => <option selected={bookStock.bookMaster.id === e.id} value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="書籍"
+            selectName="bookMasterId"
+            required
+          >
+            {
+              bookMasters.map((e) => <option selected={bookStock.bookMaster.id === e.id} value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
-          <label>在庫情報
-            <select name="bookStockStatusId">
-              {
-                bookStockStatuses.map((e) => <option selected={bookStock.bookStockStatus.id === e.id} value={e.id}>{e.name}</option>)
-              }
-            </select>
-          </label>
+          <LabelAndSelect
+            label="在庫情報"
+            selectName="bookStockStatusId"
+            required
+          >
+            {
+              bookStockStatuses.map((e) => <option selected={bookStock.bookStockStatus.id === e.id} value={e.id}>{e.name}</option>)
+            }
+          </LabelAndSelect>
         </div>
         <div>
           <LabelAndInput
