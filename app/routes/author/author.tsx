@@ -2,8 +2,23 @@ import type { Route } from "./+types/author";
 import { AuthorPage } from "../../views/pages/author/AuthorPage";
 import { authorRepository } from "~/di";
 
-export async function loader() {
-  const authors = await authorRepository.findAllAuthor();
+export async function loader({ request }: Route.LoaderArgs) {
+  // クエリパラメーターから検索条件・オーダー・ページネーション情報を取得
+  const searchParams = new URL(request.url).searchParams;
+  const name = searchParams.get("name");
+  const sortOrder = searchParams.get("sortOrder");
+  const orderBy = searchParams.get("orderBy");
+  const page = Number(searchParams.get("page"));
+  const limit = Number(searchParams.get("limit"));
+
+  const authors = await authorRepository
+    .findAllAuthor(
+      name ? name : undefined,
+      sortOrder ? sortOrder : undefined,
+      orderBy ? orderBy : undefined,
+      page ? page : undefined,
+      limit ? limit : undefined,
+    );
   return { authors };
 }
 
