@@ -3,7 +3,7 @@ volumes:
 
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/typescript-node:1-22
+    image: mikoto2000/javascript-node
     environment:
         POSTGRES_PASSWORD: postgres
         POSTGRES_USER: postgres

@@ -11,17 +11,20 @@
     {
       "type": "bind",
       "source": "${localEnv:HOME}/.vim",
-      "target": "/home/node/.vim"
+      "target": "/home/vscode/.vim"
     },
     {
       "type": "bind",
       "source": "${localEnv:HOME}/.gitconfig",
-      "target": "/home/node/.gitconfig"
+      "target": "/home/vscode/.gitconfig"
     },
     {
       "type": "bind",
       "source": "${localEnv:HOME}/.ssh",
-      "target": "/home/node/.ssh"
+      "target": "/home/vscode/.ssh"
     },
   ],
+  "features": {
+    "ghcr.io/devcontainers-community/features/deno:1": {}
+  }
 }
