@@ -1,15 +1,33 @@
 import { Link, useNavigate } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import { Table } from "~/components/table/Table";
 import type { Author } from "~/types";
 
 type AuthorPageProps = {
   authors: Author[],
+  searchedName: string | null,
 }
 
-export const AuthorPage = ({ authors }: AuthorPageProps) => {
+export const AuthorPage = ({ authors, searchedName }: AuthorPageProps) => {
   return (
     <main>
+      {/* 検索フォーム*/}
+      <div className="pb-3">
+        <h2 className="font-bold text-2xl mt-2 mb-1 ">検索フォーム</h2>
+        <form method="get" action="/authors">
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={searchedName ? searchedName : ""}
+          />
+          <SubmitButton
+            label="検索"
+          />
+        </form>
+      </div>
       <div className="pb-3">
         <h2 className="font-bold text-2xl mt-2 mb-1 ">Authors</h2>
         <LinkButton
