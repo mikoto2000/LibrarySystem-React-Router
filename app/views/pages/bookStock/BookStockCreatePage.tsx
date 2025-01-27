@@ -1,6 +1,7 @@
-import { Form, Link } from "react-router"
+import { Form } from "react-router"
 import { LabelAndInput } from "~/components/labelandinput/LabelAndInput"
 import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect"
+import { Link } from "~/components/link/Link"
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { BookStockStatus } from "~/types"
 import type { BookMasterWithoutAuthors } from "~/views/types"
@@ -50,7 +51,7 @@ export const BookStockCreatePage = ({ bookMasters, bookStockStatuses }: BookStoc
           />
         </div>
       </Form>
-      <Link to="../bookStocks">一覧に戻る</Link>
+      <Link label="一覧に戻る" to="../bookStocks"></Link>
     </main>
   )
 }

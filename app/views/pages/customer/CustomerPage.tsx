@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "~/components/link/Link";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { Table } from "~/components/table/Table";
 import type { Customer } from "~/types";
@@ -39,7 +39,9 @@ export const CustomerPage = ({ customeres }: CustomerPageProps) => {
         ]}
         content={customeres}
       ></Table>
-      <Link to="/">トップに戻る</Link>
+      <Link
+        label="トップに戻る"
+        to="/"></Link>
       {
         import.meta.env.DEV
           ?

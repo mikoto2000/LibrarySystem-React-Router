@@ -1,6 +1,7 @@
-import { Form, Link } from "react-router"
+import { Form } from "react-router"
 import { LabelAndInput } from "~/components/labelandinput/LabelAndInput"
 import { LabelAndSelect } from "~/components/labelandselect/LabelAndSelect"
+import { Link } from "~/components/link/Link"
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 import type { Customer, LendingStatus } from "~/types"
 import type { BookStockWithoutAuthor } from "~/views/types"
@@ -84,7 +85,9 @@ export const LendingSetCreatePage = ({ customers, bookStocks, lendingStatuses }:
           JSON.stringify(bookStocks, null, 2)
         }
       </pre>
-      <Link to="../bookStocks">一覧に戻る</Link>
+      <Link
+        label="一覧に戻る"
+        to="../bookStocks"></Link>
     </main >
   )
 }

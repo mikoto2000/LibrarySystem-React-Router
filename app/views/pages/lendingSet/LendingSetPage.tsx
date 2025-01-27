@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "~/components/link/Link";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { Table } from "~/components/table/Table";
 import type { LendingSetList, LendingSetWithoutAuthor } from "~/views/types";
@@ -82,9 +82,9 @@ export const LendingSetPage = ({ lendingSets }: LendingSetPageProps) => {
         content={lendingSets}
       ></Table>
       <Link
-        className="text-blue-600 dark:text-blue-500 hover:underline"
+        label="トップに戻る"
         to="/"
-      >トップに戻る</Link>
+      ></Link>
       {
         import.meta.env.DEV
           ?

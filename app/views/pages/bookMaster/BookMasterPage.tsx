@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "~/components/link/Link";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
 import { Table } from "~/components/table/Table";
 import type { BookMasterList, BookMasterWithoutAuthors } from "~/views/types";
@@ -54,9 +54,9 @@ export const BookMasterPage = ({ bookMasters }: BookMasterPageProps) => {
         content={bookMasters}
       ></Table>
       <Link
-        className="text-blue-600 dark:text-blue-500 hover:underline"
+        label="トップに戻る"
         to="/"
-      >トップに戻る</Link>
+      ></Link>
       {
         import.meta.env.DEV
           ?

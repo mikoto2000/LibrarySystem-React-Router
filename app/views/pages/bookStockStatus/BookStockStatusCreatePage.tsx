@@ -1,4 +1,5 @@
-import { Form, Link } from "react-router"
+import { Form } from "react-router"
+import { Link } from "~/components/link/Link"
 import { SubmitButton } from "~/components/submitbutton/SubmitButton"
 
 export const BookStockStatusCreatePage = () => {
@@ -10,7 +11,9 @@ export const BookStockStatusCreatePage = () => {
           label="登録"
         />
       </Form>
-      <Link to="../bookStockStatuses">一覧に戻る</Link>
+      <Link
+        label="一覧に戻る"
+        to="../bookStockStatuses"></Link>
     </main>
   )
 }
