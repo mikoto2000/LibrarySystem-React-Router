@@ -7,10 +7,34 @@ import type { Author } from "~/types";
 
 type AuthorPageProps = {
   authors: Author[],
-  searchedName: string | null,
+  searchParam: {
+    name: string,
+    orderBy: string,
+    sortOrder: string,
+  },
 }
 
-export const AuthorPage = ({ authors, searchedName }: AuthorPageProps) => {
+export const AuthorPage = ({ authors, searchParam }: AuthorPageProps) => {
+
+  const navigate = useNavigate();
+
+  /**
+   * 既存の検索条件を引き継いで、更新された検索条件で検索結果を表示するためのURLを生成する。
+   */
+  const calcSearchNavigateUrl = (name?: string, orderBy?: string, sortOrder?: string): string => {
+    const searchParams = new URLSearchParams();
+    if (name) {
+      searchParams.set("name", name);
+    }
+    if (orderBy) {
+      searchParams.set("orderBy", orderBy);
+    }
+    if (sortOrder) {
+      searchParams.set("sortOrder", sortOrder);
+    }
+    return `/authors?${searchParams.toString()}`;
+  }
+
   return (
     <main>
       {/* 検索フォーム*/}
@@ -21,7 +45,7 @@ export const AuthorPage = ({ authors, searchedName }: AuthorPageProps) => {
             label="Name"
             inputType="text"
             inputName="name"
-            inputDefaultValue={searchedName ? searchedName : ""}
+            inputDefaultValue={searchParam.name ? searchParam.name : ""}
           />
           <SubmitButton
             label="検索"
@@ -40,11 +64,19 @@ export const AuthorPage = ({ authors, searchedName }: AuthorPageProps) => {
         headerInfo={[
           {
             name: "Id",
-            onClick: () => { },
+            onClick: () => {
+              const newSortOrder = searchParam.orderBy === "id" && searchParam.sortOrder === "asc" ? "desc" : "asc";
+              navigate(calcSearchNavigateUrl(searchParam.name, "id", newSortOrder));
+            },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
           {
             name: "Name",
-            onClick: () => { },
+            onClick: () => {
+              const newSortOrder = searchParam.orderBy === "name" && searchParam.sortOrder === "asc" ? "desc" : "asc";
+              navigate(calcSearchNavigateUrl(searchParam.name, "name", newSortOrder));
+            },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },
         ]}
         contentInfo={[

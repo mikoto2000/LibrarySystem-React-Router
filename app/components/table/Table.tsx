@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 type HeaderInfo = {
   name: string,
   onClick: () => void,
+  footer?: string,
 }[];
 
 type ContentInfo<T> = {
@@ -34,7 +35,7 @@ export const Table = <T,>({ linkTo, headerInfo, contentInfo, content }: TablePro
               key={e.name}
               onClick={e.onClick}
             >
-              {e.name}
+              {e.name}{e.footer}
             </th>
             )
           }

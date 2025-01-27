@@ -19,7 +19,13 @@ export async function loader({ request }: Route.LoaderArgs) {
       page ? page : undefined,
       limit ? limit : undefined,
     );
-  return { authors, searchedName: name };
+  return {
+    authors, searchParam: {
+      name: name ? name : "",
+      sortOrder: sortOrder ? sortOrder : "",
+      orderBy: orderBy ? orderBy : "",
+    }
+  };
 }
 
 export function meta({ }: Route.MetaArgs) {
@@ -32,7 +38,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function Index({ loaderData }: Route.ComponentProps) {
   return <AuthorPage
     authors={loaderData.authors}
-    searchedName={loaderData.searchedName}
+    searchParam={loaderData.searchParam}
   />;
 }
 
