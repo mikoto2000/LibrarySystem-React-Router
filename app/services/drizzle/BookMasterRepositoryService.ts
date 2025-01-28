@@ -1,4 +1,4 @@
-import { and, or, eq, like, gte, lte, asc, desc } from "drizzle-orm";
+import { and, eq, like, gte, lte, asc, desc } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import type { BookMaster } from "~/types";
@@ -27,7 +27,7 @@ export class BookMasterRepositoryForDrizzle implements BookMasterRepositoryServi
     const selectResult = await db.select()
       .from(bookMasterTable)
       .where(
-        or(
+        and(
           name ? like(bookMasterTable.name, `%${name}%`) : undefined,
           isbn ? like(bookMasterTable.isbn, `%${isbn}%`) : undefined,
           and(
@@ -36,7 +36,6 @@ export class BookMasterRepositoryForDrizzle implements BookMasterRepositoryServi
           )
         )
       )
-
       .orderBy(sortOrder === 'desc' ? desc(ob) : asc(ob))
       .limit(limit ? limit : 10)
       .offset(page ? (page - 1) * (limit ? limit : 10) : 0);
