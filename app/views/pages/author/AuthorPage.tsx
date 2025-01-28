@@ -5,13 +5,17 @@ import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import { Table } from "~/components/table/Table";
 import type { Author } from "~/types";
 
+type SearchParam = {
+  name: string,
+  sortOrder: string,
+  orderBy: string,
+  page: number,
+  limit: number
+};
+
 type AuthorPageProps = {
   authors: Author[],
-  searchParam: {
-    name: string,
-    orderBy: string,
-    sortOrder: string,
-  },
+  searchParam: SearchParam,
 }
 
 export const AuthorPage = ({ authors, searchParam }: AuthorPageProps) => {
@@ -21,17 +25,27 @@ export const AuthorPage = ({ authors, searchParam }: AuthorPageProps) => {
   /**
    * 既存の検索条件を引き継いで、更新された検索条件で検索結果を表示するためのURLを生成する。
    */
-  const calcSearchNavigateUrl = (name?: string, orderBy?: string, sortOrder?: string): string => {
+  const calcSearchNavigateUrl = (
+    searchParam: SearchParam,
+    orderBy?: string,
+    sortOrder?: string
+  ): string => {
     const searchParams = new URLSearchParams();
-    if (name) {
-      searchParams.set("name", name);
+
+    for (const [key, value] of Object.entries(searchParam)) {
+      if (value) {
+        searchParams.set(key, String(value));
+      }
+    }
+
+    // sortOrderとorderByが指定されている場合は、それを上書きする
+    if (sortOrder) {
+      searchParams.set("sortOrder", sortOrder);
     }
     if (orderBy) {
       searchParams.set("orderBy", orderBy);
     }
-    if (sortOrder) {
-      searchParams.set("sortOrder", sortOrder);
-    }
+
     return `/authors?${searchParams.toString()}`;
   }
 
@@ -66,7 +80,7 @@ export const AuthorPage = ({ authors, searchParam }: AuthorPageProps) => {
             name: "Id",
             onClick: () => {
               const newSortOrder = searchParam.orderBy === "id" && searchParam.sortOrder === "asc" ? "desc" : "asc";
-              navigate(calcSearchNavigateUrl(searchParam.name, "id", newSortOrder));
+              navigate(calcSearchNavigateUrl(searchParam, "id", newSortOrder));
             },
             footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
@@ -74,7 +88,7 @@ export const AuthorPage = ({ authors, searchParam }: AuthorPageProps) => {
             name: "Name",
             onClick: () => {
               const newSortOrder = searchParam.orderBy === "name" && searchParam.sortOrder === "asc" ? "desc" : "asc";
-              navigate(calcSearchNavigateUrl(searchParam.name, "name", newSortOrder));
+              navigate(calcSearchNavigateUrl(searchParam, "name", newSortOrder));
             },
             footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },

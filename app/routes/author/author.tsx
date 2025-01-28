@@ -24,6 +24,8 @@ export async function loader({ request }: Route.LoaderArgs) {
       name: name ? name : "",
       sortOrder: sortOrder ? sortOrder : "",
       orderBy: orderBy ? orderBy : "",
+      page: page ? page : 1,
+      limit: limit ? limit : 10,
     }
   };
 }
