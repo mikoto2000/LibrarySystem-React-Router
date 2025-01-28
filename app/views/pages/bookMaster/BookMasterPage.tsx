@@ -1,15 +1,103 @@
+import { useNavigate } from "react-router";
+import { LabelAndInput } from "~/components/labelandinput/LabelAndInput";
 import { Link } from "~/components/link/Link";
 import { LinkButton } from "~/components/linkbutton/LinkButton";
+import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import { Table } from "~/components/table/Table";
 import type { BookMasterList, BookMasterWithoutAuthors } from "~/views/types";
 
 type BookMasterPageProps = {
   bookMasters: BookMasterList,
+  searchParam: {
+    isbn: string,
+    name: string,
+    publicationDateBegin: string,
+    publicationDateEnd: string,
+    sortOrder: string,
+    orderBy: string,
+  },
 }
 
-export const BookMasterPage = ({ bookMasters }: BookMasterPageProps) => {
+export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps) => {
+
+  const navigate = useNavigate();
+
+  /**
+   * 既存の検索条件を引き継いで、更新された検索条件で検索結果を表示するためのURLを生成する。
+   */
+  const calcSearchNavigateUrl = (
+    isbn?: string,
+    name?: string,
+    publicationDateBegin?: string,
+    publicationDateEnd?: string,
+    sortOrder?: string,
+    orderBy?: string,
+    page?: number,
+    limit?: number
+  ): string => {
+    const searchParams = new URLSearchParams();
+    if (isbn) {
+      searchParams.set("isbn", isbn);
+    }
+    if (name) {
+      searchParams.set("name", name);
+    }
+    if (publicationDateBegin) {
+      searchParams.set("publicationDateBegin", publicationDateBegin);
+    }
+    if (publicationDateEnd) {
+      searchParams.set("publicationDateEnd", publicationDateEnd);
+    }
+    if (sortOrder) {
+      searchParams.set("sortOrder", sortOrder);
+    }
+    if (orderBy) {
+      searchParams.set("orderBy", orderBy);
+    }
+    if (page) {
+      searchParams.set("page", page.toString());
+    }
+    if (limit) {
+      searchParams.set("limit", limit.toString());
+    }
+    return `/bookMasters?${searchParams.toString()}`;
+  }
+
   return (
     <main>
+      {/* 検索フォーム*/}
+      <div className="pb-3">
+        <h2 className="font-bold text-2xl mt-2 mb-1 ">検索フォーム</h2>
+        <form method="get" action="/bookMasters">
+          <LabelAndInput
+            label="ISBN"
+            inputType="text"
+            inputName="isbn"
+            inputDefaultValue={searchParam.isbn ? searchParam.isbn : ""}
+          />
+          <LabelAndInput
+            label="Name"
+            inputType="text"
+            inputName="name"
+            inputDefaultValue={searchParam.name ? searchParam.name : ""}
+          />
+          <LabelAndInput
+            label="Publication Date Begin"
+            inputType="date"
+            inputName="publicationDateBegin"
+            inputDefaultValue={searchParam.publicationDateBegin ? searchParam.publicationDateBegin : ""}
+          />
+          <LabelAndInput
+            label="Publication Date End"
+            inputType="date"
+            inputName="publicationDateEnd"
+            inputDefaultValue={searchParam.publicationDateEnd ? searchParam.publicationDateEnd : ""}
+          />
+          <SubmitButton
+            label="検索"
+          />
+        </form>
+      </div>
       <div className="pb-3">
         <h2 className="font-bold text-2xl mt-2 mb-1 ">BookMasters</h2>
         <LinkButton

@@ -26,7 +26,16 @@ export async function loader({ request }: Route.LoaderArgs) {
     limit ? limit : undefined,
   );
 
-  return { bookMasters };
+  return {
+    bookMasters, searchParam: {
+      isbn: isbn ? isbn : "",
+      name: name ? name : "",
+      publicationDateBegin: publicationDateBegin ? publicationDateBegin : "",
+      publicationDateEnd: publicationDateEnd ? publicationDateEnd : "",
+      sortOrder: sortOrder ? sortOrder : "",
+      orderBy: orderBy ? orderBy : "",
+    }
+  };
 }
 
 export function meta({ }: Route.MetaArgs) {
@@ -39,6 +48,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function Index({ loaderData }: Route.ComponentProps) {
   return <BookMasterPage
     bookMasters={loaderData.bookMasters}
+    searchParam={loaderData.searchParam}
   />;
 }
 
