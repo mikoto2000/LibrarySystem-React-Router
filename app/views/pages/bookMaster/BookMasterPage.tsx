@@ -110,19 +110,35 @@ export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps
         headerInfo={[
           {
             name: "Id",
-            onClick: () => { },
+            onClick: () => {
+              const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
+              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "id"));
+            },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
           {
             name: "ISBN",
-            onClick: () => { },
+            onClick: () => {
+              const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
+              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "isbn"));
+            },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "isbn" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "isbn" ? "▼" : "",
           },
           {
             name: "Book Name",
-            onClick: () => { },
+            onClick: () => {
+              const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
+              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "name"));
+            },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },
           {
             name: "Publication Date",
-            onClick: () => { },
+            onClick: () => {
+              const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
+              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "publicationDate"));
+            },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "publicationDate" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "publicationDate" ? "▼" : "",
           },
         ]}
         contentInfo={[
