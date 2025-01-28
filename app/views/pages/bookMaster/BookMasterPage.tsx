@@ -6,16 +6,20 @@ import { SubmitButton } from "~/components/submitbutton/SubmitButton";
 import { Table } from "~/components/table/Table";
 import type { BookMasterList, BookMasterWithoutAuthors } from "~/views/types";
 
+type SearchParam = {
+  isbn: string,
+  name: string,
+  publicationDateBegin: string,
+  publicationDateEnd: string,
+  sortOrder: string,
+  orderBy: string,
+  page: number,
+  limit: number
+};
+
 type BookMasterPageProps = {
   bookMasters: BookMasterList,
-  searchParam: {
-    isbn: string,
-    name: string,
-    publicationDateBegin: string,
-    publicationDateEnd: string,
-    sortOrder: string,
-    orderBy: string,
-  },
+  searchParam: SearchParam,
 }
 
 export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps) => {
@@ -26,40 +30,26 @@ export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps
    * 既存の検索条件を引き継いで、更新された検索条件で検索結果を表示するためのURLを生成する。
    */
   const calcSearchNavigateUrl = (
-    isbn?: string,
-    name?: string,
-    publicationDateBegin?: string,
-    publicationDateEnd?: string,
-    sortOrder?: string,
+    searchParam: SearchParam,
     orderBy?: string,
-    page?: number,
-    limit?: number
+    sortOrder?: string
   ): string => {
     const searchParams = new URLSearchParams();
-    if (isbn) {
-      searchParams.set("isbn", isbn);
+
+    for (const [key, value] of Object.entries(searchParam)) {
+      if (value) {
+        searchParams.set(key, String(value));
+      }
     }
-    if (name) {
-      searchParams.set("name", name);
-    }
-    if (publicationDateBegin) {
-      searchParams.set("publicationDateBegin", publicationDateBegin);
-    }
-    if (publicationDateEnd) {
-      searchParams.set("publicationDateEnd", publicationDateEnd);
-    }
+
+    // sortOrderとorderByが指定されている場合は、それを上書きする
     if (sortOrder) {
       searchParams.set("sortOrder", sortOrder);
     }
     if (orderBy) {
       searchParams.set("orderBy", orderBy);
     }
-    if (page) {
-      searchParams.set("page", page.toString());
-    }
-    if (limit) {
-      searchParams.set("limit", limit.toString());
-    }
+
     return `/bookMasters?${searchParams.toString()}`;
   }
 
@@ -112,7 +102,7 @@ export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps
             name: "Id",
             onClick: () => {
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
-              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "id"));
+              navigate(calcSearchNavigateUrl(searchParam, "id", newSortOrder));
             },
             footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
@@ -120,7 +110,7 @@ export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps
             name: "ISBN",
             onClick: () => {
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
-              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "isbn"));
+              navigate(calcSearchNavigateUrl(searchParam, "isbn", newSortOrder));
             },
             footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "isbn" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "isbn" ? "▼" : "",
           },
@@ -128,7 +118,7 @@ export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps
             name: "Book Name",
             onClick: () => {
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
-              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "name"));
+              navigate(calcSearchNavigateUrl(searchParam, "name", newSortOrder));
             },
             footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },
@@ -136,7 +126,7 @@ export const BookMasterPage = ({ bookMasters, searchParam }: BookMasterPageProps
             name: "Publication Date",
             onClick: () => {
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
-              navigate(calcSearchNavigateUrl(searchParam.isbn, searchParam.name, searchParam.publicationDateBegin, searchParam.publicationDateEnd, newSortOrder, "publicationDate"));
+              navigate(calcSearchNavigateUrl(searchParam, "publicationDate", newSortOrder));
             },
             footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "publicationDate" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "publicationDate" ? "▼" : "",
           },
