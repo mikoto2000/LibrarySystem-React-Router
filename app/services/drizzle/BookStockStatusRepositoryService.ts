@@ -1,12 +1,29 @@
-import { eq } from "drizzle-orm";
+import { eq, like, asc, desc } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { bookStockStatusTable } from "~/infra/db/schema";
 import type { BookStockStatus } from "~/types";
 import type { BookStockStatusRepositoryService } from "../BookStockStatusRepositoryService";
 
 export class BookStockStatusRepositoryForDrizzle implements BookStockStatusRepositoryService {
-  findAllBookStockStatus = async (): Promise<BookStockStatus[]> => {
-    return await db.select().from(bookStockStatusTable);
+  findAllBookStockStatus = async (
+    name?: string,
+    sortOrder?: string,
+    orderBy?: string,
+    page?: number,
+    limit?: number
+  ): Promise<BookStockStatus[]> => {
+
+    // orderBy 文字列から、カラムのオブジェクトに変換
+    const obi = bookStockStatusTable.id;
+    const obn= bookStockStatusTable.name;
+    let ob = orderBy && orderBy === "name" ? obn : obi;
+
+    return await db.select()
+      .from(bookStockStatusTable)
+      .where(name ? like(bookStockStatusTable.name, `%${name}%`) : undefined)
+      .orderBy(sortOrder === 'desc' ? desc(ob) : asc(ob))
+      .limit(limit ? limit : 10)
+      .offset(page ? (page - 1) * (limit ? limit : 10) : 0);
   }
 
   findBookStockStatusById = async (id: number): Promise<BookStockStatus> => {
