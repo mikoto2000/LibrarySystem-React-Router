@@ -1,5 +1,4 @@
-// TODO: View の type を剥がして service のモデルとして再定義
-import { eq } from "drizzle-orm";
+import { and, eq, like, asc, desc } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { bookMasterTable, bookStockStatusTable, bookStockTable } from "~/infra/db/schema";
 import type { BookStockWithoutAuthor } from "~/views/types";
@@ -7,11 +6,36 @@ import type { BookStockRepositoryService } from "../BookStockRepositoryService";
 
 export class BookStockRepositoryForDrizzle implements BookStockRepositoryService {
 
-  findAllBookStock = async (): Promise<BookStockWithoutAuthor[]> => {
+  findAllBookStock = async (
+    name?: string,
+    bookStockStatusId?: number,
+    memo?: string,
+    sortOrder?: string,
+    orderBy?: string,
+    page?: number,
+    limit?: number
+  ): Promise<BookStockWithoutAuthor[]> => {
+
+    // orderBy 文字列から、カラムのオブジェクトに変換
+    const obi = bookStockTable.id;
+    const obn = bookMasterTable.name;
+    const obm = bookStockTable.memo;
+    let ob: any = orderBy && orderBy === "name" ? obn : obi;
+    ob = orderBy && orderBy === "memo" ? obm : ob;
+
     const selectResult = await db.select()
       .from(bookStockTable)
       .innerJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
-      .innerJoin(bookStockStatusTable, eq(bookStockTable.bookStockStatusId, bookStockStatusTable.id));
+      .innerJoin(bookStockStatusTable, eq(bookStockTable.bookStockStatusId, bookStockStatusTable.id))
+      .where(
+        and(
+          name ? like(bookMasterTable.name, `%${name}%`) : undefined,
+          bookStockStatusId ? eq(bookStockTable.bookStockStatusId, bookStockStatusId) : undefined,
+          memo ? like(bookStockTable.memo, `%${memo}%`) : undefined),
+      )
+      .orderBy(sortOrder === 'desc' ? desc(ob) : asc(ob))
+      .limit(limit ? limit : 10)
+      .offset(page ? (page - 1) * (limit ? limit : 10) : 0);
 
     return selectResult.map((e) => {
       return {
