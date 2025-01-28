@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, or, eq, like, gte, lte, asc, desc } from "drizzle-orm";
 import { db } from "~/infra/db";
 import { authorTable, bookMasterTable, bookMasterToAuthorTable } from "~/infra/db/schema";
 import type { BookMaster } from "~/types";
@@ -6,8 +6,40 @@ import type { BookMasterList } from "~/views/types";
 import type { BookMasterRepositoryService } from "../BookMasterRepositoryService";
 
 export class BookMasterRepositoryForDrizzle implements BookMasterRepositoryService {
-  findAllBookMaster = async (): Promise<BookMasterList> => {
-    const selectResult = await db.select().from(bookMasterTable);
+  findAllBookMaster = async (
+    isbn?: string,
+    name?: string,
+    publicationDateBegin?: string,
+    publicationDateEnd?: string,
+    sortOrder?: string,
+    orderBy?: string,
+    page?: number,
+    limit?: number
+  ): Promise<BookMasterList> => {
+
+    // orderBy 文字列から、カラムのオブジェクトに変換
+    const obi = bookMasterTable.id;
+    const obn = bookMasterTable.name;
+    const obd = bookMasterTable.publicationDate;
+    let ob: any = orderBy && orderBy === "name" ? obn : obi;
+    ob = orderBy && orderBy === "publicationDate" ? obd : ob;
+
+    const selectResult = await db.select()
+      .from(bookMasterTable)
+      .where(
+        or(
+          name ? like(bookMasterTable.name, `%${name}%`) : undefined,
+          isbn ? like(bookMasterTable.isbn, `%${isbn}%`) : undefined,
+          and(
+            publicationDateBegin ? gte(bookMasterTable.publicationDate, publicationDateBegin) : undefined,
+            publicationDateEnd ? lte(bookMasterTable.publicationDate, publicationDateEnd) : undefined,
+          )
+        )
+      )
+
+      .orderBy(sortOrder === 'desc' ? desc(ob) : asc(ob))
+      .limit(limit ? limit : 10)
+      .offset(page ? (page - 1) * (limit ? limit : 10) : 0);
 
     return selectResult.map((e) => {
       return {

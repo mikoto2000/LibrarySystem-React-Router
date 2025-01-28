@@ -3,9 +3,28 @@ import { BookMasterPage } from "../../views/pages/bookMaster/BookMasterPage";
 import type { BookMasterList } from "~/views/types";
 import { bookMasterRepository } from "~/di";
 
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
+  // クエリパラメーターから検索条件・オーダー・ページネーション情報を取得
+  const searchParams = new URL(request.url).searchParams;
+  const isbn = searchParams.get("isbn");
+  const name = searchParams.get("name");
+  const publicationDateBegin = searchParams.get("publicationDateBegin");
+  const publicationDateEnd = searchParams.get("publicationDateEnd");
+  const sortOrder = searchParams.get("sortOrder");
+  const orderBy = searchParams.get("orderBy");
+  const page = Number(searchParams.get("page"));
+  const limit = Number(searchParams.get("limit"));
 
-  const bookMasters: BookMasterList = await bookMasterRepository.findAllBookMaster();
+  const bookMasters: BookMasterList = await bookMasterRepository.findAllBookMaster(
+    isbn ? isbn : undefined,
+    name ? name : undefined,
+    publicationDateBegin ? publicationDateBegin : undefined,
+    publicationDateEnd ? publicationDateEnd : undefined,
+    sortOrder ? sortOrder : undefined,
+    orderBy ? orderBy : undefined,
+    page ? page : undefined,
+    limit ? limit : undefined,
+  );
 
   return { bookMasters };
 }

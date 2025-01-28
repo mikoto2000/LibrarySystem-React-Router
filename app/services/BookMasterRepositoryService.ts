@@ -2,7 +2,27 @@ import type { BookMaster } from "~/types";
 import type { BookMasterList } from "~/views/types"
 
 export interface BookMasterRepositoryService {
-  findAllBookMaster(): Promise<BookMasterList>;
+  /**
+   * Find all book masters
+   * @param isbn book isbn
+   * @param name book name
+   * @param publicationDateBegin publication date begin
+   * @param publicationDateEnd publication date end
+   * @param sortOrder sort order
+   * @param orderBy order by
+   * @param page page number
+   * @param limit limit number
+   */
+  findAllBookMaster(
+    isbn?: string,
+    name?: string,
+    publicationDateBegin?: string,
+    publicationDateEnd?: string,
+    sortOrder?: string,
+    orderBy?: string,
+    page?: number,
+    limit?: number
+  ): Promise<BookMasterList>;
   findBookMasterById(id: number): Promise<BookMaster>;
 
   createBookMaster(bookMasters: {
