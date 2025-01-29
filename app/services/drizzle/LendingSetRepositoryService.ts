@@ -2,12 +2,37 @@ import { db } from "~/infra/db";
 import { bookMasterTable, bookStockTable, customerTable, lendingSetTable, lendingSetToBookStockTable, lendingStatusTable } from "~/infra/db/schema";
 
 
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, like, asc, desc, inArray } from "drizzle-orm";
 import type { LendingSet, LendingSetList } from "~/views/types";
 import type { LendingSetRepositoryService } from "../LendingSetRepositoryService";
 
 export class LendingSetRepositoryForDrizzle implements LendingSetRepositoryService {
-  findAllLendingSet = async (): Promise<LendingSetList> => {
+  findAllLendingSet = async (
+    lendingStatusId?: number,
+    customer?: string,
+    lendStartDateBegin?: string,
+    lendStartDateEnd?: string,
+    lendDeadlineDateBegin?: string,
+    lendDeadlineDateEnd?: string,
+    returnDateBegin?: string,
+    returnDateEnd?: string,
+    memo?: string,
+    sortOrder?: string,
+    orderBy?: string,
+    page?: number,
+    limit?: number
+  ): Promise<LendingSetList> => {
+    // orderBy 文字列から、カラムのオブジェクトに変換
+    const obi = lendingSetTable.id;
+    const obc = customerTable.name;
+    const obl = lendingSetTable.lendStartDate;
+    const obd = lendingSetTable.lendDeadlineDate;
+    const obr = lendingSetTable.returnDate;
+    let ob: any = orderBy && orderBy === "customer" ? obc : obi;
+    ob = orderBy && orderBy === "lendStartDate" ? obl : ob;
+    ob = orderBy && orderBy === "lendDeadlineDate" ? obd : ob;
+    ob = orderBy && orderBy === "returnDate" ? obr : ob;
+
     // テーブルから情報取得
     const selectResult = await db.select()
       .from(lendingSetTable)
@@ -16,6 +41,28 @@ export class LendingSetRepositoryForDrizzle implements LendingSetRepositoryServi
       .leftJoin(bookStockTable, eq(bookStockTable.id, lendingSetToBookStockTable.bookStockId))
       .leftJoin(bookMasterTable, eq(bookStockTable.bookMasterId, bookMasterTable.id))
       .leftJoin(customerTable, eq(customerTable.id, lendingSetTable.customerId))
+      .where(
+        and(
+          lendingStatusId ? eq(lendingSetTable.lendingStatusId, lendingStatusId) : undefined,
+          customer ? like(customerTable.name, `%${customer}%`) : undefined,
+          and(
+            lendStartDateBegin ? eq(lendingSetTable.lendStartDate, lendStartDateBegin) : undefined,
+            lendStartDateEnd ? eq(lendingSetTable.lendStartDate, lendStartDateEnd) : undefined,
+          ),
+          and(
+            lendDeadlineDateBegin ? eq(lendingSetTable.lendDeadlineDate, lendDeadlineDateBegin) : undefined,
+            lendDeadlineDateEnd ? eq(lendingSetTable.lendDeadlineDate, lendDeadlineDateEnd) : undefined,
+          ),
+          and(
+            returnDateBegin ? eq(lendingSetTable.returnDate, returnDateBegin) : undefined,
+            returnDateEnd ? eq(lendingSetTable.returnDate, returnDateEnd) : undefined,
+          ),
+          memo ? eq(lendingSetTable.memo, memo) : undefined,
+        )
+      )
+      .orderBy(sortOrder === 'desc' ? desc(ob) : asc(ob))
+      .limit(limit ? limit : 10)
+      .offset(page ? (page - 1) * (limit ? limit : 10) : 0);
 
     // 同じ id ごとに別々の配列に分割する
     const groupedLendingSets = Object.groupBy(selectResult, (e: any) => e.lending_set.id);
@@ -29,7 +76,6 @@ export class LendingSetRepositoryForDrizzle implements LendingSetRepositoryServi
       }
 
       // id 毎に、ひとつの Object にまとめる
-      console.log(tmp);
       const lendingSet = tmp.reduce((acumulator, currentValue) => {
         acumulator.id = Number(currentValue.lending_set.id);
         acumulator.customer = currentValue.customer.name;
@@ -53,6 +99,8 @@ export class LendingSetRepositoryForDrizzle implements LendingSetRepositoryServi
 
       lendingSets.push(lendingSet);
     }
+
+    // TODO: ソート
 
     return lendingSets;
   }
