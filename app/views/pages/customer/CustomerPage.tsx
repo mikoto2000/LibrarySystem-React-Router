@@ -89,6 +89,7 @@ export const CustomerPage = ({ customeres, searchParam }: CustomerPageProps) => 
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "id", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
           {
             name: "Name",
@@ -96,6 +97,7 @@ export const CustomerPage = ({ customeres, searchParam }: CustomerPageProps) => 
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "name", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },
           {
             name: "Email Address",
@@ -103,6 +105,7 @@ export const CustomerPage = ({ customeres, searchParam }: CustomerPageProps) => 
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "emailAddress", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "emailAddress" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "emailAddress" ? "▼" : "",
           },
         ]}
         contentInfo={[
