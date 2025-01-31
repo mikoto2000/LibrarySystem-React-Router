@@ -139,6 +139,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "id", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
           {
             name: "Status",
@@ -146,6 +147,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "status", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "status" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "status" ? "▼" : "",
           },
           {
             name: "Customer",
@@ -153,6 +155,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "customer", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "customer" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "customer" ? "▼" : "",
           },
           {
             name: "Lend Start Date",
@@ -160,6 +163,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "lendStartDate", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "lendStartDate" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "lendStartDate" ? "▼" : "",
           },
           {
             name: "Lend Deadline Date",
@@ -167,6 +171,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "lendDeadlineDate", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "lendDeadlineDate" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "lendDeadlineDate" ? "▼" : "",
           },
           {
             name: "Return Date",
@@ -174,6 +179,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "returnDate", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "returnDate" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "returnDate" ? "▼" : "",
           },
           {
             name: "Books",
@@ -181,6 +187,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "books", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "books" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "books" ? "▼" : "",
           },
           {
             name: "Memo",
@@ -188,6 +195,7 @@ export const LendingSetPage = ({ lendingSets, searchParam }: LendingSetPageProps
               const newSortOrder = searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "memo", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "memo" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "memo" ? "▼" : "",
           },
         ]}
         contentInfo={[
