@@ -83,6 +83,7 @@ export const LendingStatusPage = ({ lendingStatuses, searchParam }: LendingStatu
               const newSortOrder = searchParam.orderBy === "id" && searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "id", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
           {
             name: "Name",
@@ -90,6 +91,7 @@ export const LendingStatusPage = ({ lendingStatuses, searchParam }: LendingStatu
               const newSortOrder = searchParam.orderBy === "name" && searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "name", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },
         ]}
         contentInfo={[
