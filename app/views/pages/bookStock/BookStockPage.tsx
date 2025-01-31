@@ -108,6 +108,7 @@ export const BookStockPage = ({ bookStocks, searchParam, bookStockStatuses }: Bo
               const newSortOrder = searchParam.orderBy === "id" && searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "id", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "id" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "id" ? "▼" : "",
           },
           {
             name: "Name",
@@ -115,6 +116,7 @@ export const BookStockPage = ({ bookStocks, searchParam, bookStockStatuses }: Bo
               const newSortOrder = searchParam.orderBy === "name" && searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "name", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "name" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "name" ? "▼" : "",
           },
           {
             name: "Status",
@@ -122,6 +124,7 @@ export const BookStockPage = ({ bookStocks, searchParam, bookStockStatuses }: Bo
               const newSortOrder = searchParam.orderBy === "status" && searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "status", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "status" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "status" ? "▼" : "",
           },
           {
             name: "Memo",
@@ -129,6 +132,7 @@ export const BookStockPage = ({ bookStocks, searchParam, bookStockStatuses }: Bo
               const newSortOrder = searchParam.orderBy === "memo" && searchParam.sortOrder === "asc" ? "desc" : "asc";
               navigate(calcSearchNavigateUrl(searchParam, "memo", newSortOrder));
             },
+            footer: searchParam.sortOrder === "asc" && searchParam.orderBy === "memo" ? "▲" : searchParam.sortOrder === "desc" && searchParam.orderBy === "memo" ? "▼" : "",
           },
         ]}
         contentInfo={[
